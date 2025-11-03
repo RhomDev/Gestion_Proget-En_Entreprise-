@@ -1,4 +1,4 @@
-Il faut qu'on difinisse les taches que chacun devra faire ainsi que les différentes plateformes.
+Il faut qu'on définisse les taches que chacun devra faire ainsi que les différentes plateformes de travail.
 
 J'ai amélioré 2-3 trucs dans le carnet de bord histoire de faciliter la compréhension.
 
