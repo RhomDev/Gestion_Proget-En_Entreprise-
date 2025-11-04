@@ -3,11 +3,11 @@
 ## Idées de jeu (x5)
 
 ### Jeu 1: Pourquoi la maladie ?
-	- ** Objectif **: Un jeu video ou un personnage voyage dans le colon d'un être humaim, et essaye de deviner pourquoi il est malade avec les differents indices
-	- ** Type de Jeu **: logiciel, transmettre un savoir-faire, Régle, télécharment gratuit
-	- ** Joueur Cible **: grand public
-	- ** Cadre **: sensibilisation grand public
-	- ** Durée **: 0-20min
+	- **Objectif** : Un jeu video ou un personnage voyage dans le colon d'un être humaim, et essaye de deviner pourquoi il est malade avec les differents indices
+	- **Type de Jeu** : logiciel, transmettre un savoir-faire, Régle, télécharment gratuit
+	- **Joueur Cible** : grand public
+	- **Cadre** : sensibilisation grand public
+	- **Durée** : 0-20min
 
 ### Jeu 2: En Entreprise ! (version employé)
 	- ** Objectif **: 2-4 joueurs(employé) et un chef(maitre du jeu), les joueurs auront des taches complementaires et collaboratives mais interdiction de communiquer entre eux(le chef devra faire en  sorte les employés m'emmene leur tache et faire la communication) 
