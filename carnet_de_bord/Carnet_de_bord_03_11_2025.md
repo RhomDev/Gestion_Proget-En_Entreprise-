@@ -41,4 +41,4 @@
 	
 ## Jeu Sélection
 
-Jeu 3 selectionné APRÉS LONG DEBAT entre la proposition numero 1 soutenu par Rigon et le jeu 2, un vote a 4 contre 1, le jeu 3 a été selectionné
+Jeu selectionné APRÉS LONG DEBAT entre la proposition numero 1 soutenu par Rigon et le jeu 2, un vote a 4 contre 1, le jeu 3 a été selectionné
