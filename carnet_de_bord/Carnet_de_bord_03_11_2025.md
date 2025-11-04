@@ -1,6 +1,6 @@
-#Carnet de bord du 03/11/2025
+# Carnet de bord du 03/11/2025
 
-##Idées de jeu (x5)
+## Idées de jeu (x5)
 
 ### Jeu 1: Pourquoi la maladie ?
 	- ** Objectif **: Un jeu video ou un personnage voyage dans le colon d'un être humaim, et essaye de deviner pourquoi il est malade avec les differents indices
@@ -22,7 +22,7 @@
 	- ** Type de Jeu **: Logicel/Plateau, transmettre un savoir-faire/gestion, Régle, télécharment gratuit/Achat
 	- ** Joueur Cible **: grand public/etudiant/professionnel
 	- ** Cadre **: senbilisation, enseignement, organisation
-	+ durée : 20-40min
+	- ** Durée **: 20-40min
 	
 ### Jeu 4: Sensibilisation IA 
 
