@@ -3,8 +3,8 @@
 ## Idées de jeu (x5)
 
 ### Jeu 1: Pourquoi la maladie ?
-	- <ins> Objectif :</ins> Un jeu video ou un personnage voyage dans le colon d'un être humaim, et essaye de deviner pourquoi il est malade avec les differents indices
-	- **Type de Jeu** : logiciel, transmettre un savoir-faire, Régle, télécharment gratuit
+	**Objectif** : Un jeu video ou un personnage voyage dans le colon d'un être humaim, et essaye de deviner pourquoi il est malade avec les differents indices
+	**Type de Jeu** : logiciel, transmettre un savoir-faire, Régle, télécharment gratuit
 	- **Joueur Cible** : grand public
 	- **Cadre** : sensibilisation grand public
 	- **Durée** : 0-20min
