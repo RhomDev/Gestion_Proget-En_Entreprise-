@@ -1,22 +1,20 @@
-Carnet de bord du 03/11/2025
+#Carnet de bord du 03/11/2025
 
-Idées de jeu (x5)
+##Idées de jeu (x5)
 
-=> Jeu 1: Pourquoi la maladie ?
+### Jeu 1: Pourquoi la maladie ?
+	- **Objectif **: Un jeu video ou un personnage voyage dans le colon d'un être humaim, et essaye de deviner pourquoi il est malade avec les differents indices
+	- **Type de Jeu **: logiciel, transmettre un savoir-faire, Régle, télécharment gratuit
+	- **Joueur Cible **: grand public
+	- **Cadre **: sensibilisation grand public
+	- **Durée **: 0-20min
 
-	+ Objectif : Un jeu video ou un personnage voyage dans le colon d'un être humaim, et essaye de deviner pourquoi il est malade avec les differents indices
-	+ type de jeu: logiciel, transmettre un savoir-faire, Régle, télécharment gratuit
-	+ joueur cible: grand public
-	+ cadre : sensibilisation grand public
-	+ durée : 0-20min
-
-=> Jeu 2: En Entreprise ! (version employé)
-
-	+ Objectif: 2-4 joueurs(employé) et un chef(maitre du jeu), les joueurs auront des taches complementaires et collaboratives mais interdiction de communiquer entre eux(le chef devra faire en  sorte les employés m'emmene leur tache et faire la communication) 
-	+ type de jeu : Plateau RP , transmettre un savoir-faire/gestion, Régle, imprimable gratuit
-	+ joueur cible: grand public/etudiant/professionnel
-	+ cadre : senbilisation, enseignement, organisation
-	+ durée : 60-90min
+### Jeu 2: En Entreprise ! (version employé)
+	- **Objectif **: 2-4 joueurs(employé) et un chef(maitre du jeu), les joueurs auront des taches complementaires et collaboratives mais interdiction de communiquer entre eux(le chef devra faire en  sorte les employés m'emmene leur tache et faire la communication) 
+	- **Type de Jeu **: Plateau RP , transmettre un savoir-faire/gestion, Régle, imprimable gratuit
+	- **Joueur Cible **: grand public/etudiant/professionnel
+	- **Cadre **: senbilisation, enseignement, organisation
+	- **Durée **: 60-90min
 	
 => Jeu 3: En Entreprise ! (version employeur)
 
