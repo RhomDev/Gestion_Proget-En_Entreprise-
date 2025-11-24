@@ -8,6 +8,8 @@ class Ouvrier:
         self.state = 0
         self.etat = ["Fixe", "Cour"]
         self.image = pygame.image.load("image/homme.bmp")
+        self.image_flip = pygame.transform.flip(self.image, True, False)
+        self.flip = 0
         self.fenetre = fenetre
         self.width = fenetre.get_size()[0]
         self.heigth = fenetre.get_size()[1]
@@ -21,12 +23,14 @@ class Ouvrier:
         i = self.i
         state = self.state
         self.k = (k + 1) % (60 * 5 * 3)
-        self.i = k // 10
+        self.i = k // 4
         position = [self.pose[0] - 50, self.pose[1] - 100]
+        images = [self.image, self.image_flip]
+
         if self.etat[state] == "Cour":
-            self.fenetre.blit(self.image, position, ((i % 8) * 128, 0, 120, 160))
+            self.fenetre.blit(images[self.flip], position, ((i % 8) * 128, 0, 120, 160))
         elif self.etat[state] == "Fixe":
-            self.fenetre.blit(self.image, position, (128 * 3, 163 * 2, 128, 160))
+            self.fenetre.blit(images[0], position, (128 * 3, 163 * 2, 128, 160))
 
     def Position(self, obj):
         if self.pose[0] != obj[0] and self.pose[1] != obj[1]:
@@ -45,6 +49,11 @@ class Ouvrier:
                 self.pose[0] = obj[0]
                 self.pose[1] = obj[1]
                 self.state = 0
+
+            if x < 0:
+                self.flip = 1
+            else:
+                self.flip = 0
 
     def update(self, obj):
         self.Draw()
