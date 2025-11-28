@@ -1,60 +1,66 @@
 import pygame
-from math import *
+from math import sqrt
 
 
 class Ouvrier:
-    def __init__(self, nom, fenetre):
-        self.nom = nom
-        self.state = 0
-        self.etat = ["Fixe", "Cour"]
-        self.image = pygame.image.load("image/homme.bmp")
-        self.image_flip = pygame.transform.flip(self.image, True, False)
-        self.flip = 0
-        self.fenetre = fenetre
-        self.width = fenetre.get_size()[0]
-        self.heigth = fenetre.get_size()[1]
-        self.centre = (self.width / 2, self.heigth / 2)
-        self.pose = [self.centre[0], self.centre[1]]
-        self.i = 0
-        self.k = 0
+    def __init__(s, fenetre,boutton_de_control):
+        s.state = 0
+        s.etat = ["Fixe", "Cour"]
+        s.image = pygame.image.load("image/homme.bmp")
+        s.image_flip = pygame.transform.flip(s.image, True, False)
+        s.flip = 0
+        s.fenetre = fenetre
+        s.width = fenetre.get_size()[0]
+        s.heigth = fenetre.get_size()[1]
+        s.centre = (s.width / 2, s.heigth / 2)
+        s.pose = [s.centre[0], s.centre[1]]
+        s.i = 0
+        s.k = 0
+        s.obj = s.pose
+        s.boutton = boutton_de_control
 
-    def Draw(self):
-        k = self.k
-        i = self.i
-        state = self.state
-        self.k = (k + 1) % (60 * 5 * 3)
-        self.i = k // 4
-        position = [self.pose[0] - 50, self.pose[1] - 100]
-        images = [self.image, self.image_flip]
+    def Draw(s):
+        k = s.k
+        i = s.i
+        state = s.state
+        s.k = (k + 1) % (60 * 5 * 3)
+        s.i = k // 4
+        position = [s.pose[0] - 50, s.pose[1] - 100]
+        images = [s.image, s.image_flip]
 
-        if self.etat[state] == "Cour":
-            self.fenetre.blit(images[self.flip], position, ((i % 8) * 128, 0, 120, 160))
-        elif self.etat[state] == "Fixe":
-            self.fenetre.blit(images[0], position, (128 * 3, 163 * 2, 128, 160))
+        if s.etat[state] == "Cour":
+            s.fenetre.blit(images[s.flip], position, ((i % 8) * 128, 0, 120, 160))
+        elif s.etat[state] == "Fixe":
+            s.fenetre.blit(images[0], position, (128 * 3, 163 * 2, 128, 160))
 
-    def Position(self, obj):
-        if self.pose[0] != obj[0] and self.pose[1] != obj[1]:
-            x = obj[0] - self.pose[0]
-            y = obj[1] - self.pose[1]
+    def Position(s):
+
+        if pygame.mouse.get_pressed(3)[s.boutton]:
+            s.obj = pygame.mouse.get_pos()
+            print(s.obj)
+
+        if s.pose[0] != s.obj[0] and s.pose[1] != s.obj[1]:
+            x = s.obj[0] - s.pose[0]
+            y = s.obj[1] - s.pose[1]
             norm = sqrt(x**2 + y**2)
             x = x / norm
             y = y / norm
-            self.state = 1
+            s.state = 1
             vitesse = 10
 
-            self.pose[0] = self.pose[0] + x * vitesse
-            self.pose[1] = self.pose[1] + y * vitesse
+            s.pose[0] = s.pose[0] + x * vitesse
+            s.pose[1] = s.pose[1] + y * vitesse
 
             if norm < vitesse + 1:
-                self.pose[0] = obj[0]
-                self.pose[1] = obj[1]
-                self.state = 0
+                s.pose[0] = s.obj[0]
+                s.pose[1] = s.obj[1]
+                s.state = 0
 
             if x < 0:
-                self.flip = 1
+                s.flip = 1
             else:
-                self.flip = 0
+                s.flip = 0
 
-    def update(self, obj):
-        self.Draw()
-        self.Position(obj)
+    def update(s):
+        s.Draw()
+        s.Position()
