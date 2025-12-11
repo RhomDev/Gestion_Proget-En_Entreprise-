@@ -12,8 +12,8 @@ pygame.display.set_caption("En Entreprise !")
 main_font = pygame.font.SysFont('freesansbold.ttf', 32)
 
 # Exemple d'utilisation de TextView
-text_test = TextView(screen, main_font, (400, 300), 1, "Bonjour", (0, 0, 0))
-text_test.set_inter_actif(True)  # Active l'interaction
+text_test = TextView(screen, main_font, (0, 0), 1, "Bonjour", "Green", color_input1="Black")
+#text_test.set_inter_actif(True)  # Active l'interaction
 
 # Boucle principale
 running = True
