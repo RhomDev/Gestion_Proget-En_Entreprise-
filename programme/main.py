@@ -10,15 +10,20 @@ def evnt_fullscreen():
     else:
         screen = pygame.display.set_mode((800,600))
 
+def change_page(page):
+    global screen_page
+    screen_page = page
+    print("Change page")
+
+def get_page():
+    return screen_page
+
 if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption("En Entreprise !")
 
-    menu_screen.menu_init(screen)
-
-    # Boucle principale
     running = True
     fullscreen = False
     screen_page = 0
@@ -26,11 +31,9 @@ if __name__ == '__main__':
 
     while running:
         if screen_page == 0:
-            menu_screen.menu_screen(screen)
+            menu_screen.menu_screen(screen, change_page, get_page, clock)
         if screen_page == 1:
-            game_screen.Game_screen(screen)
-        clock.tick(60)
-        pygame.display.flip()
+            game_screen.Game_screen(screen, change_page, get_page, clock)
 
     pygame.quit()
 
