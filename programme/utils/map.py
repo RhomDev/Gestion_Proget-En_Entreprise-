@@ -37,13 +37,14 @@ class Node:
     def nexte(s, obj):
         min = 1000000
         k = -1
+        s.visited = TRUE
         for i in range(len(s.next)):
             nod = s.next[i]
             print(s.name, nod.name, nod.visited)
             if not nod.visited:
                 x, y = nod.data[0], nod.data[1]
                 distance = dist(x, y, obj[0], obj[1])
-                nod.visited = TRUE
+
                 if obj[0] == x and obj[1] == y:
                     return s.next[i]
                 if distance < min:
