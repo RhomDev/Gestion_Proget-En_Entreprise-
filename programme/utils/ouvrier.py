@@ -25,7 +25,7 @@ class Ouvrier:
 
     def Set_Objectif(s, objectif):
         s.objectif = objectif
-        s.node = map.nodes.a
+        s.dest = map.nodes.noeuds[objectif]
 
     def Draw(s):
         k = s.k
