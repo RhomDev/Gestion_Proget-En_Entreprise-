@@ -1,7 +1,7 @@
 from urllib.parse import scheme_chars
 
 import pygame
-from programme.utils.Object import *
+from programme.Object import *
 import programme.screen.popup.menu.Quit_Popup as Popup
 
 def button_center(event, page):
@@ -14,7 +14,7 @@ def button_center(event, page):
 
 def menu_init(screen):
     global fullscreen_bouton, Start_bouton, Option_bouton, Quit_bouton
-    img_boutton = pygame.image.load("src/img/util/btn_standard.png")
+    img_boutton = pygame.image.load("programme/src/img/util/btn_standard.png")
     fullscreen_bouton = Button(screen, (15, 20), img_boutton, 1, text="Fullscreen",
                                color_input='Black', color_input1='Red')
     Start_bouton = Button(screen,((screen.get_width() / 2) - 20, (screen.get_height() / 2) - 80),

@@ -1,13 +1,14 @@
 import pygame
-from programme.utils.Object import *
-
+from programme.Object import *
+from programme.utils.ouvrier import *
+from programme.utils.map import *
 
 def game_screen_init(screen):
-    global panel_outil, tache_bouton, deplacement_bouton, mission_bouton, hint_panel, var_open_panel
+    global panel_outil, tache_bouton, deplacement_bouton, mission_bouton, hint_panel, var_open_panel, bob, mapes
     var_open_panel = True
-    img_background_outil = pygame.image.load("src/img/game_img/background_btn_option.jpg")
-    img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
-    img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
+    img_background_outil = pygame.image.load("programme/src/img/game_img/background_btn_option.jpg")
+    img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
+    img_hint_panel = pygame.image.load("programme/src/img/game_img/hint_panel.png")
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
@@ -28,10 +29,17 @@ def game_screen_init(screen):
 
     hint_panel = Button(screen, (screen.get_width() - 80, screen.get_height() - 170), img_hint_panel, 1)
 
+    
+    mapes = Map(screen,1)
+    bob = Ouvrier(screen,"C",mapes)
+
 
 def game_update():
+    mapes.update()
     panel_outil.update()
     hint_panel.update()
+    bob.update()
+    
     if var_open_panel:
         tache_bouton.update()
         deplacement_bouton.update()

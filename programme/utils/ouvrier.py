@@ -1,12 +1,13 @@
-import pygame
 from math import sqrt
+
+import pygame
 
 
 class Ouvrier:
-    def __init__(s, fenetre,boutton_de_control):
+    def __init__(s, fenetre, objectif, map):
         s.state = 0
         s.etat = ["Fixe", "Cour"]
-        s.image = pygame.image.load("../src/img/perso/homme.bmp")
+        s.image = pygame.image.load("programme/src/img/perso/homme.bmp")
         s.image_flip = pygame.transform.flip(s.image, True, False)
         s.flip = 0
         s.fenetre = fenetre
@@ -17,7 +18,14 @@ class Ouvrier:
         s.i = 0
         s.k = 0
         s.obj = s.pose
-        s.boutton = boutton_de_control
+        s.objectif = objectif
+        s.scale = 0.6
+        s.node = map.nodes.a
+        s.dest = map.nodes.noeuds[objectif]
+
+    def Set_Objectif(s, objectif):
+        s.objectif = objectif
+        s.node = map.nodes.a
 
     def Draw(s):
         k = s.k
@@ -26,18 +34,20 @@ class Ouvrier:
         s.k = (k + 1) % (60 * 5 * 3)
         s.i = k // 4
         position = [s.pose[0] - 50, s.pose[1] - 100]
+
         images = [s.image, s.image_flip]
 
         if s.etat[state] == "Cour":
-            s.fenetre.blit(images[s.flip], position, ((i % 8) * 128, 0, 120, 160))
+            img = images[s.flip].subsurface(((i % 8) * 128, 0, 120, 160))
+            image_scale = pygame.transform.scale_by(img, s.scale)
+            s.fenetre.blit(image_scale, position)
         elif s.etat[state] == "Fixe":
-            s.fenetre.blit(images[0], position, (128 * 3, 163 * 2, 128, 160))
+            img = images[0].subsurface((128 * 3, 163 * 2, 128, 160))
+            image_scale = pygame.transform.scale_by(img, s.scale)
+            s.fenetre.blit(image_scale, position)
 
     def Position(s):
-
-        if pygame.mouse.get_pressed(3)[s.boutton]:
-            s.obj = pygame.mouse.get_pos()
-            print(s.obj)
+        s.obj = s.node.data
 
         if s.pose[0] != s.obj[0] and s.pose[1] != s.obj[1]:
             x = s.obj[0] - s.pose[0]
@@ -52,9 +62,12 @@ class Ouvrier:
             s.pose[1] = s.pose[1] + y * vitesse
 
             if norm < vitesse + 1:
-                s.pose[0] = s.obj[0]
-                s.pose[1] = s.obj[1]
-                s.state = 0
+                if s.node.name == s.objectif:
+                    s.pose[0] = s.obj[0]
+                    s.pose[1] = s.obj[1]
+                    s.state = 0
+                else:
+                    s.node = s.node.nexte(s.dest)
 
             if x < 0:
                 s.flip = 1
