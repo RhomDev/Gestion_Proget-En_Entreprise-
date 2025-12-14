@@ -1,5 +1,5 @@
 import pygame
-from Object import Button, TextView
+from utils.Object import Button, TextView
 
 # Initialisation de Pygame
 pygame.init()
@@ -10,10 +10,12 @@ pygame.display.set_caption("En Entreprise !")
 # Exemple d'utilisation de TextView
 
 #text_test.set_inter_actif(True)  # Active l'interaction
-fullscreen_bouton = Button((15, 20), pygame.image.load("src/img/Bouton_1.png"), 2, text="Fullscreen", color_input='Black', color_input1='Red')
-Start_bouton = Button(((screen.get_width()/2)-20, (screen.get_height()/2)-80), pygame.image.load("src/img/Bouton_1.png"), 3, text="Start", color_input='Black', color_input1='Red')
-Option_bouton = Button(((screen.get_width()/2)-20, (screen.get_height()/2)), pygame.image.load("src/img/Bouton_1.png"), 3, text="Option", color_input='Black', color_input1='Red')
-Quit_bouton = Button(((screen.get_width()/2)-20, (screen.get_height()/2)+80), pygame.image.load("src/img/Bouton_1.png"), 3, text="Quit", color_input='Black', color_input1='Red')
+img_bouton = pygame.image.load("src/img/game_img/Bouton_1.png")
+center = ((screen.get_width()/2), (screen.get_height()/2))
+fullscreen_bouton = Button(screen,(15, 20), img_bouton, 2, text="Fullscreen", color_input='Black', color_input1='Red')
+Start_bouton = Button(screen,(center[0]-20, center[1]-80), img_bouton, 3, text="Start", color_input='Black', color_input1='Red')
+Option_bouton = Button(screen,(center[0]-20, center[1]), img_bouton, 3, text="Option", color_input='Black', color_input1='Red')
+Quit_bouton = Button(screen,(center[0]-20, center[1]+80), img_bouton, 3, text="Quit", color_input='Black', color_input1='Red')
 
 # Boucle principale
 running = True
@@ -22,10 +24,10 @@ clock = pygame.time.Clock()
 
 def update():
     screen.fill((255, 255, 255))
-    fullscreen_bouton.update(screen)
-    Start_bouton.update(screen)
-    Option_bouton.update(screen)
-    Quit_bouton.update(screen)
+    fullscreen_bouton.update()
+    Start_bouton.update()
+    Option_bouton.update()
+    Quit_bouton.update()
     pygame.display.update()
 
 def evnt_fullscreen():
