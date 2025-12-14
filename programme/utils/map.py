@@ -1,4 +1,5 @@
 from math import sqrt
+from tkinter.constants import FALSE, TRUE
 
 import pygame
 
@@ -31,33 +32,37 @@ class Node:
         s.name = name
         s.data = data
         s.next = []
+        s.visited = FALSE
 
     def nexte(s, obj):
         min = 1000000
-        k = None
+        k = -1
         for i in range(len(s.next)):
             nod = s.next[i]
-            x, y = nod.data[0], nod.data[1]
-            distance = dist(x, y, obj[0], obj[1])
-            print(distance, nod.name, nod.data, obj)
-            if obj[0] == x and obj[1] == y:
-                return s.next[i]
-            if distance < min:
-                k = i
+            print(s.name, nod.name, nod.visited)
+            if not nod.visited:
+                x, y = nod.data[0], nod.data[1]
+                distance = dist(x, y, obj[0], obj[1])
+                nod.visited = TRUE
+                if obj[0] == x and obj[1] == y:
+                    return s.next[i]
+                if distance < min:
+                    k = i
+        print("return :", s.name, s.next[k].name)
         return s.next[k]
 
 
 class Nodes:
     def __init__(s):
-        s.noeuds = {"A": (167, 159), "B": (167, 292), "C": (354, 292), "D": (357, 244)}
-        s.a = Node((167, 159), "A")
-        s.b = Node((167, 292), "B")
-        s.c = Node((354, 292), "C")
-        s.d = Node((357, 244), "D")
+        s.a = Node([167, 159], "A")
+        s.b = Node([167, 292], "B")
+        s.c = Node([354, 292], "C")
+        s.d = Node([357, 244], "D")
+        s.noeuds = {"A": s.a, "B": s.b, "C": s.c, "D": s.d}
 
         s.a.next.append(s.b)
         s.b.next.append(s.a)
         s.b.next.append(s.c)
-        s.c.next.append(s.d)
         s.c.next.append(s.b)
+        s.c.next.append(s.d)
         s.d.next.append(s.c)

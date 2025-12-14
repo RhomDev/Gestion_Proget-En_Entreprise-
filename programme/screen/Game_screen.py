@@ -14,7 +14,9 @@ def game_screen_init(screen):
         hint_panel, \
         var_open_panel, \
         bob, \
-        mapes
+        mapes, \
+        ObjA, \
+        ObjD
     var_open_panel = True
     img_background_outil = pygame.image.load(
         "programme/src/img/game_img/background_btn_option.jpg"
@@ -62,6 +64,24 @@ def game_screen_init(screen):
         color_input="Black",
         color_input1="White",
     )
+    ObjA = Button(
+        screen,
+        (align_left + 230 * 2, screen.get_height() - 200),
+        img_bouton_standard,
+        4,
+        text="Objectif A",
+        color_input="Black",
+        color_input1="White",
+    )
+    ObjD = Button(
+        screen,
+        (align_left + 230 * 2, screen.get_height() - 300),
+        img_bouton_standard,
+        4,
+        text="Objectif D",
+        color_input="Black",
+        color_input1="White",
+    )
 
     hint_panel = Button(
         screen, (screen.get_width() - 80, screen.get_height() - 170), img_hint_panel, 1
@@ -78,6 +98,8 @@ def game_update():
     bob.update()
 
     if var_open_panel:
+        ObjA.update()
+        ObjD.update()
         tache_bouton.update()
         deplacement_bouton.update()
         mission_bouton.update()
@@ -122,6 +144,10 @@ def event_outil_panel(event):
         hint_panel.event(event, pygame.mouse.get_pos(), close_panel)
         tache_bouton.animation_check_color(pygame.mouse.get_pos())
         tache_bouton.event(event, pygame.mouse.get_pos(), lambda: print("tache"))
+        ObjA.animation_check_color(pygame.mouse.get_pos())
+        ObjA.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("A"))
+        ObjD.animation_check_color(pygame.mouse.get_pos())
+        ObjD.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("D"))
         deplacement_bouton.animation_check_color(pygame.mouse.get_pos())
         deplacement_bouton.event(
             event, pygame.mouse.get_pos(), lambda: print("deplacement")

@@ -1,4 +1,5 @@
 from math import sqrt
+from tkinter.constants import FALSE, TRUE
 
 import pygame
 
@@ -20,12 +21,21 @@ class Ouvrier:
         s.obj = s.pose
         s.objectif = objectif
         s.scale = 0.6
+        s.map = map
         s.node = map.nodes.a
-        s.dest = map.nodes.noeuds[objectif]
+        s.nodes = map.nodes
+        s.dest = map.nodes.noeuds[objectif].data
 
     def Set_Objectif(s, objectif):
+        s.node = s.map.nodes.noeuds[s.objectif]
+        for noeud in s.nodes.noeuds.values():
+            noeud.visited = FALSE
+        s.node.visited = TRUE
         s.objectif = objectif
-        s.dest = map.nodes.noeuds[objectif]
+        s.dest = s.map.nodes.noeuds[objectif].data
+        s.node = s.node.nexte(s.dest)
+        s.obj = s.node.data
+        print("Objectif :", s.node.data, s.pose)
 
     def Draw(s):
         k = s.k
@@ -48,15 +58,15 @@ class Ouvrier:
 
     def Position(s):
         s.obj = s.node.data
-
-        if s.pose[0] != s.obj[0] and s.pose[1] != s.obj[1]:
+        print(s.pose)
+        if s.pose[0] != s.obj[0] or s.pose[1] != s.obj[1]:
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
             norm = sqrt(x**2 + y**2)
             x = x / norm
             y = y / norm
             s.state = 1
-            vitesse = 10
+            vitesse = 5
 
             s.pose[0] = s.pose[0] + x * vitesse
             s.pose[1] = s.pose[1] + y * vitesse
@@ -66,6 +76,8 @@ class Ouvrier:
                     s.pose[0] = s.obj[0]
                     s.pose[1] = s.obj[1]
                     s.state = 0
+                    for noeud in s.nodes.noeuds.values():
+                        noeud.visited = FALSE
                 else:
                     s.node = s.node.nexte(s.dest)
 
