@@ -46,11 +46,12 @@ class Node:
 
 class Nodes:
     def __init__(s):
-        s.a = Node([167, 159], "A")
+        s.a = Node([162, 159], "A")
         s.b = Node([167, 292], "B")
         s.c = Node([354, 292], "C")
+        s.e = Node([420, 292], "E")
         s.d = Node([357, 244], "D")
-        s.noeuds = {"A": s.a, "B": s.b, "C": s.c, "D": s.d}
+        s.noeuds = {"A": s.a, "B": s.b, "C": s.c, "D": s.d, "E": s.e}
 
         s.a.lien.append(s.b)
         s.b.lien.append(s.a)
@@ -59,7 +60,12 @@ class Nodes:
         s.c.lien.append(s.d)
         s.d.lien.append(s.c)
 
+        s.e.lien.append(s.c)
+        s.c.lien.append(s.e)
+
     def Chemin(s, deb, fin):
+        if deb == fin:
+            return 0
         for nod in s.noeuds.values():
             nod.score = 100000
             nod.visited = FALSE
@@ -79,7 +85,7 @@ class Nodes:
                 if i.name == fin:
                     print(end.name, "pointe vers :", noeud.name)
                     end.pointe = noeud
-                    return
+                    return 1
                 score = noeud.score + dist(noeud, i)
                 if i.score > score and not i.visited:
                     i.score = score

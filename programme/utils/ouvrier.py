@@ -37,15 +37,16 @@ class Ouvrier:
             k = k.pointe
 
     def Set_Objectif(s, objectif):
-        s.nodes.Chemin(objectif, s.node.name)
-        s.obj = s.node.pointe.data
-        s.objectif = objectif
-        print("Objectif :", s.node.data, s.pose)
-        print("A star Bouton")
-        k = s.node
-        while k is not None:
-            print(k.name)
-            k = k.pointe
+        bool = s.nodes.Chemin(objectif, s.node.name)
+        if bool:
+            s.obj = s.node.pointe.data
+            s.objectif = objectif
+            print("Objectif :", s.node.data, s.pose)
+            print("A star Bouton")
+            k = s.node
+            while k is not None:
+                print(k.name)
+                k = k.pointe
 
     def Draw(s):
         k = s.k
@@ -67,7 +68,21 @@ class Ouvrier:
             s.fenetre.blit(image_scale, position)
 
     def Position(s):
-        if s.pose[0] != s.obj[0] or s.pose[1] != s.obj[1]:
+        print(
+            "selon x",
+            s.pose[0],
+            "objx:",
+            s.obj[0],
+            "selon y",
+            s.pose[1],
+            "objy:",
+            s.obj[1],
+        )
+        if (
+            s.pose[0] != s.obj[0]
+            or s.pose[1] != s.obj[1]
+            or s.node.name is not s.objectif
+        ):
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
             norm = sqrt(x**2 + y**2)
@@ -80,7 +95,7 @@ class Ouvrier:
             s.pose[1] = s.pose[1] + y * vitesse
 
             if norm < vitesse + 1:
-                print("Noeud Position", s.node.name)
+                print("Noeud Position", s.node.name, "objectif =", s.objectif)
                 if s.node.name == s.objectif or s.node is None:
                     s.pose[0] = s.obj[0]
                     s.pose[1] = s.obj[1]
