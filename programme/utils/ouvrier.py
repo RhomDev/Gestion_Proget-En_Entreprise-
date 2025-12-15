@@ -2,6 +2,7 @@ from math import sqrt
 from tkinter.constants import FALSE, TRUE
 
 import pygame
+from numpy import object0
 
 
 class Ouvrier:
@@ -15,27 +16,36 @@ class Ouvrier:
         s.width = fenetre.get_size()[0]
         s.heigth = fenetre.get_size()[1]
         s.centre = (s.width / 2, s.heigth / 2)
-        s.pose = [s.centre[0], s.centre[1]]
+
         s.i = 0
         s.k = 0
-        s.obj = s.pose
-        s.objectif = objectif
+
         s.scale = 0.6
         s.map = map
-        s.node = map.nodes.a
+
         s.nodes = map.nodes
-        s.dest = map.nodes.noeuds[objectif].data
+        s.objectif = "D"
+        s.dest = map.nodes.noeuds[s.objectif]
+        s.node = map.nodes.a
+        s.nodes.Chemin(s.objectif, "A")
+        s.pose = s.node.data
+        s.obj = s.node.pointe.data
+        k = s.node
+
+        while k is not None:
+            print(k.name)
+            k = k.pointe
 
     def Set_Objectif(s, objectif):
-        s.node = s.map.nodes.noeuds[s.objectif]
-        for noeud in s.nodes.noeuds.values():
-            noeud.visited = FALSE
-        s.node.visited = TRUE
+        s.nodes.Chemin(objectif, s.node.name)
+        s.obj = s.node.pointe.data
         s.objectif = objectif
-        s.dest = s.map.nodes.noeuds[objectif].data
-        s.node = s.node.nexte(s.dest)
-        s.obj = s.node.data
         print("Objectif :", s.node.data, s.pose)
+        print("A star Bouton")
+        k = s.node
+        while k is not None:
+            print(k.name)
+            k = k.pointe
 
     def Draw(s):
         k = s.k
@@ -57,8 +67,6 @@ class Ouvrier:
             s.fenetre.blit(image_scale, position)
 
     def Position(s):
-        s.obj = s.node.data
-        print(s.pose)
         if s.pose[0] != s.obj[0] or s.pose[1] != s.obj[1]:
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
@@ -72,14 +80,20 @@ class Ouvrier:
             s.pose[1] = s.pose[1] + y * vitesse
 
             if norm < vitesse + 1:
-                if s.node.name == s.objectif:
+                print("Noeud Position", s.node.name)
+                if s.node.name == s.objectif or s.node is None:
                     s.pose[0] = s.obj[0]
                     s.pose[1] = s.obj[1]
                     s.state = 0
-                    for noeud in s.nodes.noeuds.values():
-                        noeud.visited = FALSE
                 else:
-                    s.node = s.node.nexte(s.dest)
+                    if s.node.pointe is not None:
+                        print("here")
+                        s.node = s.node.pointe
+                        s.obj = s.node.data
+                    else:
+                        print("here 2")
+                        s.node.pointe = s.dest
+                        s.obj = s.node.data
 
             if x < 0:
                 s.flip = 1
