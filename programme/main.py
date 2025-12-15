@@ -1,14 +1,13 @@
 import pygame
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 import programme.screen.Menu_screen as menu_screen
 import programme.screen.Game_screen as game_screen
-
-def evnt_fullscreen():
-    global fullscreen, screen
-    fullscreen = not fullscreen
-    if fullscreen:
-        screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
-    else:
-        screen = pygame.display.set_mode((800,600))
+import programme.screen.Option_screen as option_screen
+import programme.screen.Create_Game_screen as create_game_screen
 
 def change_page(page):
     global screen_page
@@ -37,5 +36,7 @@ if __name__ == '__main__':
         if screen_page == 2:
             print("Option")
             change_page(0)
+        if screen_page == 3:
+            create_game_screen.Create_Game_screen(screen, change_page, get_page, clock)
 
     pygame.quit()

@@ -1,16 +1,19 @@
-from urllib.parse import scheme_chars
-
 import pygame
-from programme.Object import *
+import sys,os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from programme.utils.Object import *
 import programme.screen.popup.menu.Quit_Popup as Popup
 
 def button_center(event, page):
     Start_bouton.animation_check_color(pygame.mouse.get_pos())
-    Start_bouton.event(event, pygame.mouse.get_pos(), lambda: page(1))
+    Start_bouton.event(event, pygame.mouse.get_pos(), lambda: page(3))
     Option_bouton.animation_check_color(pygame.mouse.get_pos())
     Option_bouton.event(event, pygame.mouse.get_pos(), lambda: page(2))
     Quit_bouton.animation_check_color(pygame.mouse.get_pos())
     Quit_bouton.event(event, pygame.mouse.get_pos(), popup_quit.change_active)
+    fullscreen_bouton.animation_check_color(pygame.mouse.get_pos())
+    fullscreen_bouton.event(event, pygame.mouse.get_pos(), evnt_fullscreen)
 
 def menu_init(screen):
     global fullscreen_bouton, Start_bouton, Option_bouton, Quit_bouton
@@ -39,12 +42,24 @@ def is_menu_kill(data):
     else:
         return False
 
+
+def evnt_fullscreen():
+    global fullscreen, screen
+    fullscreen = not fullscreen
+    if fullscreen:
+        screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
+    else:
+        screen = pygame.display.set_mode((800,600))
+
+
 def menu_screen(screen, pageset, pageget, clock):
     global popup_quit
     menu_active=True
     menu_init(screen)
 
     popup_quit = Popup.Quit_Popup(screen, (int(screen.get_width()/2)-100, int(screen.get_height()/2)-100))
+
+    edit =
 
     while(menu_active):
         screen.fill((146,147,147))
