@@ -20,10 +20,10 @@ def game_screen_init(screen):
         ObjC
     var_open_panel = True
     img_background_outil = pygame.image.load(
-        "programme/src/img/game_img/background_btn_option.jpg"
+        "../programme/src/img/game_img/background_btn_option.jpg"
     )
-    img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
-    img_hint_panel = pygame.image.load("programme/src/img/game_img/hint_panel.png")
+    img_bouton_standard = pygame.image.load("../programme/src/img/util/btn_standard.png")
+    img_hint_panel = pygame.image.load("../programme/src/pimg/game_img/hint_panel.png")
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)

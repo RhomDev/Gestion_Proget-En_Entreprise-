@@ -34,5 +34,8 @@ if __name__ == '__main__':
             menu_screen.menu_screen(screen, change_page, get_page, clock)
         if screen_page == 1:
             game_screen.Game_screen(screen, change_page, get_page, clock)
+        if screen_page == 2:
+            print("Option")
+            change_page(0)
 
     pygame.quit()

@@ -19,8 +19,8 @@ class Quit_Popup(Popup):
         self.render(position)
 
     def render(self,position):
-        img_btn = pygame.image.load("programme/src/img/util/btn_standard.png")
-        img_panel = pygame.image.load("programme/src/img/game_img/background_btn_option.jpg")
+        img_btn = pygame.image.load("../programme/src/img/util/btn_standard.png")
+        img_panel = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
 
         self.rect_panel = Rectangle(self.screen,position, (self.width_panel, self.height_panel), img=img_panel)
         self.text_panel = TextView(self.screen, (position[0]+160,position[1]+15), 2, "Voulez vous vraiment quitter ?",'Black')
