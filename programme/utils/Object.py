@@ -242,3 +242,40 @@ class Rectangle:
             self.rect = pygame.Rect(
                 position, (int(dim[0] * scale), int(dim[1] * scale))
             )
+
+class InputBox:
+    def __init__(self,screen , position, dimension, font_size=32):
+        self.rect = pygame.Rect(position, dimension)
+        self.screen = screen
+        self.color = pygame.Color('lightskyblue3')
+        self.text = ''
+        self.font = pygame.font.Font(None, font_size)
+        self.active = False
+        self.text_color = pygame.Color('black')
+        self.active_color = pygame.Color('dodgerblue2')
+        self.inactive_color = pygame.Color('lightskyblue3')
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.active = not self.active
+            else:
+                self.active = False
+            self.color = self.active_color if self.active else self.inactive_color
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    print(self.text)  # Faire quelque chose avec le texte
+                    self.text = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+
+    def update(self):
+        pygame.draw.rect(self.screen, self.color, self.rect, 2)
+        text_surface = self.font.render(self.text, True, self.text_color)
+        self.screen.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))
+        if self.active:
+            cursor = pygame.Rect(self.rect.x + 5 + text_surface.get_width(), self.rect.y + 5, 2, self.rect.height - 10)
+            pygame.draw.rect(self.screen, self.text_color, cursor)
