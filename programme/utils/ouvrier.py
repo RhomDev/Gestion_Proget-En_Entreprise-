@@ -29,6 +29,7 @@ class Ouvrier:
 
 
     def Set_Objectif(s, objectif):
+        print(objectif)
         bool = s.nodes.Chemin(objectif, s.node.name)
         if bool:
             s.obj = s.node.pointe.data

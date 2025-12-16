@@ -24,6 +24,7 @@ class Button:
         self.image = image
         self.scale = scale
         self.text = text
+        self.actif = True
 
         # Charger et redimensionner l'image
         dim=(int(image.get_width() * scale), int(image.get_height() * scale))
@@ -92,7 +93,7 @@ class Button:
                 )
 
     def event(self, event, position, function):
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and self.actif:
             if self.rect.collidepoint(position):
                 function()
 
@@ -252,6 +253,7 @@ class Menu_Deroulent:
         s.deroule(0)
         s.deroule(1)
         s.deroule(-1)
+        s.deroule(-1)
 
     def update(s):
         #print(pygame.mouse.get_pos())
@@ -261,12 +263,17 @@ class Menu_Deroulent:
             s.affiche[i].update()
 
     def deroule(s,k):
-        print(s.index , k)
+        #print(s.index , k)
         if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
+            if k>0:
+                s.affiche[s.index].actif = False
+            if k<0:
+                s.affiche[s.index + s.n-2].actif = False
             s.index=s.index + k
         s.affiche= s.liste[s.index:s.index+s.n]
         for i in range(s.n):
             boutonpos=[ s.position[0] , s.position[1]+i*s.dim[1]]
+            s.affiche[i].actif = True
             s.affiche[i].change_dim(s.dim,s.police_taille)
             s.affiche[i].change_position(boutonpos)
 

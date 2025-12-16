@@ -78,7 +78,7 @@ class Nodes:
             a = next(iter(sorted(priorité)))
 
             noeud = priorité[a]  # prend l'élément avec la plus petite priorité
-            print("Noeud : ", noeud.name)
+            #print("Noeud : ", noeud.name)
             sup = priorité.pop(a)
             noeud.visited = TRUE
             for i in noeud.lien:

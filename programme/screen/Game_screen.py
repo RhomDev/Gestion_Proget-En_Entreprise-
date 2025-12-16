@@ -126,8 +126,8 @@ def game_update():
         tache_bouton.update()
         deplacement_bouton.update()
         mission_bouton.update()
-    if panel_deplacement:
-        menu_Deroulent.update()
+        if panel_deplacement:
+            menu_Deroulent.update()
 
 
 def close_panel():
