@@ -15,7 +15,6 @@ from programme.utils.LanguageManage import LanguageManager
 def change_page(page):
     global screen_page
     screen_page = page
-    print("Change page")
 
 def get_page():
     return screen_page
@@ -39,7 +38,6 @@ if __name__ == '__main__':
         if screen_page == Screen.GAME.value:
             game_screen.Game_screen(screen, language, change_page, get_page, clock)
         if screen_page == Screen.OPTION.value:
-            print("Option")
             change_page(Screen.MENU.value)
         if screen_page == Screen.LOBBY.value:
             create_game_screen.Create_Game_screen(screen, language, change_page, get_page, clock)

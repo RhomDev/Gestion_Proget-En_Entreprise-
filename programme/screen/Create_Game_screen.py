@@ -1,8 +1,6 @@
 import pygame
 import sys,os
 
-from auto_py_to_exe.config import language_hint
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from programme.utils.Object import *
@@ -22,8 +20,8 @@ def create_game_screen_init(screen):
     edit_port =InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:port")
     edit_nb_player =InputBox(screen, lg, ((screen.get_width() / 2), (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:nb_player")
 
-    btn_valide = Button(screen, (screen.get_width()/2,screen.get_height()/2), img_btn_std, 2, lg,"Valide",8)
-    btn_cancel = Button(screen, ((screen.get_width() / 2)+100, (screen.get_height() / 2)+70), img_btn_std, 2,lg, "Cancel",8)
+    btn_valide = Button(screen, ((screen.get_width()/2)-100,screen.get_height()/2), img_btn_std, 2, lg,"loggy::btn:valid",16)
+    btn_cancel = Button(screen, ((screen.get_width() / 2), (screen.get_height() / 2)), img_btn_std, 2,lg, "loggy::btn:cancel",16)
 
 
 def create_game_update():

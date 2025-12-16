@@ -245,7 +245,7 @@ class InputBox:
         self.active_color = pygame.Color('gray')
         self.inactive_color = pygame.Color('black')
 
-        self.hint = TextView(screen,position,1,text_hint,'gray',police=font_size, language=lang)
+        self.hint = TextView(screen,(position[0]+50,position[1]+(dimension[1]/2)),1,text_hint,'gray',police=int(font_size/2), language=lang)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -275,4 +275,5 @@ class InputBox:
             cursor = pygame.Rect(self.rect.x + 5 + text_surface.get_width(), self.rect.y + 5, 2, self.rect.height - 10)
             pygame.draw.rect(self.screen, self.text_color, cursor)
         else:
-            self.hint.update()
+            if self.text == "":
+                self.hint.update()
