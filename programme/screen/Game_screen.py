@@ -105,11 +105,11 @@ def game_screen_init(screen):
     hint_panel = Button(screen, (sWidth - 80, sHeight - 170), img_hint_panel, 1)
 
     mapes = Map(screen, 1)
-    bob = Ouvrier(screen, "D", mapes)
+    bob = Ouvrier(screen, mapes)
 
     menu_Deroulent = Menu_Deroulent(
         [ObjA, ObjB, ObjC, ObjD, ObjE],#bouton qu'on ici
-        (align_left + 250 * 2, sHeight - 400),(100,200),#position et taille du menu
+        (550, 480),(150,300),#position du coin bas gauche !! et taille du menu
         Up,#bouton up
         Down,#bouton down
         nombre_bouton_affiche=4# nmobre de boutons à afficher dans le menu

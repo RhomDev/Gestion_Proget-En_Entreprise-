@@ -3,7 +3,7 @@ import pygame
 
 
 class Ouvrier:
-    def __init__(s, fenetre, position, map):
+    def __init__(s, fenetre,  map):
         s.state = 0
         s.etat = ["Fixe", "Cour"]
         s.image = pygame.image.load("programme/src/img/perso/homme.bmp")

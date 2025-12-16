@@ -234,12 +234,13 @@ class Rectangle:
 
 
 class Menu_Deroulent:
-    def __init__(s,list_bouton,position,size,up,down,police_taille=20,nombre_bouton_affiche=3):
+    def __init__(s,list_bouton,position_bas,size,up,down,police_taille=20,nombre_bouton_affiche=3):
         s.size = size
-        s.position = position
+
         s.liste=list_bouton
         s.n=nombre_bouton_affiche
         s.index=0
+        s.position = [ position_bas[0] , position_bas[1] - size[1]* ( 1 + 1/s.n)]
         s.affiche= s.liste[s.index:s.index+s.n]
         s.police_taille = police_taille
         s.dim = [size[0],size[1]/s.n]
@@ -249,12 +250,16 @@ class Menu_Deroulent:
 
         s.init_flèche()
         s.deroule(0)
+        s.deroule(1)
+        s.deroule(-1)
 
     def update(s):
+        #print(pygame.mouse.get_pos())
         s.up.update()
         s.down.update()
         for i in range(s.n):
             s.affiche[i].update()
+
     def deroule(s,k):
         print(s.index , k)
         if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
