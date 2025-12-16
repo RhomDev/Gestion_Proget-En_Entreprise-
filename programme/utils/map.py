@@ -83,7 +83,6 @@ class Nodes:
             noeud.visited = TRUE
             for i in noeud.lien:
                 if i.name == fin:
-                    print(end.name, "pointe vers :", noeud.name)
                     end.pointe = noeud
                     return 1
                 score = noeud.score + dist(noeud, i)
@@ -92,6 +91,3 @@ class Nodes:
                     i.pointe = noeud
                     priority = int(score + dist(i, end))
                     priorité[priority] = i
-
-                    print("i name = ", i.name, fin)
-            print(priorité)

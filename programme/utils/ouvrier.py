@@ -1,8 +1,5 @@
 from math import sqrt
-
-
 import pygame
-
 
 
 class Ouvrier:
@@ -27,7 +24,6 @@ class Ouvrier:
         s.objectif = "AB"
         s.dest = map.nodes.noeuds[s.objectif].data
         s.node = map.nodes.ab
-        print(s.node.data)
         s.pose = s.node.data
         s.obj = s.pose
 
@@ -38,12 +34,6 @@ class Ouvrier:
             s.obj = s.node.pointe.data
             s.objectif = objectif
             s.dest = s.nodes.noeuds[objectif].data
-           # print("Objectif :", s.node.data, s.pose)
-           # print("A star Bouton")
-            k = s.node
-            while k is not None:
-                #print(k.name)
-                k = k.pointe
 
     def Draw(s):
         k = s.k
@@ -66,18 +56,15 @@ class Ouvrier:
 
     def Position(s):
 
-        if (
-            s.pose[0] != s.obj[0]
-            or s.pose[1] != s.obj[1]
-        ):
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
             norm = sqrt(x**2 + y**2)
-            if norm !=0:
-                x = x / norm
-                y = y / norm
-            else :
-                x,y= 0,0
+            if norm == 0:
+                s.state = 0
+                return
+            x = x / norm
+            y = y / norm
+
             s.state = 1
             vitesse = 5
 
@@ -85,25 +72,18 @@ class Ouvrier:
             s.pose[1] = s.pose[1] + y * vitesse
 
             if norm < vitesse + 1:
-                print("Noeud Position", s.node.name, "objectif =", s.objectif, s.dest)
                 if s.node.name == s.objectif or s.node is None:
                     s.pose[0] = s.obj[0]
                     s.pose[1] = s.obj[1]
                     s.state = 0
                 else:
                     if s.node.pointe is not None:
-                       # print("here")
                         s.node = s.node.pointe
-                        s.obj = s.node.data
                     else:
-                       # print("here 2")
                         s.node.pointe = s.dest
-                        s.obj = s.node.data
+                    s.obj = s.node.data
 
-            if x < 0:
-                s.flip = 1
-            else:
-                s.flip = 0
+            s.flip = 1 if x < 0 else 0
 
     def update(s):
         s.Draw()
