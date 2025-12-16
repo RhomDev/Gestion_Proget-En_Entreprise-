@@ -9,8 +9,8 @@ class Button:
         image,
         scale,
         text="",
-        color_input=(255, 255, 255),
-        color_input1=(255, 255, 255),
+        color_input="Black",
+        color_input1="White",
         position_text=(0, 0),
         police_taille=1
     ):
@@ -21,26 +21,29 @@ class Button:
         self.position_text = position_text
         self.screen = screen
         self.position = position
+        self.image = image
+        self.scale = scale
+        self.text = text
 
         # Charger et redimensionner l'image
-        self.image = pygame.transform.scale(
-            image, (int(image.get_width() * scale), int(image.get_height() * scale))
-        )
-        self.rect = pygame.Rect(
-            position, (int(image.get_width() * scale), int(image.get_height() * scale))
-        )
+        dim=(int(image.get_width() * scale), int(image.get_height() * scale))
+        self.change_dim(dim, police_taille * 8 * scale)
 
-        # Rendu du texte
-        if text != "":
-            self.text = self.main_font.render(self._input_text, True, self._input_color)
-            self.text_rect = self.text.get_rect(center=self.rect.center)
-        else:
-            self.text = text
 
     def update(self):
         self.screen.blit(self.image, self.rect)
         if self.text != "":
             self.screen.blit(self.text, self.text_rect)
+
+
+    def change_dim(self,dim, police_taille):
+        image = self.image
+        self.image = pygame.transform.scale(image, dim)
+        self.rect = pygame.Rect(self.position, dim)
+        if self._input_text != "":
+            self.text = self.main_font.render(self._input_text, True, self._input_color)
+            self.main_font = pygame.font.SysFont("Arial", police_taille )
+            self.text_rect = self.text.get_rect(center=self.rect.center)
 
     def get_rect(self):
         return self.rect
@@ -131,37 +134,22 @@ class TextView:
 
 
 class Rectangle:
-    def __init__(
-        self,
-        screen,
-        position,
-        dim=(0, 0),
-        scale=1,
-        color=None,
-        img=None,
-    ):
+    def __init__(self,screen,position, dim=(0, 0),scale=1, color=None, img=None):
         self.position = position
         self.screen = screen
 
         self.image = img
         self.color = color
+        self.centers = [int(position[0]+dim[0]/2) ,int(position[1]+dim[1]/2)  ]
 
         if img != None:
             if dim != (0, 0):
-                self.image = pygame.transform.scale(
-                    img, (int(dim[0] * scale), int(dim[1] * scale))
-                )
-                self.rect = pygame.Rect(
-                    position, (int(dim[0] * scale), int(dim[1] * scale))
-                )
+                self.image = pygame.transform.scale(img, (int(dim[0] * scale), int(dim[1] * scale)))
+                self.rect = pygame.Rect(position, (int(dim[0] * scale), int(dim[1] * scale)))
             else:
-                self.image = pygame.transform.scale(
-                    img, (int(img.get_width() * scale), int(img.get_height() * scale))
-                )
+                self.image = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
                 self.rect = pygame.Rect(
-                    position,
-                    (int(img.get_width() * scale), int(img.get_height() * scale)),
-                )
+                    position,(int(img.get_width() * scale), int(img.get_height() * scale)),)
         else:
             self.rect = pygame.Rect(
                 position, (int(dim[0] * scale), int(dim[1] * scale))
@@ -246,31 +234,42 @@ class Rectangle:
 
 
 class Menu_Deroulent:
-    def __init__(s,list_bouton,position,up,down):
+    def __init__(s,list_bouton,position,size,up,down,police_taille=20,nombre_bouton_affiche=3):
+        s.size = size
         s.position = position
         s.liste=list_bouton
+        s.n=nombre_bouton_affiche
         s.index=0
-        s.affiche= s.liste[s.index:s.index+3]
+        s.affiche= s.liste[s.index:s.index+s.n]
+        s.police_taille = police_taille
+        s.dim = [size[0],size[1]/s.n]
         s.up=up
         s.down=down
-        fleche_up=[ s.position[0]-100 , s.position[1]]
-        fleche_down=[ s.position[0]-100 , s.position[1]+200]
-        s.up.change_position(fleche_up)
-        s.down.change_position(fleche_down)
-        for i in range(3):
-            boutonpos=[ s.position[0] , s.position[1]+i*100]
-            s.affiche[i].change_position(boutonpos)
+
+
+        s.init_flèche()
+        s.deroule(0)
 
     def update(s):
         s.up.update()
         s.down.update()
-        for i in range(3):
+        for i in range(s.n):
             s.affiche[i].update()
     def deroule(s,k):
         print(s.index , k)
-        if s.index + k + 3 < len(s.liste)+1 and s.index+k >= 0:
+        if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
             s.index=s.index + k
-        s.affiche= s.liste[s.index:s.index+3]
-        for i in range(3):
-            boutonpos=[ s.position[0] , s.position[1]+i*100]
+        s.affiche= s.liste[s.index:s.index+s.n]
+        for i in range(s.n):
+            boutonpos=[ s.position[0] , s.position[1]+i*s.dim[1]]
+            s.affiche[i].change_dim(s.dim,s.police_taille)
             s.affiche[i].change_position(boutonpos)
+
+
+    def init_flèche(s):
+        fleche_up=[ s.position[0] , s.position[1]-s.dim[1]]
+        fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*s.n]
+        s.up.change_position(fleche_up)
+        s.down.change_position(fleche_down)
+        s.up.change_dim(s.dim,s.police_taille)
+        s.down.change_dim(s.dim,s.police_taille)
