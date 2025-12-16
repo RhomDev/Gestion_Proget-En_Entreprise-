@@ -12,8 +12,9 @@ class Button:
         color_input=(255, 255, 255),
         color_input1=(255, 255, 255),
         position_text=(0, 0),
+        police_taille=1
     ):
-        self.main_font = pygame.font.SysFont("Arial", 8 * scale)
+        self.main_font = pygame.font.SysFont("Arial", police_taille*8 * scale)
         self._input_text = text
         self._input_color = color_input
         self._input_color1 = color_input1
@@ -242,3 +243,34 @@ class Rectangle:
             self.rect = pygame.Rect(
                 position, (int(dim[0] * scale), int(dim[1] * scale))
             )
+
+
+class Menu_Deroulent:
+    def __init__(s,list_bouton,position,up,down):
+        s.position = position
+        s.liste=list_bouton
+        s.index=0
+        s.affiche= s.liste[s.index:s.index+3]
+        s.up=up
+        s.down=down
+        fleche_up=[ s.position[0]-100 , s.position[1]]
+        fleche_down=[ s.position[0]-100 , s.position[1]+200]
+        s.up.change_position(fleche_up)
+        s.down.change_position(fleche_down)
+        for i in range(3):
+            boutonpos=[ s.position[0] , s.position[1]+i*100]
+            s.affiche[i].change_position(boutonpos)
+
+    def update(s):
+        s.up.update()
+        s.down.update()
+        for i in range(3):
+            s.affiche[i].update()
+    def deroule(s,k):
+        print(s.index , k)
+        if s.index + k + 3 < len(s.liste)+1 and s.index+k >= 0:
+            s.index=s.index + k
+        s.affiche= s.liste[s.index:s.index+3]
+        for i in range(3):
+            boutonpos=[ s.position[0] , s.position[1]+i*100]
+            s.affiche[i].change_position(boutonpos)

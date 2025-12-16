@@ -7,12 +7,9 @@ import pygame
 def dist(n1, n2):
     x, y = n1.data[0], n1.data[1]
     x1, y1 = n2.data[0], n2.data[1]
-
     return sqrt((x - x1) ** 2 + (y - y1) ** 2)
 
 
-def dist1(x, y, x1, y1):
-    return sqrt((x - x1) ** 2 + (y - y1) ** 2)
 
 
 class Map:
@@ -46,13 +43,16 @@ class Node:
 
 class Nodes:
     def __init__(s):
+        s.ab = Node([167, 159], "AB")
         s.a = Node([162, 159], "A")
         s.b = Node([167, 292], "B")
         s.c = Node([354, 292], "C")
         s.e = Node([420, 292], "E")
         s.d = Node([357, 244], "D")
-        s.noeuds = {"A": s.a, "B": s.b, "C": s.c, "D": s.d, "E": s.e}
+        s.noeuds = {"AB":s.ab,"A": s.a, "B": s.b, "C": s.c, "D": s.d, "E": s.e}
 
+        s.ab.lien.append(s.a)
+        s.a.lien.append(s.ab)
         s.a.lien.append(s.b)
         s.b.lien.append(s.a)
         s.b.lien.append(s.c)
