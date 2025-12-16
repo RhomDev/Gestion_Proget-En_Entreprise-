@@ -169,7 +169,9 @@ def event_outil_panel(event):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 
 
-def Game_screen(screen, pageset, pageget, clock):
+def Game_screen(screen,lang, pageset, pageget, clock):
+    global lg
+    lg=lang
     game_active = True
     game_screen_init(screen)
     while game_active:

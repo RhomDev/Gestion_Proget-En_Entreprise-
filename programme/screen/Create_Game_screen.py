@@ -1,36 +1,55 @@
 import pygame
 import sys,os
+
+from auto_py_to_exe.config import language_hint
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from programme.utils.Object import *
+from programme.utils.Constant import Screen
 
 
 def create_game_screen_init(screen):
     global edit_surname, edit_ip, edit_port, edit_nb_player, btn_valide, btn_cancel, panel_background
 
-    img_btn_std = pygame.image.load("src/img/util/btn_standard.png")
+    img_btn_std = pygame.image.load("../programme/src/img/util/btn_standard.png")
+    img_panel = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
 
-    btn_valide = Button(screen, (screen.get_width()/2,screen.get_height()/2), img_btn_std, 1, "Valide")
-    btn_cancel = Button(screen, ((screen.get_width() / 2)+100, screen.get_height() / 2), img_btn_std, 1, "Cancel")
+    panel_background = Rectangle(screen,((screen.get_width() / 2)-200, (screen.get_height() / 2)-250), (400,500), 1, img=img_panel)
+
+    edit_surname = InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-200),(250,30),text_hint="loggy::edit:surname")
+    edit_ip =InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-150),(250,30),text_hint="loggy::edit:ip")
+    edit_port =InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:port")
+    edit_nb_player =InputBox(screen, lg, ((screen.get_width() / 2), (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:nb_player")
+
+    btn_valide = Button(screen, (screen.get_width()/2,screen.get_height()/2), img_btn_std, 2, lg,"Valide",8)
+    btn_cancel = Button(screen, ((screen.get_width() / 2)+100, (screen.get_height() / 2)+70), img_btn_std, 2,lg, "Cancel",8)
 
 
 def create_game_update():
+    panel_background.update()
     edit_surname.update()
     edit_ip.update()
     edit_port.update()
     edit_nb_player.update()
     btn_valide.update()
     btn_cancel.update()
-    panel_background.update()
 
 def event_create_game(event, page):
+    edit_surname.handle_event(event)
+    edit_ip.handle_event(event)
+    edit_port.handle_event(event)
+    edit_nb_player.handle_event(event)
+
     btn_valide.animation_check_color(pygame.mouse.get_pos())
     btn_valide.event(event, pygame.mouse.get_pos(), lambda : page(1))
     btn_cancel.animation_check_color(pygame.mouse.get_pos())
     btn_cancel.event(event, pygame.mouse.get_pos(), lambda: page(0))
 
 
-def Create_Game_screen(screen, pageset, pageget, clock):
+def Create_Game_screen(screen,lang, pageset, pageget, clock):
+    global lg
+    lg = lang
     game_active = True
     create_game_screen_init(screen)
     while (game_active):
@@ -42,7 +61,7 @@ def Create_Game_screen(screen, pageset, pageget, clock):
                 pygame.quit()
             event_create_game(event, pageset)
 
-        game_active = pageget() == 2
+        game_active = pageget() == Screen.LOBBY.value
 
         clock.tick(60)
         pygame.display.flip()

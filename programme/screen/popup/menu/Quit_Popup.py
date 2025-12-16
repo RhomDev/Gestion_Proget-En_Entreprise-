@@ -6,12 +6,13 @@ from programme.utils.Object import *
 from programme.utils.ouvrier import *
 
 class Quit_Popup(Popup):
-    def __init__(self, screen, position):
+    def __init__(self, screen, language, position):
         Popup.__init__(self, screen)
         self.rect_panel = None
         self.text_panel = None
         self.btn_yes = None
         self.btn_no = None
+        self.language = language
 
         self.width_panel = 300
         self.height_panel = 100
@@ -25,10 +26,10 @@ class Quit_Popup(Popup):
         img_panel = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
 
         self.rect_panel = Rectangle(self.screen,position, (self.width_panel, self.height_panel), img=img_panel)
-        self.text_panel = TextView(self.screen, (position[0]+160,position[1]+15), 2, "Voulez vous vraiment quitter ?",'Black')
+        self.text_panel = TextView(self.screen, (position[0]+160,position[1]+15), 2, "Voulez vous vraiment quitter ?",'Black', language=self.language)
 
-        self.btn_yes = Button(self.screen, (position[0]+40,position[1]-10+int(self.height_panel/2)), img_btn, 2, "Yes", 'Black', 'White')
-        self.btn_no = Button(self.screen, (position[0]+190,position[1]-10+int(self.height_panel/2)), img_btn, 2, "No", 'Black', 'White')
+        self.btn_yes = Button(self.screen, (position[0]+40,position[1]-10+int(self.height_panel/2)), img_btn, 2, self.language,"Yes", 16,'Black', 'White')
+        self.btn_no = Button(self.screen, (position[0]+190,position[1]-10+int(self.height_panel/2)), img_btn, 2, self.language,"No", 16,'Black', 'White')
 
 
     def update(self):

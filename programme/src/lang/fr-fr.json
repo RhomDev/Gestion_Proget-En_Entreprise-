@@ -1,3 +1,6 @@
 {
-
+  "menu::texte:title": "En Entreprise",
+  "menu::btn:start": "Nouvelle Partie",
+  "menu::btn:option": "Option",
+  "menu::btn:exit": "Quitter"
 }

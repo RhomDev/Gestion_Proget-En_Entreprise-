@@ -2,44 +2,35 @@ import pygame
 
 
 class Button:
-    def __init__(
-        self,
-        screen,
-        position,
-        image,
-        scale,
-        text="",
-        color_input=(255, 255, 255),
-        color_input1=(255, 255, 255),
-        position_text=(0, 0),
-    ):
-        self.main_font = pygame.font.SysFont("Arial", 8 * scale)
-        self._input_text = text
-        self._input_color = color_input
-        self._input_color1 = color_input1
-        self.position_text = position_text
+    def __init__(self,screen,position,image,scale,
+                 language=None,text="", police=8,color_input=(255, 255, 255),color_input1=(255, 255, 255),
+                 position_text=(0, 0),):
+
         self.screen = screen
         self.position = position
+        self.main_font = pygame.font.SysFont("Arial", 1*police)
+        self._input_text = text
+        self.language = language
+
+        self.color = color_input
+        self._input_color = color_input
+        self._input_color1 = color_input1
+
+        self.position_text = position_text
 
         # Charger et redimensionner l'image
-        self.image = pygame.transform.scale(
-            image, (int(image.get_width() * scale), int(image.get_height() * scale))
-        )
-        self.rect = pygame.Rect(
-            position, (int(image.get_width() * scale), int(image.get_height() * scale))
-        )
-
-        # Rendu du texte
-        if text != "":
-            self.text = self.main_font.render(self._input_text, True, self._input_color)
-            self.text_rect = self.text.get_rect(center=self.rect.center)
-        else:
-            self.text = text
+        self.image = pygame.transform.scale(image, (int(image.get_width() * scale), int(image.get_height() * scale)))
+        self.rect = pygame.Rect(position, (int(image.get_width() * scale), int(image.get_height() * scale)))
+        self._input_text = text
 
     def update(self):
         self.screen.blit(self.image, self.rect)
-        if self.text != "":
-            self.screen.blit(self.text, self.text_rect)
+        if self._input_text != "":
+            text_input = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+            text = self.main_font.render(text_input, True, self.color)
+            text_rect = text.get_rect(center=self.rect.center)
+
+            self.screen.blit(text, text_rect)
 
     def get_rect(self):
         return self.rect
@@ -69,23 +60,21 @@ class Button:
 
     def change_text(self, text):
         self._input_text = text
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
-        self.text_rect = self.text.get_rect(center=self.rect.center)
 
     def change_color(self, color):
+        self.color = color
+
+    def change_color_input(self, color):
         self._input_color = color
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
+    def change_color_input1(self, color):
+        self._input_color1 = color
 
     def animation_check_color(self, position):
-        if self.text != "":
+        if self._input_text != "":
             if self.rect.collidepoint(position):
-                self.text = self.main_font.render(
-                    self._input_text, True, self._input_color1
-                )
+                self.color = self._input_color1
             else:
-                self.text = self.main_font.render(
-                    self._input_text, True, self._input_color
-                )
+                self.color = self._input_color
 
     def event(self, event, position, function):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -94,39 +83,40 @@ class Button:
 
 
 class TextView:
-    def __init__(
-        self, screen, position, scale, text, color_input, color_input1=(255, 255, 255)
+    def __init__(self, screen, position, scale,
+                 text, color_input,police=8,language=None,
+                 color_input1=(255, 255, 255)
     ):
         self.screen = screen
-        self.main_font = pygame.font.SysFont("Arial", 8 * scale)
+        self.main_font = pygame.font.SysFont("Arial", police)
+        self.position = position
+        self.language=language
         self.rect = pygame.Rect(
             position, (0, 0)
         )  # Rect vide, car TextView n'a pas d'image
         self._input_text = text
+        self.color = color_input
         self._input_color = color_input
         self._input_color1 = color_input1
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
-        self.text_rect = self.text.get_rect(center=position)
+
 
     def update(self):
-        self.screen.blit(self.text, self.text_rect)
+        text_input = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+        text = self.main_font.render(text_input, True, self.color)
+        text_rect = text.get_rect(center=self.position)
+        self.screen.blit(text, text_rect)
 
     def change_text(self, text):
         self._input_text = text
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
-        self.text_rect = self.text.get_rect(center=self.position_text)
 
     def change_color(self, color):
         self._input_color = color
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
 
     def animation_check_color(self, position):
         if self.rect.collidepoint(position):
-            self.text = self.main_font.render(
-                self._input_text, True, self._input_color1
-            )
+            self.color = self._input_color1
         else:
-            self.text = self.main_font.render(self._input_text, True, self._input_color)
+            self.color = self._input_color
 
 
 class Rectangle:
@@ -244,7 +234,7 @@ class Rectangle:
             )
 
 class InputBox:
-    def __init__(self,screen , position, dimension, font_size=32):
+    def __init__(self,screen,lang , position, dimension, font_size=32, text_hint=""):
         self.rect = pygame.Rect(position, dimension)
         self.screen = screen
         self.color = pygame.Color('lightskyblue3')
@@ -252,8 +242,10 @@ class InputBox:
         self.font = pygame.font.Font(None, font_size)
         self.active = False
         self.text_color = pygame.Color('black')
-        self.active_color = pygame.Color('dodgerblue2')
-        self.inactive_color = pygame.Color('lightskyblue3')
+        self.active_color = pygame.Color('gray')
+        self.inactive_color = pygame.Color('black')
+
+        self.hint = TextView(screen,position,1,text_hint,'gray',police=font_size, language=lang)
 
     def handle_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -272,6 +264,9 @@ class InputBox:
                 else:
                     self.text += event.unicode
 
+    def get_text(self):
+        return self.text
+
     def update(self):
         pygame.draw.rect(self.screen, self.color, self.rect, 2)
         text_surface = self.font.render(self.text, True, self.text_color)
@@ -279,3 +274,5 @@ class InputBox:
         if self.active:
             cursor = pygame.Rect(self.rect.x + 5 + text_surface.get_width(), self.rect.y + 5, 2, self.rect.height - 10)
             pygame.draw.rect(self.screen, self.text_color, cursor)
+        else:
+            self.hint.update()
