@@ -1,7 +1,7 @@
 import pygame
 import sys,os
 
-from programme.main import change_page, set_client, set_server, get_page
+from programme.main import set_client, set_server, get_page
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -36,10 +36,10 @@ def create_game_screen_init(screen):
     edit_port =InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:port")
     edit_nb_player =InputBox(screen, lg, ((screen.get_width() / 2), (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:nb_player")
 
-    btn_valide = Button(screen, ((screen.get_width()/2)-100,screen.get_height()/2), img_btn_std, 2, lg,"loggy::btn:valid",16)
+    btn_valide = Button(screen, ((screen.get_width()/2)-100,screen.get_height()/2), img_btn_std, 2, lg,"loggy::btn:valid",16,color_input='Black',color_input1='Red' )
     btn_server = Button(screen, ((screen.get_width() / 2) - 100, (screen.get_height() / 2)+50), img_btn_std, 2, lg,
-                        "loggy::btn:server", 16)
-    btn_cancel = Button(screen, ((screen.get_width() / 2), (screen.get_height() / 2)), img_btn_std, 2,lg, "loggy::btn:cancel",16)
+                        "loggy::btn:server", 16,color_input='Black',color_input1='Red')
+    btn_cancel = Button(screen, ((screen.get_width() / 2), (screen.get_height() / 2)), img_btn_std, 2,lg, "loggy::btn:cancel",16,color_input='Black',color_input1='Red')
 
 
 def create_game_update():
@@ -53,8 +53,10 @@ def create_game_update():
     btn_server.update()
 
 def create_server(page):
+    print(edit_port.get_text())
     if is_valid_port(edit_port.get_text()):
         serveur = Serveur(port=int(edit_port.get_text()))
+        print("hello")
         serveur.start()
         set_server(serveur)
         page(Screen.GAME.value)
@@ -82,7 +84,7 @@ def event_create_game(event,page):
     btn_valide.animation_check_color(pygame.mouse.get_pos())
     btn_valide.event(event, pygame.mouse.get_pos(), lambda: joint_server(page))
     btn_cancel.animation_check_color(pygame.mouse.get_pos())
-    btn_cancel.event(event, pygame.mouse.get_pos(), lambda: change_page(Screen.MENU))
+    btn_cancel.event(event, pygame.mouse.get_pos(), lambda: page(Screen.MENU.value))
     btn_server.animation_check_color(pygame.mouse.get_pos())
     btn_server.event(event, pygame.mouse.get_pos(), lambda: create_server(page))
 

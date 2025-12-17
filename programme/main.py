@@ -33,6 +33,7 @@ def get_server():
 
 def change_page(page):
     global screen_page
+    print(f"change_page : {page}")
     screen_page = page
 
 def get_page():
