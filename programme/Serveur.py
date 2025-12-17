@@ -127,7 +127,12 @@ class Client(threading.Thread):
         self.file = "data_client.json"
 
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client_socket.connect((self.host, self.port))
+        try:
+            self.client_socket.connect((self.host, self.port))
+            print(f"Connecté au serveur {self.host}:{self.port}")
+        except Exception as e:
+            print(f"Erreur de connexion au serveur {self.host}:{self.port} : {e}")
+            raise
 
         self.receive_thread = threading.Thread(target=self.receive_data, daemon=True)
         self.receive_thread.start()
@@ -142,15 +147,15 @@ class Client(threading.Thread):
                 self.update_shared_data(data)
                 self.update_json()
 
-            except (ConnectionResetError, json.JSONDecodeError):
+            except (ConnectionResetError, json.JSONDecodeError) as e:
+                print(f"Erreur lors de la réception des données : {e}")
                 break
 
-    def send_data(self):
+    def send_data(self, data):
         try:
-            data = self.get_shared_data()
-            self.client_socket.send(data)
-        except (ConnectionResetError, BrokenPipeError):
-            print("Erreur lors de l'envoi des données")
+            self.client_socket.send(data.encode())
+        except (ConnectionResetError, BrokenPipeError) as e:
+            print(f"Erreur lors de l'envoi des données : {e}")
 
     def stop(self):
         self.running = False
@@ -162,7 +167,7 @@ class Client(threading.Thread):
 
     def update_shared_data(self, data):
         with self.lock:
-            self.shared_data = data
+            self.shared_data = json.loads(data)
 
     def update_json(self):
         with open(self.file, "w+", encoding="utf-8") as file:

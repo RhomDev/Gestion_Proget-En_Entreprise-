@@ -5,9 +5,10 @@
   "menu::btn:exit": "Quitter",
 
   "loggy::edit:surname": "surnom",
-  "loggy::edit:id": "Id du Serveur",
+  "loggy::edit:ip": "Id du Serveur",
   "loggy::edit:port":"Port",
   "loggy::edit:nb_player": "Nb de joueur",
   "loggy::btn:valid": "Valider",
-  "loggy::btn:cancel": "Annuler"
+  "loggy::btn:cancel": "Annuler",
+  "loggy::btn:server": "Serveur"
 }
