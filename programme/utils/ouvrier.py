@@ -1,11 +1,9 @@
 from math import sqrt
-from tkinter.constants import FALSE, TRUE
-
 import pygame
 
 
 class Ouvrier:
-    def __init__(s, fenetre, objectif, map):
+    def __init__(s, fenetre,  map):
         s.state = 0
         s.etat = ["Fixe", "Cour"]
         s.image = pygame.image.load("../programme/src/img/perso/homme.bmp")
@@ -15,27 +13,28 @@ class Ouvrier:
         s.width = fenetre.get_size()[0]
         s.heigth = fenetre.get_size()[1]
         s.centre = (s.width / 2, s.heigth / 2)
-        s.pose = [s.centre[0], s.centre[1]]
+
         s.i = 0
         s.k = 0
-        s.obj = s.pose
-        s.objectif = objectif
+
         s.scale = 0.6
         s.map = map
-        s.node = map.nodes.a
+
         s.nodes = map.nodes
-        s.dest = map.nodes.noeuds[objectif].data
+        s.objectif = "AB"
+        s.dest = map.nodes.noeuds[s.objectif].data
+        s.node = map.nodes.ab
+        s.pose = s.node.data
+        s.obj = s.pose
+
 
     def Set_Objectif(s, objectif):
-        s.node = s.map.nodes.noeuds[s.objectif]
-        for noeud in s.nodes.noeuds.values():
-            noeud.visited = FALSE
-        s.node.visited = TRUE
-        s.objectif = objectif
-        s.dest = s.map.nodes.noeuds[objectif].data
-        s.node = s.node.nexte(s.dest)
-        s.obj = s.node.data
-        print("Objectif :", s.node.data, s.pose)
+        print(objectif)
+        bool = s.nodes.Chemin(objectif, s.node.name)
+        if bool:
+            s.obj = s.node.pointe.data
+            s.objectif = objectif
+            s.dest = s.nodes.noeuds[objectif].data
 
     def Draw(s):
         k = s.k
@@ -57,14 +56,16 @@ class Ouvrier:
             s.fenetre.blit(image_scale, position)
 
     def Position(s):
-        s.obj = s.node.data
-        print(s.pose)
-        if s.pose[0] != s.obj[0] or s.pose[1] != s.obj[1]:
+
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
             norm = sqrt(x**2 + y**2)
+            if norm == 0:
+                s.state = 0
+                return
             x = x / norm
             y = y / norm
+
             s.state = 1
             vitesse = 5
 
@@ -72,19 +73,18 @@ class Ouvrier:
             s.pose[1] = s.pose[1] + y * vitesse
 
             if norm < vitesse + 1:
-                if s.node.name == s.objectif:
+                if s.node.name == s.objectif or s.node is None:
                     s.pose[0] = s.obj[0]
                     s.pose[1] = s.obj[1]
                     s.state = 0
-                    for noeud in s.nodes.noeuds.values():
-                        noeud.visited = FALSE
                 else:
-                    s.node = s.node.nexte(s.dest)
+                    if s.node.pointe is not None:
+                        s.node = s.node.pointe
+                    else:
+                        s.node.pointe = s.dest
+                    s.obj = s.node.data
 
-            if x < 0:
-                s.flip = 1
-            else:
-                s.flip = 0
+            s.flip = 1 if x < 0 else 0
 
     def update(s):
         s.Draw()

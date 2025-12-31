@@ -8,95 +8,119 @@ from programme.utils.ouvrier import *
 
 def game_screen_init(screen):
     global \
-        panel_outil, \
-        tache_bouton, \
-        deplacement_bouton, \
-        mission_bouton, \
-        hint_panel, \
-        var_open_panel, \
-        bob, \
-        mapes, \
-        ObjA, \
-        ObjD, \
-        ObjC
+        panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes, \
+        ObjA,ObjB,ObjD,ObjC,ObjE, \
+        panel_deplacement,menu_Deroulent,Up,Down
+    panel_deplacement = True
     var_open_panel = True
+<<<<<<< HEAD
     img_background_outil = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("../programme/src/img/util/btn_standard.png")
     img_hint_panel = pygame.image.load("../programme/src/img/game_img/hint_panel.png")
+=======
+    img_background_outil = pygame.image.load( "programme/src/img/game_img/background_btn_option.jpg")
+    img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
+    img_hint_panel = pygame.image.load("programme/src/img/game_img/hint_panel.png")
+>>>>>>> 39c970aacfbd4bd8b28f6efb05c3419fc399042a
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
 
     align_left = 70
-
+    sHeight = screen.get_height()
+    sWidth = screen.get_width()
     panel_outil = Rectangle(
         screen,
-        (0, screen.get_height() - 140),
-        dim=(screen.get_width(), 140),
+        (0, sHeight - 140),
+        dim=(sWidth, 140),
         img=img_background_outil,
         scale=1,
     )
 
     tache_bouton = Button(
         screen,
-        (align_left, screen.get_height() - 110),
+        (align_left, sHeight - 110),
         img_bouton_standard,
         4,
         text="Tache",
-        color_input="Black",
-        color_input1="White",
     )
     deplacement_bouton = Button(
         screen,
-        (align_left + 230, screen.get_height() - 110),
+        (align_left + 230 * 2, sHeight - 110),
         img_bouton_standard,
         4,
         text="Deplacement",
-        color_input="Black",
-        color_input1="White",
     )
     mission_bouton = Button(
         screen,
-        (align_left + 230 * 2, screen.get_height() - 110),
+        (align_left + 230, sHeight - 110),
         img_bouton_standard,
         4,
         text="Mission",
-        color_input="Black",
-        color_input1="White",
     )
     ObjA = Button(
         screen,
-        (align_left + 230 * 2, screen.get_height() - 200),
+        (0,0),
         img_bouton_standard,
         4,
         text="Objectif A",
-        color_input="Black",
-        color_input1="White",
+    )
+    ObjB = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        4,
+        text="Objectif B",
     )
     ObjD = Button(
         screen,
-        (align_left + 230 * 2, screen.get_height() - 300),
+        (0,0),
         img_bouton_standard,
         4,
         text="Objectif D",
-        color_input="Black",
-        color_input1="White",
     )
     ObjC = Button(
         screen,
-        (align_left + 230 * 2, screen.get_height() - 400),
+        (0,0),
         img_bouton_standard,
         4,
         text="Objectif C",
-        color_input="Black",
-        color_input1="White",
     )
-    hint_panel = Button(
-        screen, (screen.get_width() - 80, screen.get_height() - 170), img_hint_panel, 1
+    ObjE = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        4,
+        text="Objectif E",
     )
+    Up = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        2,
+        text="↑",
+        police_taille=2,
+    )
+    Down = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        2,
+        text="↓",
+        police_taille=2,
+    )
+    hint_panel = Button(screen, (sWidth - 80, sHeight - 170), img_hint_panel, 1)
 
     mapes = Map(screen, 1)
-    bob = Ouvrier(screen, "D", mapes)
+    bob = Ouvrier(screen, mapes)
+
+    menu_Deroulent = Menu_Deroulent(
+        [ObjA, ObjB, ObjC, ObjD, ObjE],#bouton qu'on ici
+        (550, 480),(150,300),#position du coin bas gauche !! et taille du menu
+        Up,#bouton up
+        Down,#bouton down
+        nombre_bouton_affiche=4# nmobre de boutons à afficher dans le menu
+    )
 
 
 def game_update():
@@ -106,12 +130,11 @@ def game_update():
     bob.update()
 
     if var_open_panel:
-        ObjA.update()
-        ObjD.update()
-        ObjC.update()
         tache_bouton.update()
         deplacement_bouton.update()
         mission_bouton.update()
+        if panel_deplacement:
+            menu_Deroulent.update()
 
 
 def close_panel():
@@ -139,13 +162,16 @@ def open_panel():
     img_button_hint_panel = pygame.transform.rotate(hint_panel.get_image(), 180)
     hint_panel.change_image(img_button_hint_panel)
     # Déplacer le bouton (exemple : vers le haut)
-    hint_panel.change_position(
-        (hint_panel.get_position()[0], screen.get_height() - 170)
-    )
+    hint_panel.change_position((hint_panel.get_position()[0], screen.get_height() - 170))
 
     # Changer la taille et la position du panel
     panel_outil.change_dim((panel_outil.get_rect().width, 140))
     panel_outil.change_position((0, screen.get_height() - 140))
+
+
+def toggle_deplacement():  # menu déroulant déplacement
+    global panel_deplacement
+    panel_deplacement = not panel_deplacement
 
 
 def event_outil_panel(event):
@@ -153,15 +179,24 @@ def event_outil_panel(event):
         hint_panel.event(event, pygame.mouse.get_pos(), close_panel)
         tache_bouton.animation_check_color(pygame.mouse.get_pos())
         tache_bouton.event(event, pygame.mouse.get_pos(), lambda: print("tache"))
-        ObjA.animation_check_color(pygame.mouse.get_pos())
-        ObjA.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("A"))
-        ObjD.animation_check_color(pygame.mouse.get_pos())
-        ObjD.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("D"))
-        ObjC.animation_check_color(pygame.mouse.get_pos())
-        ObjC.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("C"))
+        if panel_deplacement:
+            Up.animation_check_color(pygame.mouse.get_pos())
+            Up.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(-1))
+            Down.animation_check_color(pygame.mouse.get_pos())
+            Down.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(1))
+            ObjA.animation_check_color(pygame.mouse.get_pos())
+            ObjA.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("A"))
+            ObjB.animation_check_color(pygame.mouse.get_pos())
+            ObjB.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("B"))
+            ObjD.animation_check_color(pygame.mouse.get_pos())
+            ObjD.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("D"))
+            ObjC.animation_check_color(pygame.mouse.get_pos())
+            ObjC.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("C"))
+            ObjE.animation_check_color(pygame.mouse.get_pos())
+            ObjE.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("E"))
         deplacement_bouton.animation_check_color(pygame.mouse.get_pos())
         deplacement_bouton.event(
-            event, pygame.mouse.get_pos(), lambda: print("deplacement")
+            event, pygame.mouse.get_pos(), lambda: toggle_deplacement()
         )
         mission_bouton.animation_check_color(pygame.mouse.get_pos())
         mission_bouton.event(event, pygame.mouse.get_pos(), lambda: print("mission"))
