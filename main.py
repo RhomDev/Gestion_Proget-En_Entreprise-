@@ -21,7 +21,7 @@ def get_page():
 if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((1920 , 1080))
     pygame.display.set_caption("En Entreprise !")
 
     running = True

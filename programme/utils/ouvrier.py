@@ -6,7 +6,8 @@ class Ouvrier:
     def __init__(s, fenetre,  map):
         s.state = 0
         s.etat = ["Fixe", "Cour"]
-        s.image = pygame.image.load("programme/src/img/perso/homme.bmp")
+        s.image = pygame.image.load("programme/src/img/perso/homme.png")
+        s.width_image, s.heigth_image = s.image.get_size()[0] // 3, s.image.get_size()[1] // 3
         s.image_flip = pygame.transform.flip(s.image, True, False)
         s.flip = 0
         s.fenetre = fenetre
@@ -21,9 +22,9 @@ class Ouvrier:
         s.map = map
 
         s.nodes = map.nodes
-        s.objectif = "AB"
+        s.objectif = "EntréeBis"
         s.dest = map.nodes.noeuds[s.objectif].data
-        s.node = map.nodes.ab
+        s.node = map.nodes.EntreeBis
         s.pose = s.node.data
         s.obj = s.pose
 
@@ -47,15 +48,17 @@ class Ouvrier:
         images = [s.image, s.image_flip]
 
         if s.etat[state] == "Cour":
-            img = images[s.flip].subsurface(((i % 8) * 128, 0, 120, 160))
+            img = images[s.flip].subsurface(((i % 3) * s.width_image, s.width_image, s.width_image, s.heigth_image))
             image_scale = pygame.transform.scale_by(img, s.scale)
             s.fenetre.blit(image_scale, position)
         elif s.etat[state] == "Fixe":
-            img = images[0].subsurface((128 * 3, 163 * 2, 128, 160))
+            img = images[0].subsurface((0, 0, s.width_image, s.heigth_image))
             image_scale = pygame.transform.scale_by(img, s.scale)
             s.fenetre.blit(image_scale, position)
 
     def Position(s):
+            if pygame.mouse.get_pressed()[0]:
+                print(pygame.mouse.get_pos())
 
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
