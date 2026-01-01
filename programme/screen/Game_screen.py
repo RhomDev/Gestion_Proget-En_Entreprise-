@@ -14,7 +14,8 @@ def game_screen_init(screen):
     global \
         panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes, \
         GoEntre,GoElectric ,GoTravail,GoMange,\
-        panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente
+        panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_Mission,\
+        Up_mission,Down_mission
     panel_deplacement = True
     var_open_panel = True
     img_background_outil = pygame.image.load( "programme/src/img/game_img/background_btn_option.jpg")
@@ -130,7 +131,7 @@ def game_screen_init(screen):
         (1650, 900),(200,400),#position du coin bas gauche !! et taille du menu
         up=Up,#bouton up
         down=Down,#bouton down
-        nombre_bouton_affiche=4,# nmobre de boutons à afficher dans le menu
+        nombre_bouton_affiche=3,# nmobre de boutons à afficher dans le menu
         police_taille=30
     )
 
@@ -150,6 +151,35 @@ def game_screen_init(screen):
     )
 
 
+
+    Répondre_aux_mails = Button(screen, (125,125),img_bouton_standard,1,text="Répondre aux mails") 
+    Réunion_improvisée = Button(screen, (125,125),img_bouton_standard,1,text="Réunion improvisée")
+    Rapport_express = Button(screen, (125,125),img_bouton_standard,1,text="Rapport express")
+
+    Analyse_marché = Button(screen, (125,125),img_bouton_standard,1,text="Analyse marché")
+    Plan_stratégique = Button(screen, (125,125),img_bouton_standard,1,text="Plan stratégique")
+    Présentation_finale = Button(screen, (125,125),img_bouton_standard,1,text="Présentation finale")
+
+    Brainstorming = Button(screen,(0,0),img_bouton_standard,1,text="Brainstorming")
+    Design_prototype = Button(screen, (125,125),img_bouton_standard,1,text="Design prototype")
+    Pitch_client = Button(screen, (125,125),img_bouton_standard,1,text="Pitch client")
+    Up_mission = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
+    Down_mission = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
+
+    Liste_missions=[Répondre_aux_mails,Réunion_improvisée,Rapport_express,
+                    Analyse_marché,Plan_stratégique,Présentation_finale,
+                    Brainstorming,Design_prototype,Pitch_client]
+    
+    Menu_Mission=Menu_Deroulent(
+        Liste_missions,
+        (319, 929),(300,300),
+        up=Up_mission,
+        down=Down_mission,
+        nombre_bouton_affiche=3,
+        police_taille=30
+    )
+
+
 def game_update():
     mapes.update()
     panel_outil.update()
@@ -164,6 +194,7 @@ def game_update():
         mission_bouton.update()
         if panel_deplacement:
             menu_Deroulent.update()
+            Menu_Mission.update()
 
 
 def close_panel():
@@ -218,6 +249,10 @@ def event_outil_panel(event):
             Up.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(-1))
             Down.animation_check_color(pygame.mouse.get_pos())
             Down.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(1))
+            Up_mission.animation_check_color(pygame.mouse.get_pos())
+            Up_mission.event(event, pygame.mouse.get_pos(), lambda: Menu_Mission.deroule(-1))
+            Down_mission.animation_check_color(pygame.mouse.get_pos())
+            Down_mission.event(event, pygame.mouse.get_pos(), lambda: Menu_Mission.deroule(1))
             GoEntre.animation_check_color(pygame.mouse.get_pos())
             GoEntre.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Entrée"))
             GoElectric.animation_check_color(pygame.mouse.get_pos())
