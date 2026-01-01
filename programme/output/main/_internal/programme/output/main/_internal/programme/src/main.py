@@ -1,6 +1,6 @@
 import pygame
-import programme.screen.Menu_screen as menu_screen
-import programme.screen.Game_screen as game_screen
+import screen.Menu_screen as menu_screen
+import screen.Game_screen as game_screen
 
 def evnt_fullscreen():
     global fullscreen, screen
@@ -21,7 +21,7 @@ def get_page():
 if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((1920 , 1080))
     pygame.display.set_caption("En Entreprise !")
 
     running = True

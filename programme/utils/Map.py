@@ -16,7 +16,11 @@ class Map:
     def __init__(s, screen, choix):
         s.screen = screen
         s.resolution = (s.screen.get_width(), s.screen.get_height())
+<<<<<<< HEAD:programme/utils/map.py
         s.image = pygame.image.load(f"../programme/src/img/map/map{choix}.png")
+=======
+        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3:programme/utils/Map.py
         s.image = pygame.transform.scale(s.image, s.resolution)
         s.nodes = Nodes()
 
@@ -24,7 +28,11 @@ class Map:
         s.screen.blit(s.image, (0, 0))
 
     def Set_Map(s, choix):
+<<<<<<< HEAD:programme/utils/map.py
         s.image = pygame.image.load(f"../programme/src/img/map/map{choix}.png")
+=======
+        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3:programme/utils/Map.py
         s.image = pygame.transform.scale(s.image, s.resolution)
 
     def update(s):
@@ -43,25 +51,36 @@ class Node:
 
 class Nodes:
     def __init__(s):
-        s.ab = Node([167, 159], "AB")
-        s.a = Node([162, 159], "A")
-        s.b = Node([167, 292], "B")
-        s.c = Node([354, 292], "C")
-        s.e = Node([420, 292], "E")
-        s.d = Node([357, 244], "D")
-        s.noeuds = {"AB":s.ab,"A": s.a, "B": s.b, "C": s.c, "D": s.d, "E": s.e}
+        s.EntreeBis = Node([1294,655], "EntréeBis")
+        s.Entree = Node([1293,654], "Entrée")
+        s.a = Node([1390,555], "A")
+        s.electric = Node([1563, 372], "Electricité")
+        s.b = Node([1042, 406], "B")
+        s.mange = Node([1134, 264], "Mange")
+        s.ba = Node([885, 328], "BA")
+        s.travail = Node([752, 393], "Travail")
 
-        s.ab.lien.append(s.a)
-        s.a.lien.append(s.ab)
-        s.a.lien.append(s.b)
-        s.b.lien.append(s.a)
-        s.b.lien.append(s.c)
-        s.c.lien.append(s.b)
-        s.c.lien.append(s.d)
-        s.d.lien.append(s.c)
+        s.noeuds = {"EntréeBis": s.EntreeBis, "Entrée":s.Entree,
+                    "A": s.a, "Electricité": s.electric,"B": s.b, "Mange": s.mange, "BA": s.ba, "Travail": s.travail}
 
-        s.e.lien.append(s.c)
-        s.c.lien.append(s.e)
+        s.EntreeBis.lien.append(s.Entree)
+        s.Entree.lien.append(s.EntreeBis)
+        s.Entree.lien.append(s.a)
+        s.a.lien.append(s.Entree)
+        s.a.lien.append(s.electric)
+        s.electric.lien.append(s.a)
+
+        s.Entree.lien.append(s.b)
+        s.b.lien.append(s.Entree)
+        s.b.lien.append(s.mange)
+        s.mange.lien.append(s.b)
+        s.b.lien.append(s.ba)
+        s.ba.lien.append(s.b)
+        s.ba.lien.append(s.travail)
+        s.travail.lien.append(s.ba)
+
+
+
 
     def Chemin(s, deb, fin):
         if deb == fin:

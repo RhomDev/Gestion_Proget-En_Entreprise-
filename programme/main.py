@@ -1,4 +1,5 @@
 import pygame
+<<<<<<< HEAD
 import os
 import sys
 
@@ -35,6 +36,23 @@ def change_page(page):
     global screen_page
     print(f"change_page : {page}")
     screen_page = page
+=======
+import screen.Menu_screen as menu_screen
+import screen.Game_screen as game_screen
+
+def evnt_fullscreen():
+    global fullscreen, screen
+    fullscreen = not fullscreen
+    if fullscreen:
+        screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
+    else:
+        screen = pygame.display.set_mode((800,600))
+
+def change_page(page):
+    global screen_page
+    screen_page = page
+    print("Change page")
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
 def get_page():
     return screen_page
@@ -42,6 +60,7 @@ def get_page():
 if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
+<<<<<<< HEAD
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption("En Entreprise !")
 
@@ -67,3 +86,23 @@ if __name__ == '__main__':
             create_game_screen.Create_Game_screen(screen, language, change_page, get_page, clock)
 
     pygame.quit()
+=======
+    screen = pygame.display.set_mode((1920 , 1080))
+    pygame.display.set_caption("En Entreprise !")
+
+    running = True
+    fullscreen = False
+    screen_page = 0
+    clock = pygame.time.Clock()
+
+    while running:
+        if screen_page == 0:
+            menu_screen.menu_screen(screen, change_page, get_page, clock)
+        if screen_page == 1:
+            game_screen.Game_screen(screen, change_page, get_page, clock)
+        if screen_page == 2:
+            print("Option")
+            change_page(0)
+
+    pygame.quit()
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3

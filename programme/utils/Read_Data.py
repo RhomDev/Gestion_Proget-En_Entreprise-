@@ -1,6 +1,4 @@
 import json
-import os
-
 
 # la sortie est un dictoinnaire soit: data = read_json("file.json")
 # data["nom_variable"]

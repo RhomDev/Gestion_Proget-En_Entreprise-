@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 import sys,os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from programme.utils.Popup import Popup
 from programme.utils.Object import *
 from programme.utils.ouvrier import *
+=======
+import pygame
+from utils.Popup import Popup
+from utils.Object import *
+from player.ouvrier import *
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
 class Quit_Popup(Popup):
     def __init__(self, screen, language, position):
@@ -22,8 +29,13 @@ class Quit_Popup(Popup):
         self.render(position)
 
     def render(self,position):
+<<<<<<< HEAD
         img_btn = pygame.image.load("../programme/src/img/util/btn_standard.png")
         img_panel = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
+=======
+        img_btn = pygame.image.load("src/img/util/btn_standard.png")
+        img_panel = pygame.image.load("src/img/game_img/background_btn_option.jpg")
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
         self.rect_panel = Rectangle(self.screen,position, (self.width_panel, self.height_panel), img=img_panel)
         self.text_panel = TextView(self.screen, (position[0]+160,position[1]+15), 2, "Voulez vous vraiment quitter ?",'Black', language=self.language)

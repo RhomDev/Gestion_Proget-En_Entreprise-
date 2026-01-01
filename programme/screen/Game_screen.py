@@ -1,18 +1,30 @@
+<<<<<<< HEAD
 import sys,os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from programme.utils.Object import *
 from programme.utils.map import *
 from programme.utils.ouvrier import *
+=======
+from utils.Object import *
+from utils.Map import *
+from player.ouvrier import *
+from utils.Read_Data import read_json
+
+
+
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
 
 def game_screen_init(screen):
     global \
         panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes, \
-        ObjA,ObjB,ObjD,ObjC,ObjE, \
-        panel_deplacement,menu_Deroulent,Up,Down
+        GoEntre,GoElectric ,GoTravail,GoMange,\
+        panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_Mission,\
+        Up_mission,Down_mission
     panel_deplacement = True
     var_open_panel = True
+<<<<<<< HEAD
 <<<<<<< HEAD
     img_background_outil = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("../programme/src/img/util/btn_standard.png")
@@ -22,6 +34,12 @@ def game_screen_init(screen):
     img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
     img_hint_panel = pygame.image.load("programme/src/img/game_img/hint_panel.png")
 >>>>>>> 39c970aacfbd4bd8b28f6efb05c3419fc399042a
+=======
+    img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
+    img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
+    img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
+    img_bar = pygame.image.load("src/img/game_img/bar_life.png")
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
@@ -36,6 +54,9 @@ def game_screen_init(screen):
         img=img_background_outil,
         scale=1,
     )
+
+    desciprtion_data = read_json("src/json/Description.json")
+    print(desciprtion_data["GoEntrée"][1])
 
     tache_bouton = Button(
         screen,
@@ -58,40 +79,42 @@ def game_screen_init(screen):
         4,
         text="Mission",
     )
-    ObjA = Button(
+    GoEntre = Button(
         screen,
         (0,0),
         img_bouton_standard,
         4,
-        text="Objectif A",
+        text="Entrée",
+        function=lambda: description_bouton_update(desciprtion_data["GoEntrée"],pos=(1563,32),dim=(300,230),police_taille=24),
+
     )
-    ObjB = Button(
+    GoElectric = Button(
         screen,
         (0,0),
         img_bouton_standard,
         4,
-        text="Objectif B",
+        text="Electricité",
+        function=lambda: description_bouton_update(desciprtion_data["GoElectric"],pos=(1563,32),dim=(300,230),police_taille=24),
+
     )
-    ObjD = Button(
+
+    GoTravail = Button(
         screen,
         (0,0),
         img_bouton_standard,
         4,
-        text="Objectif D",
+        text="Travail",
+        function=lambda: description_bouton_update(desciprtion_data["GoTravail"],pos=(1563,32),dim=(300,230),police_taille=24),
+
     )
-    ObjC = Button(
+    GoMange = Button(
         screen,
         (0,0),
         img_bouton_standard,
         4,
-        text="Objectif C",
-    )
-    ObjE = Button(
-        screen,
-        (0,0),
-        img_bouton_standard,
-        4,
-        text="Objectif E",
+        text="Mange",
+        function=lambda: description_bouton_update(desciprtion_data["GoMange"],pos=(1563,32),dim=(300,230),police_taille=24),
+
     )
     Up = Button(
         screen,
@@ -109,17 +132,69 @@ def game_screen_init(screen):
         text="↓",
         police_taille=2,
     )
+    Energie = barre_de_vie(screen, (63,15), (300,30), scale=1)
+    Energie.set_value(0.25)
+    Stress = barre_de_vie(screen, (63,75), (300,30), scale=1,color2=(127,0,255))
+    Stress.set_value(0.60)
+
+    description_bouton = Button(screen, (125,125),img_bouton_standard,3,text="")
+
     hint_panel = Button(screen, (sWidth - 80, sHeight - 170), img_hint_panel, 1)
 
     mapes = Map(screen, 1)
     bob = Ouvrier(screen, mapes)
 
     menu_Deroulent = Menu_Deroulent(
-        [ObjA, ObjB, ObjC, ObjD, ObjE],#bouton qu'on ici
-        (550, 480),(150,300),#position du coin bas gauche !! et taille du menu
-        Up,#bouton up
-        Down,#bouton down
-        nombre_bouton_affiche=4# nmobre de boutons à afficher dans le menu
+        [GoEntre, GoElectric, GoTravail, GoMange],#bouton qu'on ici
+        (1650, 900),(200,400),#position du coin bas gauche !! et taille du menu
+        up=Up,#bouton up
+        down=Down,#bouton down
+        nombre_bouton_affiche=3,# nmobre de boutons à afficher dans le menu
+        police_taille=30
+    )
+
+
+    
+    Liste_mission = Button(screen,(0,0),img_bouton_standard,1,text="Liste D'attente", police_taille=3)
+    mission1 = Button(screen, (125,125),img_bouton_standard,1,text="mission1")
+    mission2 = Button(screen, (125,125),img_bouton_standard,1,text="mission2")
+    mission3 = Button(screen, (125,125),img_bouton_standard,1,text="mission3")
+    Liste_Attente=[mission1,mission2,mission3]
+    Menu_Liste_Attente= Menu_Deroulent(
+        Liste_Attente,
+        (63,560),(180,250),
+        up=Liste_mission,
+        nombre_bouton_affiche=3,
+        police_taille=24
+    )
+
+
+
+    Répondre_aux_mails = Button(screen, (125,125),img_bouton_standard,1,text="Répondre aux mails") 
+    Réunion_improvisée = Button(screen, (125,125),img_bouton_standard,1,text="Réunion improvisée")
+    Rapport_express = Button(screen, (125,125),img_bouton_standard,1,text="Rapport express")
+
+    Analyse_marché = Button(screen, (125,125),img_bouton_standard,1,text="Analyse marché")
+    Plan_stratégique = Button(screen, (125,125),img_bouton_standard,1,text="Plan stratégique")
+    Présentation_finale = Button(screen, (125,125),img_bouton_standard,1,text="Présentation finale")
+
+    Brainstorming = Button(screen,(0,0),img_bouton_standard,1,text="Brainstorming")
+    Design_prototype = Button(screen, (125,125),img_bouton_standard,1,text="Design prototype")
+    Pitch_client = Button(screen, (125,125),img_bouton_standard,1,text="Pitch client")
+    Up_mission = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
+    Down_mission = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
+
+    Liste_missions=[Répondre_aux_mails,Réunion_improvisée,Rapport_express,
+                    Analyse_marché,Plan_stratégique,Présentation_finale,
+                    Brainstorming,Design_prototype,Pitch_client]
+    
+    Menu_Mission=Menu_Deroulent(
+        Liste_missions,
+        (319, 929),(300,300),
+        up=Up_mission,
+        down=Down_mission,
+        nombre_bouton_affiche=3,
+        police_taille=30
     )
 
 
@@ -128,13 +203,16 @@ def game_update():
     panel_outil.update()
     hint_panel.update()
     bob.update()
-
+    Energie.update()
+    Stress.update()
+    Menu_Liste_Attente.update()
     if var_open_panel:
         tache_bouton.update()
         deplacement_bouton.update()
         mission_bouton.update()
         if panel_deplacement:
             menu_Deroulent.update()
+            Menu_Mission.update()
 
 
 def close_panel():
@@ -173,6 +251,11 @@ def toggle_deplacement():  # menu déroulant déplacement
     global panel_deplacement
     panel_deplacement = not panel_deplacement
 
+def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3):
+    description_bouton.change_text(texte)
+    description_bouton.change_position(pos)
+    description_bouton.change_dim(dim, police_taille)
+    description_bouton.update()
 
 def event_outil_panel(event):
     if var_open_panel:
@@ -184,22 +267,24 @@ def event_outil_panel(event):
             Up.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(-1))
             Down.animation_check_color(pygame.mouse.get_pos())
             Down.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(1))
-            ObjA.animation_check_color(pygame.mouse.get_pos())
-            ObjA.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("A"))
-            ObjB.animation_check_color(pygame.mouse.get_pos())
-            ObjB.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("B"))
-            ObjD.animation_check_color(pygame.mouse.get_pos())
-            ObjD.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("D"))
-            ObjC.animation_check_color(pygame.mouse.get_pos())
-            ObjC.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("C"))
-            ObjE.animation_check_color(pygame.mouse.get_pos())
-            ObjE.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("E"))
+            Up_mission.animation_check_color(pygame.mouse.get_pos())
+            Up_mission.event(event, pygame.mouse.get_pos(), lambda: Menu_Mission.deroule(-1))
+            Down_mission.animation_check_color(pygame.mouse.get_pos())
+            Down_mission.event(event, pygame.mouse.get_pos(), lambda: Menu_Mission.deroule(1))
+            GoEntre.animation_check_color(pygame.mouse.get_pos())
+            GoEntre.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Entrée"))
+            GoElectric.animation_check_color(pygame.mouse.get_pos())
+            GoElectric.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Electricité"))
+            GoTravail.animation_check_color(pygame.mouse.get_pos())
+            GoTravail.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Travail"))
+            GoMange.animation_check_color(pygame.mouse.get_pos())
+            GoMange.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Mange"))
         deplacement_bouton.animation_check_color(pygame.mouse.get_pos())
-        deplacement_bouton.event(
-            event, pygame.mouse.get_pos(), lambda: toggle_deplacement()
-        )
+        deplacement_bouton.event(event, pygame.mouse.get_pos(), lambda: toggle_deplacement())
+
         mission_bouton.animation_check_color(pygame.mouse.get_pos())
         mission_bouton.event(event, pygame.mouse.get_pos(), lambda: print("mission"))
+        
     else:
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 

@@ -12,7 +12,11 @@ class Button:
         color_input="Black",
         color_input1="White",
         position_text=(0, 0),
-        police_taille=1
+        police_taille=1,
+        taille = (0,0),
+
+        function=None,
+
     ):
         self.main_font = pygame.font.SysFont("Arial", police_taille*8 * scale)
         self._input_text = text
@@ -25,16 +29,24 @@ class Button:
         self.scale = scale
         self.text = text
         self.actif = True
+        self.taille = taille
 
+        self.hovered = False
+        self.function = function
         # Charger et redimensionner l'image
         dim=(int(image.get_width() * scale), int(image.get_height() * scale))
         self.change_dim(dim, police_taille * 8 * scale)
+        if self.taille != (0,0):
+            self.change_dim(self.taille, police_taille)
 
 
     def update(self):
         self.screen.blit(self.image, self.rect)
         if self.text != "":
             self.screen.blit(self.text, self.text_rect)
+        if self.hovered and self.function is not None:
+            self.function()
+
 
 
     def change_dim(self,dim, police_taille):
@@ -91,12 +103,18 @@ class Button:
                 self.text = self.main_font.render(
                     self._input_text, True, self._input_color
                 )
+    def filtre(self, tint_color):
+        surf = self.image.copy().convert_alpha()
+        tint = pygame.Surface(surf.get_size(), pygame.SRCALPHA)
+        tint.fill((*tint_color, 0))
 
     def event(self, event, position, function):
-        if event.type == pygame.MOUSEBUTTONDOWN and self.actif:
-            if self.rect.collidepoint(position):
+        if self.rect.collidepoint(position):
+            if event.type == pygame.MOUSEBUTTONDOWN and self.actif:
                 function()
-
+            self.hovered = True
+        else:
+            self.hovered = False
 
 class TextView:
     def __init__(
@@ -235,7 +253,7 @@ class Rectangle:
 
 
 class Menu_Deroulent:
-    def __init__(s,list_bouton,position_bas,size,up,down,police_taille=20,nombre_bouton_affiche=3):
+    def __init__(s,list_bouton,position_bas,size,up=None,down=None,police_taille=20,nombre_bouton_affiche=3):
         s.size = size
 
         s.liste=list_bouton
@@ -257,8 +275,10 @@ class Menu_Deroulent:
 
     def update(s):
         #print(pygame.mouse.get_pos())
-        s.up.update()
-        s.down.update()
+        if s.up is not None:
+            s.up.update()
+        if s.down is not None:
+            s.down.update()
         for i in range(s.n):
             s.affiche[i].update()
 
@@ -279,9 +299,34 @@ class Menu_Deroulent:
 
 
     def init_flèche(s):
-        fleche_up=[ s.position[0] , s.position[1]-s.dim[1]]
-        fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*s.n]
-        s.up.change_position(fleche_up)
-        s.down.change_position(fleche_down)
-        s.up.change_dim(s.dim,s.police_taille)
-        s.down.change_dim(s.dim,s.police_taille)
+        if s.up is not None:
+            fleche_up=[ s.position[0] , s.position[1]-s.dim[1]]
+            s.up.change_position(fleche_up)
+            s.up.change_dim(s.dim,s.police_taille)
+        if s.down is not None:    
+            fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*s.n]
+            s.down.change_position(fleche_down)
+            s.down.change_dim(s.dim,s.police_taille)
+
+
+class barre_de_vie:
+    def __init__(s,screen,position,dim,scale=1,color1=(192,192,192),color2=(255,200,0)):
+        s.position=position
+        s.dim=dim
+        s.screen=screen
+        s.color1=color1
+        s.color2=color2
+        s.scale=scale
+
+        s.rect_bar = pygame.Rect(position, (int(dim[0] * scale), int(dim[1] * scale)))
+        s.rec_vie = pygame.Rect(position, (int(dim[0] * scale) * 1.0, int(dim[1] * scale)))
+
+    def update(s):
+        pygame.draw.rect(s.screen, s.color1, s.rect_bar)
+        pygame.draw.rect(s.screen, s.color2, s.rec_vie)
+
+    def change_dim(s,dim):
+        s.dim=dim
+        s.rect = pygame.Rect(s.position, (int(dim[0] * s.scale), int(dim[1] * s.scale)))
+    def set_value(s, vie):
+        s.rec_vie = pygame.Rect(s.position, (int(s.dim[0] * s.scale) * vie, int(s.dim[1] * s.scale)))
