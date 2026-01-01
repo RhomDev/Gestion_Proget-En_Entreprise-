@@ -1,10 +1,7 @@
-
-import pygame
-
-from programme.Object import *
-from programme.utils.map import *
-from programme.utils.ouvrier import *
-from programme.utils.Read_Data import read_json
+from utils.Object import *
+from utils.Map import *
+from player.ouvrier import *
+from utils.Read_Data import read_json
 
 
 
@@ -18,10 +15,10 @@ def game_screen_init(screen):
         Up_mission,Down_mission
     panel_deplacement = True
     var_open_panel = True
-    img_background_outil = pygame.image.load( "programme/src/img/game_img/background_btn_option.jpg")
-    img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
-    img_hint_panel = pygame.image.load("programme/src/img/game_img/hint_panel.png")
-    img_bar = pygame.image.load("programme/src/img/game_img/bar_life.png")
+    img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
+    img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
+    img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
+    img_bar = pygame.image.load("src/img/game_img/bar_life.png")
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
@@ -37,7 +34,7 @@ def game_screen_init(screen):
         scale=1,
     )
 
-    desciprtion_data = read_json("programme/src/json/Description.json")
+    desciprtion_data = read_json("src/json/Description.json")
     print(desciprtion_data["GoEntrée"][1])
 
     tache_bouton = Button(

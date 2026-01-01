@@ -6,7 +6,7 @@ class Ouvrier:
     def __init__(s, fenetre,  map):
         s.state = 0
         s.etat = ["Fixe", "Cour"]
-        s.image = pygame.image.load("programme/src/img/perso/homme.png")
+        s.image = pygame.image.load("src/img/perso/homme.png")
         s.width_image, s.heigth_image = s.image.get_size()[0] // 3, s.image.get_size()[1] // 3
         s.image_flip = pygame.transform.flip(s.image, True, False)
         s.flip = 0

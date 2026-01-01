@@ -1,6 +1,6 @@
 import pygame
-import programme.screen.Menu_screen as menu_screen
-import programme.screen.Game_screen as game_screen
+import screen.Menu_screen as menu_screen
+import screen.Game_screen as game_screen
 
 def evnt_fullscreen():
     global fullscreen, screen

@@ -16,7 +16,7 @@ class Map:
     def __init__(s, screen, choix):
         s.screen = screen
         s.resolution = (s.screen.get_width(), s.screen.get_height())
-        s.image = pygame.image.load(f"programme/src/img/map/map{choix}.png")
+        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
         s.image = pygame.transform.scale(s.image, s.resolution)
         s.nodes = Nodes()
 
@@ -24,7 +24,7 @@ class Map:
         s.screen.blit(s.image, (0, 0))
 
     def Set_Map(s, choix):
-        s.image = pygame.image.load(f"programme/src/img/map/map{choix}.png")
+        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
         s.image = pygame.transform.scale(s.image, s.resolution)
 
     def update(s):

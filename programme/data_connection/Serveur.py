@@ -3,7 +3,7 @@ import threading
 import time
 import json
 import random
-from programme.utils.Read_Data import write_json
+from utils.Read_Data import write_json
 
 
 class Serveur(threading.Thread):
@@ -15,7 +15,7 @@ class Serveur(threading.Thread):
         self.shared_data = {}
         self.lock = threading.Lock()
         self.running = True
-        self.file = "data_serveur.json"
+        self.file = "data_connection/data_serveur.json"
 
     def run(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -120,7 +120,7 @@ class Client(threading.Thread):
 
         self.shared_data = None
         self.lock = threading.Lock()
-        self.file = "data_client.json"
+        self.file = "data_connection/data_client.json"
 
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_socket.connect((self.host, self.port))
