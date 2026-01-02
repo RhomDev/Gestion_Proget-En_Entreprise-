@@ -70,7 +70,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Entrée",
-        function=lambda: description_bouton_update(liste_longeurs["Entrée"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Entrée"],pos=(1450,510),dim=(200,100),police_taille=36),
 
     )
     GoElectric = Button(
@@ -79,7 +79,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Electricité",
-        function=lambda: description_bouton_update(liste_longeurs["Electricité"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Electricité"],pos=(1450,510),dim=(200,100),police_taille=36),
 
     )
 
@@ -89,7 +89,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Travail",
-        function=lambda: description_bouton_update(liste_longeurs["Travail"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Travail"],pos=(1450,510),dim=(200,100),police_taille=36),
 
     )
     GoMange = Button(
@@ -98,7 +98,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Mange",
-        function=lambda: description_bouton_update(liste_longeurs["Mange"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Mange"],pos=(1450,510),dim=(200,100),police_taille=36),
 
     )
     GoMachine = Button(
@@ -107,7 +107,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Machine",
-        function=lambda: description_bouton_update(liste_longeurs["Machine"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Machine"],pos=(1450,510),dim=(200,100),police_taille=36),
     )
     GoEntrepot = Button(
         screen,
@@ -115,7 +115,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Entrepôt",
-        function=lambda: description_bouton_update(liste_longeurs["Entrepôt"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Entrepôt"],pos=(1450,510),dim=(200,100),police_taille=36),
     )
     Up = Button(
         screen,
