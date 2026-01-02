@@ -43,33 +43,62 @@ class Node:
 
 class Nodes:
     def __init__(s):
-        s.EntreeBis = Node([1294,655], "EntréeBis")
-        s.Entree = Node([1293,654], "Entrée")
-        s.a = Node([1390,555], "A")
-        s.electric = Node([1563, 372], "Electricité")
-        s.b = Node([1042, 406], "B")
-        s.mange = Node([1134, 264], "Mange")
-        s.ba = Node([885, 328], "BA")
-        s.travail = Node([752, 393], "Travail")
+        s.EntreeBis = Node([1294, 655], "EntréeBis")
+        s.Entree    = Node([1293, 654], "Entrée")
+        s.a         = Node([1390, 555], "A")
+        s.electric  = Node([1563, 372], "Electricité")
+        s.b         = Node([1042, 406], "B")
+        s.mange     = Node([1134, 264], "Mange")
+        s.ba        = Node([885,  328], "BA")          
+        s.travail   = Node([752,  393], "Travail")
+        s.c         = Node([986, 690], "C")
+        s.ca1       = Node([998, 790], "CA1")
+        s.ca2       = Node([896, 680], "CA2")
+        s.cb2       = Node([718, 762], "CB2")
+        s.machine   = Node([636, 712], "Machine")
+        s.entrepot  = Node([887, 871], "Entrepôt")
+        s.objectifs = {"Entrée":0,"Electricité":0,"Travail":0,"Mange":0,"Machine":0,"Entrepôt":0}
+        s.noeuds = {
+            "EntréeBis": s.EntreeBis, "Entrée": s.Entree,
+            "A": s.a, "Electricité": s.electric, "B": s.b,
+            "Mange": s.mange, "BA": s.ba, "Travail": s.travail,
+            "C": s.c, "CA1": s.ca1, "CA2": s.ca2, "CB2": s.cb2,
+            "Machine": s.machine, "Entrepôt": s.entrepot
+        }
 
-        s.noeuds = {"EntréeBis": s.EntreeBis, "Entrée":s.Entree,
-                    "A": s.a, "Electricité": s.electric,"B": s.b, "Mange": s.mange, "BA": s.ba, "Travail": s.travail}
 
-        s.EntreeBis.lien.append(s.Entree)
-        s.Entree.lien.append(s.EntreeBis)
-        s.Entree.lien.append(s.a)
-        s.a.lien.append(s.Entree)
-        s.a.lien.append(s.electric)
-        s.electric.lien.append(s.a)
+        def link(u, v):
+            u.lien.append(v)
+            v.lien.append(u)
 
-        s.Entree.lien.append(s.b)
-        s.b.lien.append(s.Entree)
-        s.b.lien.append(s.mange)
-        s.mange.lien.append(s.b)
-        s.b.lien.append(s.ba)
-        s.ba.lien.append(s.b)
-        s.ba.lien.append(s.travail)
-        s.travail.lien.append(s.ba)
+
+        link(s.EntreeBis, s.Entree)
+
+        link(s.Entree, s.a)
+        link(s.Entree, s.b)
+        link(s.Entree, s.c)
+        link(s.Entree, s.ca1)
+
+        link(s.a, s.b)
+        link(s.a, s.c)
+        link(s.a, s.electric)
+        link(s.a, s.ca2)
+
+        link(s.b, s.c)
+        link(s.b, s.mange)
+        link(s.b, s.ba)
+        link(s.b, s.ca2)
+
+        link(s.ba, s.travail)
+
+        link(s.c, s.ca1)
+        link(s.c, s.ca2)
+
+        link(s.ca1, s.entrepot)
+
+        link(s.ca2, s.cb2)
+
+        link(s.cb2, s.machine)
 
 
 
@@ -88,7 +117,7 @@ class Nodes:
         while 1:
             a = next(iter(sorted(priorité)))
 
-            noeud = priorité[a]  # prend l'élément avec la plus petite priorité
+            noeud = priorité[a]  
             #print("Noeud : ", noeud.name)
             sup = priorité.pop(a)
             noeud.visited = TRUE
@@ -102,3 +131,21 @@ class Nodes:
                     i.pointe = noeud
                     priority = int(score + dist(i, end))
                     priorité[priority] = i
+
+    def longueur_chemin(s, deb, fin):
+        length = 0
+        current = s.noeuds[fin.name]
+        while current.name != deb.name:
+            length += dist(current, current.pointe)
+            current = current.pointe
+        return length
+
+    def liste_longueur_chemin(s, deb):
+        for fin in s.objectifs:
+            nod = s.noeuds[fin]
+            bool = s.Chemin(deb.name, nod.name)
+            if bool:
+                s.objectifs[fin] = round(s.longueur_chemin(deb, nod)*30/1000)
+            else:
+                s.objectifs[fin] = 0
+        return s.objectifs

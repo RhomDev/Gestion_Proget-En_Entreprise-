@@ -30,8 +30,12 @@ class Ouvrier:
         
 
 
-    def Set_Objectif(s, objectif):
+    def Set_Objectif(s, objectif,liste_longeurs):
         print(objectif)
+        liste_longeurs_int = s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
+        for key in liste_longeurs_int:
+            liste_longeurs[key] = str(liste_longeurs_int[key])
+        print(liste_longeurs)
         bool = s.nodes.Chemin(objectif, s.node.name)
         if bool:
             s.obj = s.node.pointe.data
@@ -58,8 +62,8 @@ class Ouvrier:
             s.fenetre.blit(image_scale, position)
 
     def Position(s):
-            #if pygame.mouse.get_pressed()[0]:
-            #   print(pygame.mouse.get_pos())
+            if pygame.mouse.get_pressed()[0]:
+               print(pygame.mouse.get_pos())
 
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
@@ -89,6 +93,7 @@ class Ouvrier:
                     s.obj = s.node.data
 
             s.flip = 1 if x < 0 else 0
+            
 
     def update(s):
         s.Draw()

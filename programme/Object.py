@@ -284,7 +284,7 @@ class Menu_Deroulent:
 
     def deroule(s,k):
         if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
-            print("index : ",s.index ,"k:", k,"index + s.n:",s.index + s.n)
+            #print("index : ",s.index ,"k:", k,"index + s.n:",s.index + s.n)
             if k>0:
                 s.affiche[0].actif = False
             if k<0:
@@ -307,6 +307,15 @@ class Menu_Deroulent:
             fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*s.n]
             s.down.change_position(fleche_down)
             s.down.change_dim(s.dim,s.police_taille)
+    def change_liste(s,list_bouton):
+        s.liste=list_bouton
+        s.index=0
+        s.affiche= s.liste[s.index:s.index+s.n]
+        s.init_flèche()
+        for i in range(len(s.liste)):
+            s.deroule(1)
+        for i in range(len(s.liste)):
+            s.deroule(-1)
 
 
 class barre_de_vie:

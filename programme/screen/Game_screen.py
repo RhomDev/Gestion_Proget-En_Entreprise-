@@ -15,9 +15,11 @@ def game_screen_init(screen):
         panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes, \
         GoEntre,GoElectric ,GoTravail,GoMange,\
         panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
-        Up_taches,Down_taches,panel_taches,mission1,mission2,mission3
+        Up_taches,Down_taches,panel_taches,mission1,mission2,mission3,GoEntrepot,GoMachine,liste_longeurs,Liste_Entrée,Liste_Electricité,Liste_Travail,Liste_taches
     panel_deplacement = False
     panel_taches = False
+    bob_pièce = "Entrée"
+    liste_longeurs = {"Entrée":"0","Electricité":"0","Travail":"0","Mange":"0","Machine":"0","Entrepôt":"0"}
     var_open_panel = True
     img_background_outil = pygame.image.load( "programme/src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
@@ -39,7 +41,7 @@ def game_screen_init(screen):
     )
 
     desciprtion_data = read_json("programme/src/json/Description.json")
-    print(desciprtion_data["GoEntrée"][1])
+
 
     tache_bouton = Button(
         screen,
@@ -68,7 +70,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Entrée",
-        function=lambda: description_bouton_update(desciprtion_data["GoEntrée"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Entrée"],pos=(1563,32),dim=(300,230),police_taille=24),
 
     )
     GoElectric = Button(
@@ -77,7 +79,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Electricité",
-        function=lambda: description_bouton_update(desciprtion_data["GoElectric"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Electricité"],pos=(1563,32),dim=(300,230),police_taille=24),
 
     )
 
@@ -87,7 +89,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Travail",
-        function=lambda: description_bouton_update(desciprtion_data["GoTravail"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Travail"],pos=(1563,32),dim=(300,230),police_taille=24),
 
     )
     GoMange = Button(
@@ -96,8 +98,24 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Mange",
-        function=lambda: description_bouton_update(desciprtion_data["GoMange"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Mange"],pos=(1563,32),dim=(300,230),police_taille=24),
 
+    )
+    GoMachine = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        4,
+        text="Machine",
+        function=lambda: description_bouton_update(liste_longeurs["Machine"],pos=(1563,32),dim=(300,230),police_taille=24),
+    )
+    GoEntrepot = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        4,
+        text="Entrepôt",
+        function=lambda: description_bouton_update(liste_longeurs["Entrepôt"],pos=(1563,32),dim=(300,230),police_taille=24),
     )
     Up = Button(
         screen,
@@ -132,7 +150,7 @@ def game_screen_init(screen):
     bob = Ouvrier(screen, mapes)
 
     menu_Deroulent = Menu_Deroulent(
-        [GoEntre, GoElectric, GoTravail, GoMange],#bouton qu'on ici
+        [GoEntre, GoElectric, GoTravail, GoMange,GoMachine,GoEntrepot],#bouton qu'on ici
         (1650, 900),(200,400),#position du coin bas gauche !! et taille du menu
         up=Up,#bouton up
         down=Down,#bouton down
@@ -171,9 +189,12 @@ def game_screen_init(screen):
     Up_taches = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
     Down_taches = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
 
-    Liste_taches=[Répondre_aux_mails,Réunion_improvisée,Rapport_express,
-                    Analyse_marché,Plan_stratégique,Présentation_finale,
-                    Brainstorming,Design_prototype,Pitch_client]
+    Liste_Entrée=[Répondre_aux_mails,Réunion_improvisée,Rapport_express]
+    Liste_Electricité=[Analyse_marché,Plan_stratégique,Présentation_finale]
+    Liste_Travail=[Brainstorming,Design_prototype,Pitch_client]
+
+
+    Liste_taches=Liste_Entrée
 
     Menu_taches=Menu_Deroulent(
         Liste_taches,
@@ -266,6 +287,18 @@ def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, 
         description_bouton.change_dim(dim, police_taille)
         description_bouton.update()
 
+def Update_Objectif(objectif,liste_longeurs):
+    global bob_pièce,Liste_taches
+    bob.Set_Objectif(objectif,liste_longeurs)
+    bob_pièce=objectif
+    if bob_pièce=="Entrée":
+        Liste_taches=Liste_Entrée
+    elif bob_pièce=="Electricité":
+        Liste_taches=Liste_Electricité
+    elif bob_pièce=="Travail":
+        Liste_taches=Liste_Travail
+    Menu_taches.change_liste(Liste_taches)
+
 
 def event_outil_panel(event):
     if var_open_panel:
@@ -279,13 +312,17 @@ def event_outil_panel(event):
             Down.animation_check_color(pygame.mouse.get_pos())
             Down.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(1))
             GoEntre.animation_check_color(pygame.mouse.get_pos())
-            GoEntre.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Entrée"))
+            GoEntre.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Entrée", liste_longeurs))
             GoElectric.animation_check_color(pygame.mouse.get_pos())
-            GoElectric.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Electricité"))
+            GoElectric.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Electricité", liste_longeurs))
             GoTravail.animation_check_color(pygame.mouse.get_pos())
-            GoTravail.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Travail"))
+            GoTravail.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Travail", liste_longeurs))
             GoMange.animation_check_color(pygame.mouse.get_pos())
-            GoMange.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Mange"))
+            GoMange.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Mange", liste_longeurs))
+            GoMachine.animation_check_color(pygame.mouse.get_pos())
+            GoMachine.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Machine", liste_longeurs))
+            GoEntrepot.animation_check_color(pygame.mouse.get_pos())
+            GoEntrepot.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Entrepôt", liste_longeurs))
         deplacement_bouton.animation_check_color(pygame.mouse.get_pos())
         deplacement_bouton.event(event, pygame.mouse.get_pos(), lambda: toggle_deplacement())
 
