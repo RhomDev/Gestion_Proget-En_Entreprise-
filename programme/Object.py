@@ -255,14 +255,18 @@ class Rectangle:
 class Menu_Deroulent:
     def __init__(s,list_bouton,position_bas,size,up=None,down=None,police_taille=20,nombre_bouton_affiche=3):
         s.size = size
-
+        s.nombre_bouton_affiche=nombre_bouton_affiche
         s.liste=list_bouton
-        s.n=nombre_bouton_affiche
+        if nombre_bouton_affiche < len(s.liste):
+            s.n=nombre_bouton_affiche
+        else:
+            s.n=len(s.liste)
+        print("nombre de bouton affiche :",s.n)
         s.index=0
-        s.position = [ position_bas[0] , position_bas[1] - size[1]* ( 1 + 1/s.n)]
+        s.position = [ position_bas[0] , position_bas[1] - size[1]]
         s.affiche= s.liste[s.index:s.index+s.n]
         s.police_taille = police_taille
-        s.dim = [size[0],size[1]/s.n]
+        s.dim = [size[0],size[1]/(s.n+2)]
         s.up=up
         s.down=down
 
@@ -292,7 +296,7 @@ class Menu_Deroulent:
             s.index=s.index + k
         s.affiche= s.liste[s.index:s.index+s.n]
         for i in range(s.n):
-            boutonpos=[ s.position[0] , s.position[1]+i*s.dim[1]]
+            boutonpos=[ s.position[0] , s.position[1] + (i+1) * s.dim[1]]
             s.affiche[i].actif = True
             s.affiche[i].change_dim(s.dim,s.police_taille)
             s.affiche[i].change_position(boutonpos)
@@ -300,22 +304,28 @@ class Menu_Deroulent:
 
     def init_flèche(s):
         if s.up is not None:
-            fleche_up=[ s.position[0] , s.position[1]-s.dim[1]]
+            fleche_up=[ s.position[0] , s.position[1]]
             s.up.change_position(fleche_up)
             s.up.change_dim(s.dim,s.police_taille)
         if s.down is not None:    
-            fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*s.n]
+            fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*(s.n+1)]
             s.down.change_position(fleche_down)
             s.down.change_dim(s.dim,s.police_taille)
+    
     def change_liste(s,list_bouton):
         s.liste=list_bouton
         s.index=0
         s.affiche= s.liste[s.index:s.index+s.n]
-        s.init_flèche()
+        if s.nombre_bouton_affiche < len(s.liste):
+            s.n=s.nombre_bouton_affiche
+        else:
+            s.n=len(s.liste)
+        
         for i in range(len(s.liste)):
             s.deroule(1)
         for i in range(len(s.liste)):
             s.deroule(-1)
+        s.init_flèche()
 
 
 class barre_de_vie:

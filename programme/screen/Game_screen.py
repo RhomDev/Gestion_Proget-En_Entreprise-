@@ -165,9 +165,10 @@ def game_screen_init(screen):
     mission2 = Button(screen, (125,125),img_bouton_standard,1,text="mission2",function=lambda:Affiche_tache_m2.update())
     mission3 = Button(screen, (125,125),img_bouton_standard,1,text="mission3",function=lambda:Affiche_tache_m3.update())
     Liste_Attente=[mission1,mission2,mission3]
+
     Menu_Liste_Attente= Menu_Deroulent(
         Liste_Attente,
-        (63,560),(180,250),
+        (63,475),(180,360),
         up=Liste_mission,
         nombre_bouton_affiche=3,
         police_taille=24
@@ -186,23 +187,30 @@ def game_screen_init(screen):
     Brainstorming = Button(screen,(0,0),img_bouton_standard,1,text="Brainstorming")
     Design_prototype = Button(screen, (125,125),img_bouton_standard,1,text="Design prototype")
     Pitch_client = Button(screen, (125,125),img_bouton_standard,1,text="Pitch client")
+
     Up_taches = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
     Down_taches = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
 
     Liste_Entrée=[Répondre_aux_mails,Réunion_improvisée,Rapport_express]
     Liste_Electricité=[Analyse_marché,Plan_stratégique,Présentation_finale]
     Liste_Travail=[Brainstorming,Design_prototype,Pitch_client]
+    Liste_Machine=[Brainstorming,Analyse_marché]
+    Liste_Entrepôt=[Pitch_client,Design_prototype]
+    Liste_Mange=[Plan_stratégique,Rapport_express]
     Tache_par_pièce={
         "Entrée":Liste_Entrée,
         "Electricité":Liste_Electricité,
-        "Travail":Liste_Travail
+        "Travail":Liste_Travail,
+        "Machine":Liste_Machine,
+        "Entrepôt":Liste_Entrepôt,
+        "Mange":Liste_Mange
     }
 
 
 
     Menu_taches=Menu_Deroulent(
         Tache_par_pièce[bob_pièce],
-        (63, 929),(300,260),
+        (82, 941),(200,460),
         up=Up_taches,
         down=Down_taches,
         nombre_bouton_affiche=3,
@@ -213,19 +221,18 @@ def game_screen_init(screen):
     Tache2m1 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m1")
     Tache3m1 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m1")
     Liste_Tache_m1=[Tache1m1,Tache2m1,Tache3m1]
-    Affiche_tache_m1= Menu_Deroulent(Liste_Tache_m1,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
+    Affiche_tache_m1= Menu_Deroulent(Liste_Tache_m1,(243,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
 
     Tache1m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache1 m2")
     Tache2m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m2")
     Tache3m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m2")
     Liste_Tache_m2=[Tache1m2,Tache2m2,Tache3m2]
-    Affiche_tache_m2= Menu_Deroulent(Liste_Tache_m2,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
-
+    Affiche_tache_m2= Menu_Deroulent(Liste_Tache_m2,(243,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
     Tache1m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache1 m3")
     Tache2m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m3")
     Tache3m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m3")     
     Liste_Tache_m3=[Tache1m3,Tache2m3,Tache3m3]
-    Affiche_tache_m3= Menu_Deroulent(Liste_Tache_m3,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
+    Affiche_tache_m3= Menu_Deroulent(Liste_Tache_m3,(243,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
 
 def game_update():
     mapes.update()
