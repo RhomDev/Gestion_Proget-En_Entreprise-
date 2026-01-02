@@ -1,50 +1,65 @@
-from urllib.parse import scheme_chars
-
 import pygame
-from programme.Object import *
+<<<<<<< HEAD
+import sys,os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from programme.utils.Object import *
 import programme.screen.popup.menu.Quit_Popup as Popup
+from programme.utils.Constant import Screen
+=======
+from utils.Object import *
+import screen.popup.menu.Quit_Popup as Popup
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
 def button_center(event, page):
     Start_bouton.animation_check_color(pygame.mouse.get_pos())
-    Start_bouton.event(event, pygame.mouse.get_pos(), lambda: page(1))
+    Start_bouton.event(event, pygame.mouse.get_pos(), lambda: page(Screen.LOBBY.value))
     Option_bouton.animation_check_color(pygame.mouse.get_pos())
-    Option_bouton.event(event, pygame.mouse.get_pos(), lambda: page(2))
+    Option_bouton.event(event, pygame.mouse.get_pos(), lambda: page(Screen.OPTION.value))
     Quit_bouton.animation_check_color(pygame.mouse.get_pos())
     Quit_bouton.event(event, pygame.mouse.get_pos(), popup_quit.change_active)
 
 def menu_init(screen):
+<<<<<<< HEAD
+    global Start_bouton, Option_bouton, Quit_bouton
+    img_boutton = pygame.image.load("../programme/src/img/util/btn_standard.png")
+=======
     global fullscreen_bouton, Start_bouton, Option_bouton, Quit_bouton
-    img_boutton = pygame.image.load("programme/src/img/util/btn_standard.png")
+    img_boutton = pygame.image.load("src/img/util/btn_standard.png")
     fullscreen_bouton = Button(screen, (15, 20), img_boutton, 1, text="Fullscreen",
                                color_input='Black', color_input1='Red')
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
     Start_bouton = Button(screen,((screen.get_width() / 2) - 20, (screen.get_height() / 2) - 80),
-                          img_boutton, 3, text="Start", color_input='Black',
-                          color_input1='Red')
+                          img_boutton, 3,language=lg, text="menu::btn:start",police=16,
+                          color_input='Black',color_input1='Red')
     Option_bouton = Button(screen,((screen.get_width() / 2) - 20, (screen.get_height() / 2)),
-                           img_boutton, 3, text="Option", color_input='Black',
-                           color_input1='Red')
+                           img_boutton, 3,language=lg, text="menu::btn:option",police=24,
+                           color_input='Black',color_input1='Red')
     Quit_bouton = Button(screen,((screen.get_width() / 2) - 20, (screen.get_height() / 2) + 80),
-                         img_boutton, 3, text="Quit", color_input='Black',
-                         color_input1='Red')
+                         img_boutton, 3,language=lg, text="menu::btn:exit", police=24,
+                         color_input='Black',color_input1='Red')
 
 def menu_update():
-    fullscreen_bouton.update()
     Start_bouton.update()
     Option_bouton.update()
     Quit_bouton.update()
 
-def is_menu_kill(data):
-    if data == 0:
-        return True
+def evnt_fullscreen():
+    global fullscreen, screen
+    fullscreen = not fullscreen
+    if fullscreen:
+        screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
     else:
-        return False
+        screen = pygame.display.set_mode((800,600))
 
-def menu_screen(screen, pageset, pageget, clock):
-    global popup_quit
+
+def menu_screen(screen,lang, pageset, pageget, clock):
+    global popup_quit, lg
     menu_active=True
-    menu_init(screen)
+    lg = lang
 
-    popup_quit = Popup.Quit_Popup(screen, (int(screen.get_width()/2)-100, int(screen.get_height()/2)-100))
+    menu_init(screen)
+    popup_quit = Popup.Quit_Popup(screen, lang, (int(screen.get_width()/2)-100, int(screen.get_height()/2)-100))
 
     while(menu_active):
         screen.fill((146,147,147))
@@ -61,7 +76,7 @@ def menu_screen(screen, pageset, pageget, clock):
         menu_update()
         popup_quit.update()
 
-        menu_active=is_menu_kill(pageget())
+        menu_active= pageget()==Screen.MENU.value
 
         clock.tick(60)
         pygame.display.flip()

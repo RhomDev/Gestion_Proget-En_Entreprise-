@@ -1,0 +1,9 @@
+{
+  "id": 0,
+  "active": false,
+  "effet_actif": "aucun",
+  "mission": [0,0],
+  "mission_faite": [false,false],
+  "action_realisee": "aucun",
+  "oke": false
+}

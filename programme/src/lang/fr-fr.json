@@ -1,3 +1,14 @@
 {
+  "menu::texte:title": "En Entreprise",
+  "menu::btn:start": "Nouvelle Partie",
+  "menu::btn:option": "Option",
+  "menu::btn:exit": "Quitter",
 
+  "loggy::edit:surname": "surnom",
+  "loggy::edit:ip": "Id du Serveur",
+  "loggy::edit:port":"Port",
+  "loggy::edit:nb_player": "Nb de joueur",
+  "loggy::btn:valid": "Valider",
+  "loggy::btn:cancel": "Annuler",
+  "loggy::btn:server": "Serveur"
 }

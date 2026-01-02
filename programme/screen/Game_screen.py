@@ -1,10 +1,7 @@
-
-import pygame
-
-from programme.Object import *
-from programme.utils.map import *
-from programme.utils.ouvrier import *
-from programme.utils.Read_Data import read_json
+from utils.Object import *
+from utils.Map import *
+from player.ouvrier import *
+from utils.Read_Data import read_json
 
 
 
@@ -19,10 +16,22 @@ def game_screen_init(screen):
     panel_deplacement = False
     panel_taches = False
     var_open_panel = True
+<<<<<<< HEAD
+<<<<<<< HEAD
+    img_background_outil = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
+    img_bouton_standard = pygame.image.load("../programme/src/img/util/btn_standard.png")
+    img_hint_panel = pygame.image.load("../programme/src/img/game_img/hint_panel.png")
+=======
     img_background_outil = pygame.image.load( "programme/src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
     img_hint_panel = pygame.image.load("programme/src/img/game_img/hint_panel.png")
-    img_bar = pygame.image.load("programme/src/img/game_img/bar_life.png")
+>>>>>>> 39c970aacfbd4bd8b28f6efb05c3419fc399042a
+=======
+    img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
+    img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
+    img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
+    img_bar = pygame.image.load("src/img/game_img/bar_life.png")
+>>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
@@ -38,7 +47,7 @@ def game_screen_init(screen):
         scale=1,
     )
 
-    desciprtion_data = read_json("programme/src/json/Description.json")
+    desciprtion_data = read_json("src/json/Description.json")
     print(desciprtion_data["GoEntrée"][1])
 
     tache_bouton = Button(
@@ -308,7 +317,9 @@ def event_outil_panel(event):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 
 
-def Game_screen(screen, pageset, pageget, clock):
+def Game_screen(screen,lang, pageset, pageget, clock):
+    global lg
+    lg=lang
     game_active = True
     game_screen_init(screen)
     while game_active:

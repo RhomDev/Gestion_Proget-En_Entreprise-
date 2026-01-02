@@ -1,0 +1,16 @@
+{
+  "script": "main.py",
+  "onefile": true,
+  "windowed": true,
+  "icon": null,
+  "add_data": [
+    {
+      "source": "src/img;src/img/**/*",
+      "target": "src/img"
+    },
+    {
+      "source": "src/lang;src/lang/**/*",
+      "target": "src/lang"
+    }
+  ]
+}
