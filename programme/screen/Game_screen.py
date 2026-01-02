@@ -14,9 +14,10 @@ def game_screen_init(screen):
     global \
         panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes, \
         GoEntre,GoElectric ,GoTravail,GoMange,\
-        panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_Mission,\
-        Up_mission,Down_mission
-    panel_deplacement = True
+        panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
+        Up_taches,Down_taches,panel_taches,mission1,mission2,mission3
+    panel_deplacement = False
+    panel_taches = False
     var_open_panel = True
     img_background_outil = pygame.image.load( "programme/src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
@@ -114,6 +115,10 @@ def game_screen_init(screen):
         text="↓",
         police_taille=2,
     )
+
+
+
+
     Energie = barre_de_vie(screen, (63,15), (300,30), scale=1)
     Energie.set_value(0.25)
     Stress = barre_de_vie(screen, (63,75), (300,30), scale=1,color2=(127,0,255))
@@ -138,9 +143,9 @@ def game_screen_init(screen):
 
     
     Liste_mission = Button(screen,(0,0),img_bouton_standard,1,text="Liste D'attente", police_taille=3)
-    mission1 = Button(screen, (125,125),img_bouton_standard,1,text="mission1")
-    mission2 = Button(screen, (125,125),img_bouton_standard,1,text="mission2")
-    mission3 = Button(screen, (125,125),img_bouton_standard,1,text="mission3")
+    mission1 = Button(screen, (125,125),img_bouton_standard,1,text="mission1",function=lambda:Affiche_tache_m1.update())
+    mission2 = Button(screen, (125,125),img_bouton_standard,1,text="mission2",function=lambda:Affiche_tache_m2.update())
+    mission3 = Button(screen, (125,125),img_bouton_standard,1,text="mission3",function=lambda:Affiche_tache_m3.update())
     Liste_Attente=[mission1,mission2,mission3]
     Menu_Liste_Attente= Menu_Deroulent(
         Liste_Attente,
@@ -163,22 +168,39 @@ def game_screen_init(screen):
     Brainstorming = Button(screen,(0,0),img_bouton_standard,1,text="Brainstorming")
     Design_prototype = Button(screen, (125,125),img_bouton_standard,1,text="Design prototype")
     Pitch_client = Button(screen, (125,125),img_bouton_standard,1,text="Pitch client")
-    Up_mission = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
-    Down_mission = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
+    Up_taches = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
+    Down_taches = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
 
-    Liste_missions=[Répondre_aux_mails,Réunion_improvisée,Rapport_express,
+    Liste_taches=[Répondre_aux_mails,Réunion_improvisée,Rapport_express,
                     Analyse_marché,Plan_stratégique,Présentation_finale,
                     Brainstorming,Design_prototype,Pitch_client]
-    
-    Menu_Mission=Menu_Deroulent(
-        Liste_missions,
-        (319, 929),(300,300),
-        up=Up_mission,
-        down=Down_mission,
+
+    Menu_taches=Menu_Deroulent(
+        Liste_taches,
+        (63, 929),(300,260),
+        up=Up_taches,
+        down=Down_taches,
         nombre_bouton_affiche=3,
-        police_taille=30
+        police_taille=24
     )
 
+    Tache1m1 = Button(screen, (0,0),img_bouton_standard,3,text="Tache1 m1")
+    Tache2m1 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m1")
+    Tache3m1 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m1")
+    Liste_Tache_m1=[Tache1m1,Tache2m1,Tache3m1]
+    Affiche_tache_m1= Menu_Deroulent(Liste_Tache_m1,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
+
+    Tache1m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache1 m2")
+    Tache2m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m2")
+    Tache3m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m2")
+    Liste_Tache_m2=[Tache1m2,Tache2m2,Tache3m2]
+    Affiche_tache_m2= Menu_Deroulent(Liste_Tache_m2,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
+
+    Tache1m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache1 m3")
+    Tache2m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m3")
+    Tache3m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m3")     
+    Liste_Tache_m3=[Tache1m3,Tache2m3,Tache3m3]
+    Affiche_tache_m3= Menu_Deroulent(Liste_Tache_m3,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
 
 def game_update():
     mapes.update()
@@ -194,7 +216,8 @@ def game_update():
         mission_bouton.update()
         if panel_deplacement:
             menu_Deroulent.update()
-            Menu_Mission.update()
+        if panel_taches:
+            Menu_taches.update()
 
 
 def close_panel():
@@ -232,27 +255,29 @@ def open_panel():
 def toggle_deplacement():  # menu déroulant déplacement
     global panel_deplacement
     panel_deplacement = not panel_deplacement
+def toggle_taches():  # menu déroulant taches
+    global panel_taches
+    panel_taches = not panel_taches
 
-def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3):
-    description_bouton.change_text(texte)
-    description_bouton.change_position(pos)
-    description_bouton.change_dim(dim, police_taille)
-    description_bouton.update()
+def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, liste=None):
+    if liste is None:
+        description_bouton.change_text(texte)
+        description_bouton.change_position(pos)
+        description_bouton.change_dim(dim, police_taille)
+        description_bouton.update()
+
 
 def event_outil_panel(event):
     if var_open_panel:
         hint_panel.event(event, pygame.mouse.get_pos(), close_panel)
         tache_bouton.animation_check_color(pygame.mouse.get_pos())
         tache_bouton.event(event, pygame.mouse.get_pos(), lambda: print("tache"))
+        
         if panel_deplacement:
             Up.animation_check_color(pygame.mouse.get_pos())
             Up.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(-1))
             Down.animation_check_color(pygame.mouse.get_pos())
             Down.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(1))
-            Up_mission.animation_check_color(pygame.mouse.get_pos())
-            Up_mission.event(event, pygame.mouse.get_pos(), lambda: Menu_Mission.deroule(-1))
-            Down_mission.animation_check_color(pygame.mouse.get_pos())
-            Down_mission.event(event, pygame.mouse.get_pos(), lambda: Menu_Mission.deroule(1))
             GoEntre.animation_check_color(pygame.mouse.get_pos())
             GoEntre.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Entrée"))
             GoElectric.animation_check_color(pygame.mouse.get_pos())
@@ -264,8 +289,20 @@ def event_outil_panel(event):
         deplacement_bouton.animation_check_color(pygame.mouse.get_pos())
         deplacement_bouton.event(event, pygame.mouse.get_pos(), lambda: toggle_deplacement())
 
-        mission_bouton.animation_check_color(pygame.mouse.get_pos())
-        mission_bouton.event(event, pygame.mouse.get_pos(), lambda: print("mission"))
+        if panel_taches:
+            Up_taches.animation_check_color(pygame.mouse.get_pos())
+            Up_taches.event(event, pygame.mouse.get_pos(), lambda: Menu_taches.deroule(-1))
+            Down_taches.animation_check_color(pygame.mouse.get_pos())
+            Down_taches.event(event, pygame.mouse.get_pos(), lambda: Menu_taches.deroule(1))
+        tache_bouton.animation_check_color(pygame.mouse.get_pos())
+        tache_bouton.event(event, pygame.mouse.get_pos(), lambda: toggle_taches())
+
+        mission1.animation_check_color(pygame.mouse.get_pos())
+        mission2.animation_check_color(pygame.mouse.get_pos())
+        mission3.animation_check_color(pygame.mouse.get_pos())
+        mission1.event(event, pygame.mouse.get_pos(), lambda: print("mission1"))
+        mission2.event(event, pygame.mouse.get_pos(), lambda: print("mission2"))
+        mission3.event(event, pygame.mouse.get_pos(), lambda: print("mission3"))
         
     else:
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)

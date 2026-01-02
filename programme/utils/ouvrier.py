@@ -27,6 +27,7 @@ class Ouvrier:
         s.node = map.nodes.EntreeBis
         s.pose = s.node.data
         s.obj = s.pose
+        
 
 
     def Set_Objectif(s, objectif):
@@ -57,8 +58,8 @@ class Ouvrier:
             s.fenetre.blit(image_scale, position)
 
     def Position(s):
-            if pygame.mouse.get_pressed()[0]:
-                print(pygame.mouse.get_pos())
+            #if pygame.mouse.get_pressed()[0]:
+            #   print(pygame.mouse.get_pos())
 
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]

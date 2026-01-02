@@ -268,10 +268,10 @@ class Menu_Deroulent:
 
 
         s.init_flèche()
-        s.deroule(0)
-        s.deroule(1)
-        s.deroule(-1)
-        s.deroule(-1)
+        for i in range(len(s.liste)):
+            s.deroule(1)
+        for i in range(len(s.liste)):
+            s.deroule(-1)
 
     def update(s):
         #print(pygame.mouse.get_pos())
@@ -283,12 +283,12 @@ class Menu_Deroulent:
             s.affiche[i].update()
 
     def deroule(s,k):
-        #print(s.index , k)
         if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
+            print("index : ",s.index ,"k:", k,"index + s.n:",s.index + s.n)
             if k>0:
-                s.affiche[s.index].actif = False
+                s.affiche[0].actif = False
             if k<0:
-                s.affiche[s.index + s.n-2].actif = False
+                s.affiche[-1].actif = False
             s.index=s.index + k
         s.affiche= s.liste[s.index:s.index+s.n]
         for i in range(s.n):
