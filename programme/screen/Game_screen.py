@@ -15,7 +15,7 @@ def game_screen_init(screen):
         panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes, \
         GoEntre,GoElectric ,GoTravail,GoMange,\
         panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
-        Up_taches,Down_taches,panel_taches,mission1,mission2,mission3,GoEntrepot,GoMachine,liste_longeurs,Liste_Entrée,Liste_Electricité,Liste_Travail,Liste_taches
+        Up_taches,Down_taches,panel_taches,mission1,mission2,mission3,GoEntrepot,GoMachine,liste_longeurs,Tache_par_pièce
     panel_deplacement = False
     panel_taches = False
     bob_pièce = "Entrée"
@@ -192,12 +192,16 @@ def game_screen_init(screen):
     Liste_Entrée=[Répondre_aux_mails,Réunion_improvisée,Rapport_express]
     Liste_Electricité=[Analyse_marché,Plan_stratégique,Présentation_finale]
     Liste_Travail=[Brainstorming,Design_prototype,Pitch_client]
+    Tache_par_pièce={
+        "Entrée":Liste_Entrée,
+        "Electricité":Liste_Electricité,
+        "Travail":Liste_Travail
+    }
 
 
-    Liste_taches=Liste_Entrée
 
     Menu_taches=Menu_Deroulent(
-        Liste_taches,
+        Tache_par_pièce[bob_pièce],
         (63, 929),(300,260),
         up=Up_taches,
         down=Down_taches,
@@ -288,17 +292,10 @@ def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, 
         description_bouton.update()
 
 def Update_Objectif(objectif,liste_longeurs):
-    global bob_pièce,Liste_taches
+    global bob_pièce,Tache_par_pièce
     bob.Set_Objectif(objectif,liste_longeurs)
     bob_pièce=objectif
-    if bob_pièce=="Entrée":
-        Liste_taches=Liste_Entrée
-    elif bob_pièce=="Electricité":
-        Liste_taches=Liste_Electricité
-    elif bob_pièce=="Travail":
-        Liste_taches=Liste_Travail
-    Menu_taches.change_liste(Liste_taches)
-
+    Menu_taches.change_liste(Tache_par_pièce[bob_pièce])
 
 def event_outil_panel(event):
     if var_open_panel:
