@@ -17,7 +17,9 @@ class Ouvrier:
 
         s.i = 0
         s.k = 0
-
+        s.arrivee = False
+        s.Liste_Objectifs = ["Entrée","Travail","Mange","Machine","Entrepôt","Travail","Electricité","Mange","Entrepôt"]
+        s.Liste_Objectifs = []
         s.scale = 0.6
         s.map = map
 
@@ -31,11 +33,12 @@ class Ouvrier:
 
 
     def Set_Objectif(s, objectif,liste_longeurs):
-        print(objectif)
+        #print(objectif)
+        s.arrivee = False
         liste_longeurs_int = s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
         for key in liste_longeurs_int:
             liste_longeurs[key] = str(liste_longeurs_int[key])
-        print(liste_longeurs)
+        #print(liste_longeurs)
         bool = s.nodes.Chemin(objectif, s.node.name)
         if bool:
             s.obj = s.node.pointe.data
@@ -85,16 +88,28 @@ class Ouvrier:
                     s.pose[0] = s.obj[0]
                     s.pose[1] = s.obj[1]
                     s.state = 0
+                    s.arrivee = True
+                    print(f"Arrivé à l'objectif : {s.objectif}")
                 else:
                     if s.node.pointe is not None:
                         s.node = s.node.pointe
                     else:
                         s.node.pointe = s.dest
+
                     s.obj = s.node.data
 
             s.flip = 1 if x < 0 else 0
+    
+    def Liste_Objectifs_fun(s):
+        if len(s.Liste_Objectifs) > 0 and s.arrivee == True:   
+            objectif = s.Liste_Objectifs[0]
             
+            s.Set_Objectif(objectif, s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif]))
+            print(f"Nouvel objectif : {objectif}")
+            s.Liste_Objectifs.pop(0)
+            print(f"Objectifs restants : {s.Liste_Objectifs}")
 
     def update(s):
         s.Draw()
         s.Position()
+        s.Liste_Objectifs_fun()
