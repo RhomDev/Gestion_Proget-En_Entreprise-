@@ -1,0 +1,92 @@
+{
+    "players": [
+        {
+            "id": 0,
+            "wait_new": [
+                2,
+                2
+            ],
+            "tour": 4,
+            "bob": {
+                "stress": 0,
+                "fatigue": 0
+            },
+            "action_realisee": [],
+            "statue": 0,
+            "effet_actif": "aucun",
+            "mission": [],
+            "mission_faite": []
+        },
+        {
+            "id": 1,
+            "wait_new": [
+                2,
+                2
+            ],
+            "tour": 4,
+            "bob": {
+                "stress": 0,
+                "fatigue": 0
+            },
+            "action_realisee": [],
+            "statue": 1,
+            "effet_actif": "aucun",
+            "mission": [],
+            "mission_faite": []
+        },
+        {
+            "id": 2,
+            "wait_new": [
+                2,
+                2
+            ],
+            "tour": 4,
+            "bob": {
+                "stress": 0,
+                "fatigue": 0
+            },
+            "action_realisee": [],
+            "statue": 2,
+            "effet_actif": "aucun",
+            "mission": [],
+            "mission_faite": []
+        },
+        {
+            "id": 3,
+            "wait_new": [
+                2,
+                2
+            ],
+            "tour": 4,
+            "bob": {
+                "stress": 0,
+                "fatigue": 0
+            },
+            "action_realisee": [],
+            "statue": 2,
+            "effet_actif": "aucun",
+            "mission": [],
+            "mission_faite": []
+        },
+        {
+            "id": 4,
+            "wait_new": [
+                2,
+                2
+            ],
+            "tour": 4,
+            "bob": {
+                "stress": 0,
+                "fatigue": 0
+            },
+            "action_realisee": [],
+            "statue": 2,
+            "effet_actif": "aucun",
+            "mission": [],
+            "mission_faite": []
+        }
+    ],
+    "nb_player": 2,
+    "wait_nb_player": 2,
+    "player_maitre": 1
+}

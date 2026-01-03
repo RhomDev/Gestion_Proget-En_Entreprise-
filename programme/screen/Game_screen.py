@@ -1,10 +1,9 @@
+import pygame
+
 from utils.Object import *
 from utils.Map import *
-from player.ouvrier import *
-from utils.Read_Data import read_json
-
-
-
+from player.Ouvrier import *
+from utils.Read_Data import read_json, write_json
 
 
 def game_screen_init(screen):
@@ -12,26 +11,19 @@ def game_screen_init(screen):
         panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes, \
         GoEntre,GoElectric ,GoTravail,GoMange,\
         panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
-        Up_taches,Down_taches,panel_taches,mission1,mission2,mission3
+        Up_taches,Down_taches,panel_taches,mission1,mission2,mission3,GoEntrepot,GoMachine,liste_longeurs,Tache_par_pièce,\
+        background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue
     panel_deplacement = False
     panel_taches = False
+    bob_pièce = "Entrée"
+    liste_longeurs = {"Entrée":"0","Electricité":"0","Travail":"0","Mange":"0","Machine":"0","Entrepôt":"0"}
     var_open_panel = True
-<<<<<<< HEAD
-<<<<<<< HEAD
-    img_background_outil = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
-    img_bouton_standard = pygame.image.load("../programme/src/img/util/btn_standard.png")
-    img_hint_panel = pygame.image.load("../programme/src/img/game_img/hint_panel.png")
-=======
-    img_background_outil = pygame.image.load( "programme/src/img/game_img/background_btn_option.jpg")
-    img_bouton_standard = pygame.image.load("programme/src/img/util/btn_standard.png")
-    img_hint_panel = pygame.image.load("programme/src/img/game_img/hint_panel.png")
->>>>>>> 39c970aacfbd4bd8b28f6efb05c3419fc399042a
-=======
     img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
     img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
+    img_btn_fin_tour = pygame.image.load("src/img/game_img/btn_tour.png")
+    img_btn_fin_tour = pygame.transform.scale(img_btn_fin_tour, (450, 70))
     img_bar = pygame.image.load("src/img/game_img/bar_life.png")
->>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
@@ -39,7 +31,7 @@ def game_screen_init(screen):
     align_left = 70
     sHeight = screen.get_height()
     sWidth = screen.get_width()
-    panel_outil = Rectangle(
+    panel_outil = RectangleView(
         screen,
         (0, sHeight - 140),
         dim=(sWidth, 140),
@@ -47,9 +39,7 @@ def game_screen_init(screen):
         scale=1,
     )
 
-    desciprtion_data = read_json("src/json/Description.json")
-    print(desciprtion_data["GoEntrée"][1])
-
+# Bouton option
     tache_bouton = Button(
         screen,
         (align_left, sHeight - 110),
@@ -71,13 +61,15 @@ def game_screen_init(screen):
         4,
         text="Mission",
     )
+    # Bouton Déplacement
+
     GoEntre = Button(
         screen,
         (0,0),
         img_bouton_standard,
         4,
         text="Entrée",
-        function=lambda: description_bouton_update(desciprtion_data["GoEntrée"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Entrée"],pos=(1450,510),dim=(200,100),police_taille=36),
 
     )
     GoElectric = Button(
@@ -86,7 +78,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Electricité",
-        function=lambda: description_bouton_update(desciprtion_data["GoElectric"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Electricité"],pos=(1450,510),dim=(200,100),police_taille=36),
 
     )
 
@@ -96,7 +88,7 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Travail",
-        function=lambda: description_bouton_update(desciprtion_data["GoTravail"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Travail"],pos=(1450,510),dim=(200,100),police_taille=36),
 
     )
     GoMange = Button(
@@ -105,8 +97,24 @@ def game_screen_init(screen):
         img_bouton_standard,
         4,
         text="Mange",
-        function=lambda: description_bouton_update(desciprtion_data["GoMange"],pos=(1563,32),dim=(300,230),police_taille=24),
+        function=lambda: description_bouton_update(liste_longeurs["Mange"],pos=(1450,510),dim=(200,100),police_taille=36),
 
+    )
+    GoMachine = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        4,
+        text="Machine",
+        function=lambda: description_bouton_update(liste_longeurs["Machine"],pos=(1450,510),dim=(200,100),police_taille=36),
+    )
+    GoEntrepot = Button(
+        screen,
+        (0,0),
+        img_bouton_standard,
+        4,
+        text="Entrepôt",
+        function=lambda: description_bouton_update(liste_longeurs["Entrepôt"],pos=(1450,510),dim=(200,100),police_taille=36),
     )
     Up = Button(
         screen,
@@ -127,7 +135,7 @@ def game_screen_init(screen):
 
 
 
-
+# Barre
     Energie = barre_de_vie(screen, (63,15), (300,30), scale=1)
     Energie.set_value(0.25)
     Stress = barre_de_vie(screen, (63,75), (300,30), scale=1,color2=(127,0,255))
@@ -141,7 +149,7 @@ def game_screen_init(screen):
     bob = Ouvrier(screen, mapes)
 
     menu_Deroulent = Menu_Deroulent(
-        [GoEntre, GoElectric, GoTravail, GoMange],#bouton qu'on ici
+        [GoEntre, GoElectric, GoTravail, GoMange,GoMachine,GoEntrepot],#bouton qu'on ici
         (1650, 900),(200,400),#position du coin bas gauche !! et taille du menu
         up=Up,#bouton up
         down=Down,#bouton down
@@ -156,16 +164,17 @@ def game_screen_init(screen):
     mission2 = Button(screen, (125,125),img_bouton_standard,1,text="mission2",function=lambda:Affiche_tache_m2.update())
     mission3 = Button(screen, (125,125),img_bouton_standard,1,text="mission3",function=lambda:Affiche_tache_m3.update())
     Liste_Attente=[mission1,mission2,mission3]
+
     Menu_Liste_Attente= Menu_Deroulent(
         Liste_Attente,
-        (63,560),(180,250),
+        (63,475),(180,360),
         up=Liste_mission,
         nombre_bouton_affiche=3,
         police_taille=24
     )
 
 
-
+# Bouton Tache
     Répondre_aux_mails = Button(screen, (125,125),img_bouton_standard,1,text="Répondre aux mails") 
     Réunion_improvisée = Button(screen, (125,125),img_bouton_standard,1,text="Réunion improvisée")
     Rapport_express = Button(screen, (125,125),img_bouton_standard,1,text="Rapport express")
@@ -177,16 +186,30 @@ def game_screen_init(screen):
     Brainstorming = Button(screen,(0,0),img_bouton_standard,1,text="Brainstorming")
     Design_prototype = Button(screen, (125,125),img_bouton_standard,1,text="Design prototype")
     Pitch_client = Button(screen, (125,125),img_bouton_standard,1,text="Pitch client")
+
     Up_taches = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
     Down_taches = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
 
-    Liste_taches=[Répondre_aux_mails,Réunion_improvisée,Rapport_express,
-                    Analyse_marché,Plan_stratégique,Présentation_finale,
-                    Brainstorming,Design_prototype,Pitch_client]
+    Liste_Entrée=[Répondre_aux_mails,Réunion_improvisée,Rapport_express]
+    Liste_Electricité=[Analyse_marché,Plan_stratégique,Présentation_finale]
+    Liste_Travail=[Brainstorming,Design_prototype,Pitch_client]
+    Liste_Machine=[Brainstorming,Analyse_marché]
+    Liste_Entrepôt=[Pitch_client,Design_prototype]
+    Liste_Mange=[Plan_stratégique,Rapport_express]
+    Tache_par_pièce={
+        "Entrée":Liste_Entrée,
+        "Electricité":Liste_Electricité,
+        "Travail":Liste_Travail,
+        "Machine":Liste_Machine,
+        "Entrepôt":Liste_Entrepôt,
+        "Mange":Liste_Mange
+    }
+
+
 
     Menu_taches=Menu_Deroulent(
-        Liste_taches,
-        (63, 929),(300,260),
+        Tache_par_pièce[bob_pièce],
+        (82, 941),(200,460),
         up=Up_taches,
         down=Down_taches,
         nombre_bouton_affiche=3,
@@ -197,24 +220,36 @@ def game_screen_init(screen):
     Tache2m1 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m1")
     Tache3m1 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m1")
     Liste_Tache_m1=[Tache1m1,Tache2m1,Tache3m1]
-    Affiche_tache_m1= Menu_Deroulent(Liste_Tache_m1,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
+    Affiche_tache_m1= Menu_Deroulent(Liste_Tache_m1,(243,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
 
     Tache1m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache1 m2")
     Tache2m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m2")
     Tache3m2 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m2")
     Liste_Tache_m2=[Tache1m2,Tache2m2,Tache3m2]
-    Affiche_tache_m2= Menu_Deroulent(Liste_Tache_m2,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
-
+    Affiche_tache_m2= Menu_Deroulent(Liste_Tache_m2,(243,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
     Tache1m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache1 m3")
     Tache2m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache2 m3")
     Tache3m3 = Button(screen, (0,0),img_bouton_standard,3,text="Tache3 m3")     
     Liste_Tache_m3=[Tache1m3,Tache2m3,Tache3m3]
-    Affiche_tache_m3= Menu_Deroulent(Liste_Tache_m3,(243,560),(180,250),nombre_bouton_affiche=3,police_taille=24)
+    Affiche_tache_m3= Menu_Deroulent(Liste_Tache_m3,(243,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
+
+    # system tour
+
+    background_meca_tour = ImageView(screen, (sWidth - 300,sHeight - 90),0.6,
+                                     "src/img/game_img/background_meca_tour.png")
+    img_statue = ImageView(screen, (sWidth - 300,sHeight - 130),0.8,"src/img/game_img/statue/statue_loading.png")
+    txt_N_tour = TextView(screen, (sWidth - 420,sHeight - 90),1,"0 tour","Black",police=20)
+    txt_heure = TextView(screen, (sWidth - 200,sHeight - 90), 1, "00:00", "Black",police=20)
+
+    btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text="Fin de tour (60/60)",police_taille=4)
 
 def game_update():
+    data = read_json("network/data_client.json")
+
     mapes.update()
     panel_outil.update()
-    hint_panel.update()
+    if loading:
+        hint_panel.update()
     bob.update()
     Energie.update()
     Stress.update()
@@ -228,6 +263,13 @@ def game_update():
         if panel_taches:
             Menu_taches.update()
 
+        img_statue.update()
+        background_meca_tour.update()
+        txt = data["tour"]
+        txt_N_tour.change_text(f"{txt} tours")
+        txt_N_tour.update()
+        txt_heure.update()
+        btn_fin_tour.update()
 
 def close_panel():
     global var_open_panel
@@ -244,7 +286,6 @@ def close_panel():
     panel_outil.change_dim((panel_outil.get_rect().width, 50))
     panel_outil.change_position((0, screen.get_height() - 50))
 
-
 def open_panel():
     global var_open_panel
     var_open_panel = True
@@ -260,7 +301,6 @@ def open_panel():
     panel_outil.change_dim((panel_outil.get_rect().width, 140))
     panel_outil.change_position((0, screen.get_height() - 140))
 
-
 def toggle_deplacement():  # menu déroulant déplacement
     global panel_deplacement
     panel_deplacement = not panel_deplacement
@@ -275,8 +315,18 @@ def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, 
         description_bouton.change_dim(dim, police_taille)
         description_bouton.update()
 
+def Update_Objectif(objectif,liste_longeurs):
+    global bob_pièce,Tache_par_pièce
+    data = read_json("network/data_client.json")
 
-def event_outil_panel(event):
+    bob.Set_Objectif(objectif,liste_longeurs)
+    bob_pièce=objectif
+    Menu_taches.change_liste(Tache_par_pièce[bob_pièce])
+
+    data["action_realisee"].append(objectif)
+
+def event_outil_panel(event, client):
+    data = read_json("network/data_client.json")
     if var_open_panel:
         hint_panel.event(event, pygame.mouse.get_pos(), close_panel)
         tache_bouton.animation_check_color(pygame.mouse.get_pos())
@@ -288,15 +338,22 @@ def event_outil_panel(event):
             Down.animation_check_color(pygame.mouse.get_pos())
             Down.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(1))
             GoEntre.animation_check_color(pygame.mouse.get_pos())
-            GoEntre.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Entrée"))
+            GoEntre.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Entrée", liste_longeurs))
             GoElectric.animation_check_color(pygame.mouse.get_pos())
-            GoElectric.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Electricité"))
+            GoElectric.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Electricité", liste_longeurs))
             GoTravail.animation_check_color(pygame.mouse.get_pos())
-            GoTravail.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Travail"))
+            GoTravail.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Travail", liste_longeurs))
             GoMange.animation_check_color(pygame.mouse.get_pos())
-            GoMange.event(event, pygame.mouse.get_pos(), lambda: bob.Set_Objectif("Mange"))
+            GoMange.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Mange", liste_longeurs))
+            GoMachine.animation_check_color(pygame.mouse.get_pos())
+            GoMachine.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Machine", liste_longeurs))
+            GoEntrepot.animation_check_color(pygame.mouse.get_pos())
+            GoEntrepot.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Entrepôt", liste_longeurs))
         deplacement_bouton.animation_check_color(pygame.mouse.get_pos())
         deplacement_bouton.event(event, pygame.mouse.get_pos(), lambda: toggle_deplacement())
+
+        btn_fin_tour.animation_check_color(pygame.mouse.get_pos())
+        btn_fin_tour.event(event, pygame.mouse.get_pos(), lambda : client().send_data())
 
         if panel_taches:
             Up_taches.animation_check_color(pygame.mouse.get_pos())
@@ -316,10 +373,21 @@ def event_outil_panel(event):
     else:
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 
+def loading_animation_serveur():
+    global loading
+    data  = read_json("network/data_client.json")
+    if (data["statue"] != 1):
+        close_panel()
+        loading = False
+    if(data["statue"]==2):
+        for obj in data["action_realisee"]:
+            Update_Objectif(obj, liste_longeurs)
+            # attendre que la tache est finie
 
-def Game_screen(screen,lang, pageset, pageget, clock):
-    global lg
-    lg=lang
+def Game_screen(screen,language, client, pageset, pageget, clock):
+    global lg, loading
+    lg = language
+    loading = True
     game_active = True
     game_screen_init(screen)
     while game_active:
@@ -329,9 +397,11 @@ def Game_screen(screen,lang, pageset, pageget, clock):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            event_outil_panel(event)
+            event_outil_panel(event, client)
 
         game_active = pageget() == 1
+
+        loading_animation_serveur()
 
         clock.tick(60)
         pygame.display.flip()

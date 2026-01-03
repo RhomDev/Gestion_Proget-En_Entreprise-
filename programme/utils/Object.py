@@ -1,55 +1,27 @@
 import pygame
 
-
+# actionneur
 class Button:
-<<<<<<< HEAD
-    def __init__(self,screen,position,image,scale,
-                 language=None,text="", police=8,color_input=(255, 255, 255),color_input1=(255, 255, 255),
-                 position_text=(0, 0),):
-
-        self.screen = screen
-        self.position = position
-        self.main_font = pygame.font.SysFont("Arial", 1*police)
-        self._input_text = text
-        self.language = language
-
-        self.color = color_input
-        self._input_color = color_input
-        self._input_color1 = color_input1
-
-        self.position_text = position_text
-
-        # Charger et redimensionner l'image
-        self.image = pygame.transform.scale(image, (int(image.get_width() * scale), int(image.get_height() * scale)))
-        self.rect = pygame.Rect(position, (int(image.get_width() * scale), int(image.get_height() * scale)))
-        self._input_text = text
-
-    def update(self):
-        self.screen.blit(self.image, self.rect)
-        if self._input_text != "":
-            text_input = (self._input_text if self.language is None else self.language.get_text(self._input_text))
-            text = self.main_font.render(text_input, True, self.color)
-            text_rect = text.get_rect(center=self.rect.center)
-
-            self.screen.blit(text, text_rect)
-=======
     def __init__(
-        self,
-        screen,
-        position,
-        image,
-        scale,
-        text="",
-        color_input="Black",
-        color_input1="White",
-        position_text=(0, 0),
-        police_taille=1,
-        taille = (0,0),
+            self,
+            screen,
+            position,
+            image,
+            scale,
+            language=None,text="",
+            color_input="Black",
+            color_input1="White",
+            position_text=(0, 0),
+            police_taille=1,
+            taille=(0, 0),
 
-        function=None,
+            function=None,
 
     ):
-        self.main_font = pygame.font.SysFont("Arial", police_taille*8 * scale)
+        self.text_rect = None
+        self.rect = None
+
+        self.main_font = pygame.font.SysFont("Arial", police_taille * 8 * scale)
         self._input_text = text
         self._input_color = color_input
         self._input_color1 = color_input1
@@ -61,34 +33,33 @@ class Button:
         self.text = text
         self.actif = True
         self.taille = taille
+        self.language = language
 
         self.hovered = False
         self.function = function
         # Charger et redimensionner l'image
-        dim=(int(image.get_width() * scale), int(image.get_height() * scale))
+        dim = (int(image.get_width() * scale), int(image.get_height() * scale))
         self.change_dim(dim, police_taille * 8 * scale)
-        if self.taille != (0,0):
+        if self.taille != (0, 0):
             self.change_dim(self.taille, police_taille)
 
 
     def update(self):
         self.screen.blit(self.image, self.rect)
-        if self.text != "":
+        if self._input_text != "":
             self.screen.blit(self.text, self.text_rect)
         if self.hovered and self.function is not None:
             self.function()
-
-
 
     def change_dim(self,dim, police_taille):
         image = self.image
         self.image = pygame.transform.scale(image, dim)
         self.rect = pygame.Rect(self.position, dim)
         if self._input_text != "":
-            self.text = self.main_font.render(self._input_text, True, self._input_color)
-            self.main_font = pygame.font.SysFont("Arial", police_taille )
+            _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+            self.text = self.main_font.render(_text, True, self._input_color)
             self.text_rect = self.text.get_rect(center=self.rect.center)
->>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
+
 
     def get_rect(self):
         return self.rect
@@ -118,56 +89,20 @@ class Button:
 
     def change_text(self, text):
         self._input_text = text
-<<<<<<< HEAD
+        _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+        self.text = self.main_font.render(_text, True, self._input_color)
+        self.text_rect = self.text.get_rect(center=self.rect.center)
 
     def change_color(self, color):
-        self.color = color
-
-    def change_color_input(self, color):
-        self._input_color = color
-    def change_color_input1(self, color):
-        self._input_color1 = color
+        _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+        self.text = self.main_font.render(_text, True, color)
 
     def animation_check_color(self, position):
         if self._input_text != "":
             if self.rect.collidepoint(position):
-                self.color = self._input_color1
+                self.change_color(self._input_color1)
             else:
-                self.color = self._input_color
-
-    def event(self, event, position, function):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(position):
-                function()
-
-
-class TextView:
-    def __init__(self, screen, position, scale,
-                 text, color_input,police=8,language=None,
-                 color_input1=(255, 255, 255)
-    ):
-        self.screen = screen
-        self.main_font = pygame.font.SysFont("Arial", police)
-        self.position = position
-        self.language=language
-=======
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
-        self.text_rect = self.text.get_rect(center=self.rect.center)
-
-    def change_color(self, color):
-        self._input_color = color
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
-
-    def animation_check_color(self, position):
-        if self.text != "":
-            if self.rect.collidepoint(position):
-                self.text = self.main_font.render(
-                    self._input_text, True, self._input_color1
-                )
-            else:
-                self.text = self.main_font.render(
-                    self._input_text, True, self._input_color
-                )
+                self.change_color(self._input_color)
     def filtre(self, tint_color):
         surf = self.image.copy().convert_alpha()
         tint = pygame.Surface(surf.get_size(), pygame.SRCALPHA)
@@ -180,57 +115,71 @@ class TextView:
             self.hovered = True
         else:
             self.hovered = False
+class InputBox:
+    def __init__(self,screen,lang , position, dimension, font_size=32, text_hint=""):
+        self.rect = pygame.Rect(position, dimension)
+        self.screen = screen
+        self.color = pygame.Color('lightskyblue3')
+        self.text = ''
+        self.font = pygame.font.Font(None, font_size)
+        self.active = False
+        self.text_color = pygame.Color('black')
+        self.active_color = pygame.Color('gray')
+        self.inactive_color = pygame.Color('black')
 
+        self.hint = TextView(screen,(position[0]+50,position[1]+(dimension[1]/2)),1,text_hint,'gray',police=int(font_size/2), language=lang)
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.active = not self.active
+            else:
+                self.active = False
+            self.color = self.active_color if self.active else self.inactive_color
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    print(self.text)  # Faire quelque chose avec le texte
+                    self.text = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+
+    def get_text(self):
+        return self.text
+
+    def update(self):
+        pygame.draw.rect(self.screen, self.color, self.rect, 2)
+        text_surface = self.font.render(self.text, True, self.text_color)
+        self.screen.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))
+        if self.active:
+            cursor = pygame.Rect(self.rect.x + 5 + text_surface.get_width(), self.rect.y + 5, 2, self.rect.height - 10)
+            pygame.draw.rect(self.screen, self.text_color, cursor)
+        else:
+            if self.text == "":
+                self.hint.update()
+
+
+# visuelle
 class TextView:
     def __init__(
-        self, screen, position, scale, text, color_input, color_input1=(255, 255, 255)
+        self, screen, position, scale, text, color_input,language=None, color_input1=(255, 255, 255),police=8
     ):
         self.screen = screen
-        self.main_font = pygame.font.SysFont("Arial", 8 * scale)
->>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
+        self.main_font = pygame.font.SysFont("Arial", police * scale)
         self.rect = pygame.Rect(
             position, (0, 0)
         )  # Rect vide, car TextView n'a pas d'image
+
         self._input_text = text
-<<<<<<< HEAD
-        self.color = color_input
+        self.language = language
         self._input_color = color_input
         self._input_color1 = color_input1
+        self.position_text=position
 
-
-    def update(self):
-        text_input = (self._input_text if self.language is None else self.language.get_text(self._input_text))
-        text = self.main_font.render(text_input, True, self.color)
-        text_rect = text.get_rect(center=self.position)
-        self.screen.blit(text, text_rect)
-
-    def change_text(self, text):
-        self._input_text = text
-
-    def change_color(self, color):
-        self._input_color = color
-
-    def animation_check_color(self, position):
-        if self.rect.collidepoint(position):
-            self.color = self._input_color1
-        else:
-            self.color = self._input_color
-
-
-class Rectangle:
-    def __init__(
-        self,
-        screen,
-        position,
-        dim=(0, 0),
-        scale=1,
-        color=None,
-        img=None,
-    ):
-=======
-        self._input_color = color_input
-        self._input_color1 = color_input1
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
+        _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+        self.text = self.main_font.render(_text, True, self._input_color)
         self.text_rect = self.text.get_rect(center=position)
 
     def update(self):
@@ -238,7 +187,8 @@ class Rectangle:
 
     def change_text(self, text):
         self._input_text = text
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
+        _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+        self.text = self.main_font.render(_text, True, self._input_color)
         self.text_rect = self.text.get_rect(center=self.position_text)
 
     def change_color(self, color):
@@ -251,36 +201,46 @@ class Rectangle:
                 self._input_text, True, self._input_color1
             )
         else:
-            self.text = self.main_font.render(self._input_text, True, self._input_color)
+            _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
+            self.text = self.main_font.render(_text, True, self._input_color)
+class ImageView:
+    def __init__(self, screen, position, scale, image_path):
+        self.screen = screen
+        self.position = position
+        self.scale = scale
 
+        # Chargement image
+        self._image_path = image_path
+        self._original_image = pygame.image.load(image_path).convert_alpha()
 
-class Rectangle:
+        self.image = self._scale_image(self._original_image)
+        self.rect = self.image.get_rect(center=position)
+
+    def _scale_image(self, image):
+        width = image.get_width() * self.scale
+        height = image.get_height() * self.scale
+        return pygame.transform.scale(image, (width, height))
+
+    def update(self):
+        self.screen.blit(self.image, self.rect)
+
+    def change_image(self, image_path):
+        self._image_path = image_path
+        self._original_image = pygame.image.load(image_path).convert_alpha()
+        self.image = self._scale_image(self._original_image)
+        self.rect = self.image.get_rect(center=self.position)
+
+    def change_scale(self, scale):
+        self.scale = scale
+        self.image = self._scale_image(self._original_image)
+        self.rect = self.image.get_rect(center=self.position)
+class RectangleView:
     def __init__(self,screen,position, dim=(0, 0),scale=1, color=None, img=None):
->>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
         self.position = position
         self.screen = screen
 
         self.image = img
         self.color = color
-<<<<<<< HEAD
-
-        if img != None:
-            if dim != (0, 0):
-                self.image = pygame.transform.scale(
-                    img, (int(dim[0] * scale), int(dim[1] * scale))
-                )
-                self.rect = pygame.Rect(
-                    position, (int(dim[0] * scale), int(dim[1] * scale))
-                )
-            else:
-                self.image = pygame.transform.scale(
-                    img, (int(img.get_width() * scale), int(img.get_height() * scale))
-                )
-                self.rect = pygame.Rect(
-                    position,
-                    (int(img.get_width() * scale), int(img.get_height() * scale)),
-                )
-=======
         self.centers = [int(position[0]+dim[0]/2) ,int(position[1]+dim[1]/2)  ]
 
         if img != None:
@@ -291,7 +251,6 @@ class Rectangle:
                 self.image = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
                 self.rect = pygame.Rect(
                     position,(int(img.get_width() * scale), int(img.get_height() * scale)),)
->>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
         else:
             self.rect = pygame.Rect(
                 position, (int(dim[0] * scale), int(dim[1] * scale))
@@ -374,73 +333,32 @@ class Rectangle:
                 position, (int(dim[0] * scale), int(dim[1] * scale))
             )
 
-<<<<<<< HEAD
-class InputBox:
-    def __init__(self,screen,lang , position, dimension, font_size=32, text_hint=""):
-        self.rect = pygame.Rect(position, dimension)
-        self.screen = screen
-        self.color = pygame.Color('lightskyblue3')
-        self.text = ''
-        self.font = pygame.font.Font(None, font_size)
-        self.active = False
-        self.text_color = pygame.Color('black')
-        self.active_color = pygame.Color('gray')
-        self.inactive_color = pygame.Color('black')
 
-        self.hint = TextView(screen,(position[0]+50,position[1]+(dimension[1]/2)),1,text_hint,'gray',police=int(font_size/2), language=lang)
-
-    def handle_event(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                self.active = not self.active
-            else:
-                self.active = False
-            self.color = self.active_color if self.active else self.inactive_color
-        if event.type == pygame.KEYDOWN:
-            if self.active:
-                if event.key == pygame.K_RETURN:
-                    print(self.text)  # Faire quelque chose avec le texte
-                    self.text = ''
-                elif event.key == pygame.K_BACKSPACE:
-                    self.text = self.text[:-1]
-                else:
-                    self.text += event.unicode
-
-    def get_text(self):
-        return self.text
-
-    def update(self):
-        pygame.draw.rect(self.screen, self.color, self.rect, 2)
-        text_surface = self.font.render(self.text, True, self.text_color)
-        self.screen.blit(text_surface, (self.rect.x + 5, self.rect.y + 5))
-        if self.active:
-            cursor = pygame.Rect(self.rect.x + 5 + text_surface.get_width(), self.rect.y + 5, 2, self.rect.height - 10)
-            pygame.draw.rect(self.screen, self.text_color, cursor)
-        else:
-            if self.text == "":
-                self.hint.update()
-=======
 
 class Menu_Deroulent:
     def __init__(s,list_bouton,position_bas,size,up=None,down=None,police_taille=20,nombre_bouton_affiche=3):
         s.size = size
-
+        s.nombre_bouton_affiche=nombre_bouton_affiche
         s.liste=list_bouton
-        s.n=nombre_bouton_affiche
+        if nombre_bouton_affiche < len(s.liste):
+            s.n=nombre_bouton_affiche
+        else:
+            s.n=len(s.liste)
+        print("nombre de bouton affiche :",s.n)
         s.index=0
-        s.position = [ position_bas[0] , position_bas[1] - size[1]* ( 1 + 1/s.n)]
+        s.position = [ position_bas[0] , position_bas[1] - size[1]]
         s.affiche= s.liste[s.index:s.index+s.n]
         s.police_taille = police_taille
-        s.dim = [size[0],size[1]/s.n]
+        s.dim = [size[0],size[1]/(s.n+2)]
         s.up=up
         s.down=down
 
 
         s.init_flèche()
-        s.deroule(0)
-        s.deroule(1)
-        s.deroule(-1)
-        s.deroule(-1)
+        for i in range(len(s.liste)):
+            s.deroule(1)
+        for i in range(len(s.liste)):
+            s.deroule(-1)
 
     def update(s):
         #print(pygame.mouse.get_pos())
@@ -452,16 +370,16 @@ class Menu_Deroulent:
             s.affiche[i].update()
 
     def deroule(s,k):
-        #print(s.index , k)
         if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
+            #print("index : ",s.index ,"k:", k,"index + s.n:",s.index + s.n)
             if k>0:
-                s.affiche[s.index].actif = False
+                s.affiche[0].actif = False
             if k<0:
-                s.affiche[s.index + s.n-2].actif = False
+                s.affiche[-1].actif = False
             s.index=s.index + k
         s.affiche= s.liste[s.index:s.index+s.n]
         for i in range(s.n):
-            boutonpos=[ s.position[0] , s.position[1]+i*s.dim[1]]
+            boutonpos=[ s.position[0] , s.position[1] + (i+1) * s.dim[1]]
             s.affiche[i].actif = True
             s.affiche[i].change_dim(s.dim,s.police_taille)
             s.affiche[i].change_position(boutonpos)
@@ -469,14 +387,28 @@ class Menu_Deroulent:
 
     def init_flèche(s):
         if s.up is not None:
-            fleche_up=[ s.position[0] , s.position[1]-s.dim[1]]
+            fleche_up=[ s.position[0] , s.position[1]]
             s.up.change_position(fleche_up)
             s.up.change_dim(s.dim,s.police_taille)
         if s.down is not None:    
-            fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*s.n]
+            fleche_down=[ s.position[0] , s.position[1]+s.dim[1]*(s.n+1)]
             s.down.change_position(fleche_down)
             s.down.change_dim(s.dim,s.police_taille)
-
+    
+    def change_liste(s,list_bouton):
+        s.liste=list_bouton
+        s.index=0
+        s.affiche= s.liste[s.index:s.index+s.n]
+        if s.nombre_bouton_affiche < len(s.liste):
+            s.n=s.nombre_bouton_affiche
+        else:
+            s.n=len(s.liste)
+        
+        for i in range(len(s.liste)):
+            s.deroule(1)
+        for i in range(len(s.liste)):
+            s.deroule(-1)
+        s.init_flèche()
 
 class barre_de_vie:
     def __init__(s,screen,position,dim,scale=1,color1=(192,192,192),color2=(255,200,0)):
@@ -499,4 +431,5 @@ class barre_de_vie:
         s.rect = pygame.Rect(s.position, (int(dim[0] * s.scale), int(dim[1] * s.scale)))
     def set_value(s, vie):
         s.rec_vie = pygame.Rect(s.position, (int(s.dim[0] * s.scale) * vie, int(s.dim[1] * s.scale)))
->>>>>>> 9212f0b01ed2a1573c52b80ae04bc537e3cd42a3
+
+
