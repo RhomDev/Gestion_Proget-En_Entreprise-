@@ -1,16 +1,16 @@
 {
-    "id": 0,
+    "id": 1,
     "wait_new": [
         2,
         2
     ],
-    "tour": 4,
+    "tour": 1,
     "bob": {
         "stress": 0,
         "fatigue": 0
     },
     "action_realisee": [],
-    "statue": 0,
+    "statue": 1,
     "effet_actif": "aucun",
     "mission": [],
     "mission_faite": []
