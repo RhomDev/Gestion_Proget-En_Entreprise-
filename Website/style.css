@@ -1,0 +1,104 @@
+/* =========================
+   STYLE GLOBAL
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Police générale et fond */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f8;
+    color: #222;
+    line-height: 1.6;
+}
+
+/* =========================
+   EN-TÊTE
+   ========================= */
+
+header {
+    background-color: #1f2933;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.85;
+}
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+section h2 {
+    margin-bottom: 15px;
+    color: #1f2933;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 8px;
+}
+
+section h3 {
+    margin-top: 20px;
+    color: #374151;
+}
+
+/* Texte */
+section p {
+    margin-bottom: 12px;
+}
+
+/* =========================
+   LISTES
+   ========================= */
+
+ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* =========================
+   PIED DE PAGE
+   ========================= */
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1f2933;
+    color: white;
+    margin-top: 60px;
+    font-size: 0.9rem;
+}
+
+/* =========================
+   EFFETS LÉGERS
+   ========================= */
+
+section:hover {
+    transform: scale(1.01);
+    transition: transform 0.2s ease;
+}
