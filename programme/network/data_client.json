@@ -4,7 +4,11 @@
         2,
         2
     ],
+<<<<<<< HEAD
     "tour": 1,
+=======
+    "tour": 3,
+>>>>>>> eb90fd421a0d9fff99fb58a7e045a3f4fb8a6162
     "bob": {
         "stress": 0,
         "fatigue": 0

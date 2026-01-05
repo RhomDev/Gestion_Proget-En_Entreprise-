@@ -13,11 +13,13 @@ def game_screen_init(screen):
         panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
         Up_taches,Down_taches,panel_taches,mission1,mission2,mission3,GoEntrepot,GoMachine,liste_longeurs,Tache_par_pièce,\
         background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue
+
     panel_deplacement = False
     panel_taches = False
     bob_pièce = "Entrée"
     liste_longeurs = {"Entrée":"0","Electricité":"0","Travail":"0","Mange":"0","Machine":"0","Entrepôt":"0"}
     var_open_panel = True
+
     img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
     img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
@@ -244,7 +246,7 @@ def game_screen_init(screen):
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text="Fin de tour (60/60)",police_taille=4)
 
 def game_update():
-    data = read_json("network/data_client.json")
+    data = cl.get_shared_data()
 
     mapes.update()
     panel_outil.update()
@@ -317,7 +319,7 @@ def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, 
 
 def Update_Objectif(objectif,liste_longeurs):
     global bob_pièce,Tache_par_pièce
-    data = read_json("network/data_client.json")
+    data = cl.get_shared_data()
 
     bob.Set_Objectif(objectif,liste_longeurs)
     bob_pièce=objectif
@@ -325,8 +327,13 @@ def Update_Objectif(objectif,liste_longeurs):
 
     data["action_realisee"].append(objectif)
 
+def fin_tour(client):
+    data = client().get_shared_data()
+    data["statue"]=2
+    client().update_json_file(data)
+    client().send_data()
+
 def event_outil_panel(event, client):
-    data = read_json("network/data_client.json")
     if var_open_panel:
         hint_panel.event(event, pygame.mouse.get_pos(), close_panel)
         tache_bouton.animation_check_color(pygame.mouse.get_pos())
@@ -353,7 +360,7 @@ def event_outil_panel(event, client):
         deplacement_bouton.event(event, pygame.mouse.get_pos(), lambda: toggle_deplacement())
 
         btn_fin_tour.animation_check_color(pygame.mouse.get_pos())
-        btn_fin_tour.event(event, pygame.mouse.get_pos(), lambda : client().send_data())
+        btn_fin_tour.event(event, pygame.mouse.get_pos(), lambda: fin_tour(client))
 
         if panel_taches:
             Up_taches.animation_check_color(pygame.mouse.get_pos())
@@ -373,20 +380,24 @@ def event_outil_panel(event, client):
     else:
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 
-def loading_animation_serveur():
+def loading_animation_serveur(client):
     global loading
-    data  = read_json("network/data_client.json")
+    data  = client().get_shared_data()
+    print(data["statue"])
     if (data["statue"] != 1):
         close_panel()
         loading = False
+    else:
+        open_panel()
     if(data["statue"]==2):
         for obj in data["action_realisee"]:
             Update_Objectif(obj, liste_longeurs)
             # attendre que la tache est finie
 
 def Game_screen(screen,language, client, pageset, pageget, clock):
-    global lg, loading
+    global lg, loading, cl
     lg = language
+    cl = client()
     loading = True
     game_active = True
     game_screen_init(screen)
@@ -401,7 +412,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 
         game_active = pageget() == 1
 
-        loading_animation_serveur()
+        loading_animation_serveur(client)
 
         clock.tick(60)
         pygame.display.flip()

@@ -1,18 +1,24 @@
 import json
 import os
-
+import time
 
 # la sortie est un tableau soit: data = read_json("file.json")
 # data["nom_variable"]
-def read_json(file):
-    if not os.path.exists(file):
-        return None
-
-    with open(file, "r", encoding="utf-8") as file:
-        content = file.read().strip()
-        if content == "":
-            return None  # fichier vide → pas d'erreur
-        return json.loads(content)
+def read_json(path, retry=10, delay=0.1):
+    for _ in range(retry):
+        if not os.path.exists(path):
+            time.sleep(delay)
+            continue
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+                if content:
+                    return json.loads(content)
+        except json.JSONDecodeError:
+            pass  # fichier en cours d'écriture
+        time.sleep(delay)
+        print(_)
+    return None
 
 
 # il faut que data soit un tableau
