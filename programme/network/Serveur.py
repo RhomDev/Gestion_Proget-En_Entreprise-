@@ -109,6 +109,9 @@ class Serveur(threading.Thread):
 
     def synchronize_players(self, original_id):
         with self.lock:
+            if self.shared_data["players"][original_id]["statue"]==2:
+                self.shared_data["players"][original_id]["statue"] = 0
+
             original_player = self.shared_data["players"][original_id]
 
             for i, player in enumerate(self.shared_data["players"]):
