@@ -1,167 +1,134 @@
 import socket
 import threading
 import json
-import time
 import random
-
 import utils.Read_Data as j
 
-
 class Serveur(threading.Thread):
-    def __init__(self, host='0.0.0.0', port=13546, file="network/data_serveur.json", nb_wait=0):
+    def __init__(self, host="0.0.0.0", port=5555, file="network/data_serveur.json", nb_wait=0):
         super().__init__(daemon=True)
         self.host = host
         self.port = port
         self.file = file
+        j.write_json(file, j.read_json("network/data.json"))
 
-        self.clients = []  # liste des sockets clients
-        self.shared_data = {}  # données partagées (JSON)
+        self.clients = []
         self.lock = threading.Lock()
         self.running = True
+        self.init_started = False
+        self.shared_data = j.read_json(file)
 
-        # Charger le JSON existant
-        self.load_json()
-        with self.lock:
-            self.shared_data = j.read_json("network/data.json")
-            self.shared_data["wait_nb_player"] = nb_wait
-            self.save_json()
+        self.save_json()
+        self.shared_data["wait_nb_player"] = nb_wait
 
-    # Charger le JSON existant
-    def load_json(self):
-        with open(self.file, "r", encoding="utf-8") as f:
-            self.shared_data = json.load(f)
-
-    # Sauvegarder le JSON
-    def save_json(self):
-        with open(self.file, "w", encoding="utf-8") as f:
-            json.dump(self.shared_data, f, indent=4, ensure_ascii=False)
-
-    # Lancement du serveur
     def run(self):
-        try:
-            self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.server_socket.bind((self.host, self.port))
-            self.server_socket.listen()
-            print(f"Serveur démarré sur {self.host}:{self.port}")
-        except OSError as e:
-            print(f"Erreur serveur lors du bind : {e}")
-            self.running = False
-            return  # Arrêter le thread si le port est occupé
+        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket.bind((self.host, self.port))
+        self.server_socket.listen()
+        print(f"Serveur lancé sur {self.host}:{self.port}")
 
         while self.running:
-            try:
-                client_socket, addr = self.server_socket.accept()
-                print(f"Nouveau client connecté : {addr}")
-
-                new_id = len(self.clients)
-
+            client_socket, addr = self.server_socket.accept()
+            with self.lock:
+                client_id = len(self.clients)
                 self.clients.append(client_socket)
+                self.shared_data["nb_player"] = len(self.clients)
+                self.shared_data["players"].append(j.read_json("network/data_player.json"))
+                self.synchro_init_serveur()
+                self.save_json()
+                self.broadcast_state()
 
-                with self.lock:
-                    self.shared_data["nb_player"]+=1
-                    self.shared_data["players"][new_id]["wait_new"][0]=self.shared_data["wait_nb_player"]
-                    self.shared_data["players"][new_id]["wait_new"][1] = new_id+1
-                    self.save_json()
-                self.synchronize_players(new_id)
+            print(f"Client {client_id} connecté")
 
-                self.broadcast_all()
+            threading.Thread(
+                target=self.handle_client,
+                args=(client_socket, client_id),
+                daemon=True
+            ).start()
 
-                # Thread pour gérer ce client
-                threading.Thread(
-                    target=self.handle_client,
-                    args=(client_socket, new_id),
-                    daemon=True
-                ).start()
-
-            except OSError:
-                break
-
-    # Gestion d'un client
     def handle_client(self, client_socket, client_id):
         buffer = ""
-
         while self.running:
             try:
+                with self.lock:
+                    if (self.shared_data["wait_nb_player"] == self.shared_data["nb_player"]) and not self.init_started:
+                        self.init_started = True
+                        self.select_new_master()
+                        self.save_json()
+                        self.broadcast_state()
+
                 data = client_socket.recv(4096)
                 if not data:
                     break
 
                 buffer += data.decode()
-
                 while "\n" in buffer:
                     line, buffer = buffer.split("\n", 1)
-                    received_data = json.loads(line)
-
-                    print(f"Reçu du client {client_id} :", received_data)
-
-                    with self.lock:
-                        self.shared_data["players"][client_id].update(received_data)
-                        self.save_json()
-
-                    self.synchronize_players(client_id)
-                    self.change_player()
-                    self.broadcast_all()
+                    msg = json.loads(line)
+                    print("Client ", client_id, " -> Serveur:", msg)
+                    self.handle_message(client_id, msg)
 
             except (ConnectionResetError, json.JSONDecodeError):
                 break
 
         self.disconnect_client(client_id)
 
-    def synchronize_players(self, original_id):
+    def handle_message(self, client_id, msg):
         with self.lock:
-            if self.shared_data["players"][original_id]["statue"]==2:
-                self.shared_data["players"][original_id]["statue"] = 0
+            player = self.shared_data["players"][client_id]
 
-            original_player = self.shared_data["players"][original_id]
+            # 🔹 Action du maître
+            if msg["type"] == "action" and player["statue"] == 1:
+                for i in range(self.shared_data["nb_player"]):
+                    self.shared_data["players"][i]["action_realisee"] = msg["action"]
 
-            for i, player in enumerate(self.shared_data["players"]):
-                if i != original_id:
-                    player_id = player["id"]
-                    self.shared_data["players"][i] = original_player.copy()
-                    self.shared_data["players"][i]["id"] = player_id
-                    self.shared_data["players"][i]["statue"] = 2
+            # 🔹 Fin d’animation
+            elif msg["type"] == "animation_done":
+                player["action_realisee"] = ""
+
+            # 🔹 Fin de tour
+            elif msg["type"] == "end_turn" and player["statue"] == 1:
+                player["statue"] = 0
+                self.select_new_master()
+
             self.save_json()
+            self.broadcast_state()
 
-    def change_player(self):
-        nombre = random.randint(0, len(self.clients) - 1)
-        print(f"le nouveau maitre client {nombre}")
-        with self.lock:
-            for i in range(len(self.clients)):
-                self.shared_data["players"][i]["statue"] = 0
-            self.shared_data["players"][nombre]["statue"] = 1
-            self.shared_data["player_maitre"] = nombre
-            # Mettre à jour le JSON serveur
-            self.save_json()
+    def select_new_master(self):
+        nombre = random.randint(0, self.shared_data["nb_player"] - 1)
+        for i in range(self.shared_data["nb_player"]):
+            self.shared_data["players"][i]["statue"] = 0
+        self.shared_data["players"][nombre]["statue"] = 1
+        self.shared_data["player_maitre"] = nombre
 
-    # Diffuser les données à tous les clients
-    def broadcast_all(self):
+    def broadcast_state(self):
+
+        for idx, client_socket in enumerate(self.clients[:]):
+            try:
+                message = json.dumps(self.shared_data["players"][idx]) + "\n"
+                print("Serveur -> Client", idx," : ", message)
+                client_socket.sendall(message.encode())
+            except (BrokenPipeError, ConnectionResetError):
+                self.clients.remove(client_socket)
+
+    def save_json(self):
+        with open(self.file, "w", encoding="utf-8") as f:
+            json.dump(self.shared_data, f, indent=4)
+
+    def disconnect_client(self, client_id):
         with self.lock:
-            for idx, client_socket in enumerate(self.clients[:]):
+            if client_id < len(self.clients):
                 try:
-                    message = json.dumps(self.shared_data["players"][idx]) + "\n"
-                    client_socket.sendall(message.encode())
-                except (BrokenPipeError, ConnectionResetError):
-                    self.disconnect_client(idx)
+                    self.clients[client_id].close()
+                except:
+                    pass
+                del self.clients[client_id]
+            self.shared_data["nb_player"] = len(self.clients)
+            print(f"Client {client_id} déconnecté")
 
-
-    def broadcast_local(self,id):
-        with self.lock:
-                try:
-                    message = json.dumps(self.shared_data["players"][id]).encode()
-                    self.clients[id].sendall(message)
-                except (BrokenPipeError, ConnectionResetError):
-                    print(f"Client {id} déconnecté")
-                    self.clients.remove(id)
-
-    # Arrêter le serveur
-    def stop(self):
-        self.running = False
-        self.server_socket.close()
-        for client in self.clients:
-            client.close()
-        self.clients.clear()
-
-    # Accès sécurisé aux données partagées
-    def get_shared_data(self):
-        with self.lock:
-            return self.shared_data
+    def synchro_init_serveur(self):
+        for i in range(len(self.clients)):
+            player= self.shared_data["players"][i]
+            player["id"] = i
+            player["nb_player"] = self.shared_data["nb_player"]
+            player["wait_nb_player"] = self.shared_data["wait_nb_player"]

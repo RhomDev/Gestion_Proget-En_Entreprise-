@@ -246,11 +246,11 @@ def game_screen_init(screen):
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text="Fin de tour (60/60)",police_taille=4)
 
 def game_update():
-    data = cl.get_shared_data()
+    data = cl.get_state()
 
     mapes.update()
     panel_outil.update()
-    if loading:
+    if data["statue"]==1:
         hint_panel.update()
     bob.update()
     Energie.update()
@@ -319,19 +319,13 @@ def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, 
 
 def Update_Objectif(objectif,liste_longeurs):
     global bob_pièce,Tache_par_pièce
-    data = cl.get_shared_data()
 
     bob.Set_Objectif(objectif,liste_longeurs)
     bob_pièce=objectif
     Menu_taches.change_liste(Tache_par_pièce[bob_pièce])
 
-    data["action_realisee"].append(objectif)
-
 def fin_tour(client):
-    data = client().get_shared_data()
-    data["statue"]=2
-    client().update_json_file(data)
-    client().send_data()
+    client.send_end_turn()
 
 def event_outil_panel(event, client):
     if var_open_panel:
@@ -345,17 +339,17 @@ def event_outil_panel(event, client):
             Down.animation_check_color(pygame.mouse.get_pos())
             Down.event(event, pygame.mouse.get_pos(), lambda: menu_Deroulent.deroule(1))
             GoEntre.animation_check_color(pygame.mouse.get_pos())
-            GoEntre.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Entrée", liste_longeurs))
+            GoEntre.event(event, pygame.mouse.get_pos(), lambda: cl.send_action("Entrée"))
             GoElectric.animation_check_color(pygame.mouse.get_pos())
-            GoElectric.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Electricité", liste_longeurs))
+            GoElectric.event(event, pygame.mouse.get_pos(), lambda: cl.send_action("Electricité"))
             GoTravail.animation_check_color(pygame.mouse.get_pos())
-            GoTravail.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Travail", liste_longeurs))
+            GoTravail.event(event, pygame.mouse.get_pos(), lambda: cl.send_action("Travail"))
             GoMange.animation_check_color(pygame.mouse.get_pos())
-            GoMange.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Mange", liste_longeurs))
+            GoMange.event(event, pygame.mouse.get_pos(), lambda: cl.send_action("Mange"))
             GoMachine.animation_check_color(pygame.mouse.get_pos())
-            GoMachine.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Machine", liste_longeurs))
+            GoMachine.event(event, pygame.mouse.get_pos(), lambda: cl.send_action("Machine"))
             GoEntrepot.animation_check_color(pygame.mouse.get_pos())
-            GoEntrepot.event(event, pygame.mouse.get_pos(), lambda: Update_Objectif("Entrepôt", liste_longeurs))
+            GoEntrepot.event(event, pygame.mouse.get_pos(), lambda: cl.send_action("Entrepôt"))
         deplacement_bouton.animation_check_color(pygame.mouse.get_pos())
         deplacement_bouton.event(event, pygame.mouse.get_pos(), lambda: toggle_deplacement())
 
@@ -381,18 +375,16 @@ def event_outil_panel(event, client):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 
 def loading_animation_serveur(client):
-    global loading
-    data  = client().get_shared_data()
-    print(data["statue"])
-    if (data["statue"] != 1):
+    if client().get_state()["statue"] != 1:
         close_panel()
-        loading = False
     else:
         open_panel()
-    if(data["statue"]==2):
-        for obj in data["action_realisee"]:
-            Update_Objectif(obj, liste_longeurs)
-            # attendre que la tache est finie
+    if client().get_state()["action_realisee"] != "":
+        act = client().get_state()["action_realisee"]
+        Update_Objectif(act, liste_longeurs)
+        client().send_animation_done()
+
+
 
 def Game_screen(screen,language, client, pageset, pageget, clock):
     global lg, loading, cl

@@ -13,6 +13,9 @@ class Wait_Popup(Popup):
         self.text_panel = None
         self.nb_player = None
         self.btn_cancel = None
+
+        self.client_data = None
+
         self.language = language
 
         self.width_panel = 500
@@ -39,16 +42,18 @@ class Wait_Popup(Popup):
             self.rect_panel.update()
             self.btn_cancel.update()
             self.text_panel.update()
-            data = read_json("network/data_client.json")
+            data = self.client_data.get_state()
 
             if data is None:
                 return  # on attend encore que le serveur réponde
 
-            wait = data["wait_new"][0]
-            new_ = data["wait_new"][1]
+            wait = data["wait_nb_player"]
+            new_ = data["nb_player"]
             self.nb_player.change_text(f"{new_} / {wait}")
             self.nb_player.update()
 
+    def set_client(self,client):
+        self.client_data=client
 
     def event_handler(self,event, function_non):
         if self.get_active():
