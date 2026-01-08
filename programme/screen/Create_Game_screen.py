@@ -85,6 +85,8 @@ def create_server(set_client):
 
                     time.sleep(1)
 
+                    popup_wait.set_client(client)
+
                     popup_wait.change_active()
 
 
@@ -116,7 +118,10 @@ def joint_server(page,set_client):
         client = Client(host=ip, port=port)
 
         set_client(client)
-        page(Screen.GAME.value)
+
+        popup_wait.set_client(client)
+
+        popup_wait.change_active()
 
     except ConnectionRefusedError:
         txt_err_msg.change_text("Connexion refusée : serveur inaccessible")
@@ -156,14 +161,15 @@ def cancel_wait(client, set_client):
     popup_wait.change_active()
 
 def verif_wait(page, cl):
-    data = read_json("network/data_client.json")
+    if cl() is None:
+        return
+    data = cl().get_state()
     if data is None:
         return  # on attend encore que le serveur réponde
-    wait = data["wait_new"][0]
-    new_ = data["wait_new"][1]
+    wait = data["wait_nb_player"]
+    new_ = data["nb_player"]
     if wait==new_:
         page(Screen.GAME.value)
-        cl().send_data()
 
 
 
@@ -189,8 +195,9 @@ def Create_Game_screen(screen,lang, set_cl, get_cl,page,get, clock):
                 popup_wait.event_handler(event,
                                          lambda : cancel_wait(get_cl,set_cl))
                 popup_wait.animation_check_color()
-                verif_wait(page, get_cl)
 
+        if popup_wait.get_active():
+            verif_wait(page, get_cl)
 
         game_active = get() == Screen.LOBBY.value
 
