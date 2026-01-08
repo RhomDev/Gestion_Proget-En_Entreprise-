@@ -89,6 +89,8 @@ class Serveur(threading.Thread):
             # 🔹 Fin de tour
             elif msg["type"] == "end_turn" and player["statue"] == 1:
                 player["statue"] = 0
+                for i in range(self.shared_data["nb_player"]):
+                    self.shared_data["players"][i]["tour"] +=1
                 self.select_new_master()
 
             self.save_json()

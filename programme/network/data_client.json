@@ -1,6 +1,6 @@
 {
     "id": 0,
-    "statue": 0,
+    "statue": 1,
     "tour": 0,
     "bob": {
         "stress": 0,
@@ -10,7 +10,7 @@
     "effet_actif": "",
     "mission": [],
     "mission_faite": [],
-    "nb_player": 3,
-    "wait_nb_player": 3,
+    "nb_player": 1,
+    "wait_nb_player": 1,
     "player_maitre": 0
 }

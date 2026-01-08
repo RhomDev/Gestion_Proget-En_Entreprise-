@@ -5,6 +5,8 @@ from utils.Map import *
 from player.Ouvrier import *
 from utils.Read_Data import read_json, write_json
 
+from utils.Constant import Screen, Tache
+
 
 def game_screen_init(screen):
     global \
@@ -13,6 +15,8 @@ def game_screen_init(screen):
         panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
         Up_taches,Down_taches,panel_taches,mission1,mission2,mission3,GoEntrepot,GoMachine,liste_longeurs,Tache_par_pièce,\
         background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue
+
+    data_tache_info = read_json("src/data/tache/info.json")
 
     panel_deplacement = False
     panel_taches = False
@@ -177,6 +181,7 @@ def game_screen_init(screen):
 
 
 # Bouton Tache
+
     Répondre_aux_mails = Button(screen, (125,125),img_bouton_standard,1,text="Répondre aux mails") 
     Réunion_improvisée = Button(screen, (125,125),img_bouton_standard,1,text="Réunion improvisée")
     Rapport_express = Button(screen, (125,125),img_bouton_standard,1,text="Rapport express")
@@ -184,19 +189,19 @@ def game_screen_init(screen):
     Analyse_marché = Button(screen, (125,125),img_bouton_standard,1,text="Analyse marché")
     Plan_stratégique = Button(screen, (125,125),img_bouton_standard,1,text="Plan stratégique")
     Présentation_finale = Button(screen, (125,125),img_bouton_standard,1,text="Présentation finale")
-
-    Brainstorming = Button(screen,(0,0),img_bouton_standard,1,text="Brainstorming")
-    Design_prototype = Button(screen, (125,125),img_bouton_standard,1,text="Design prototype")
-    Pitch_client = Button(screen, (125,125),img_bouton_standard,1,text="Pitch client")
+    Liste_Travail = []
+    for key in data_tache_info:
+        btn = Button(screen,(0,0),img_bouton_standard,1,text=data_tache_info[key][0], language=lg)
+        Liste_Travail.append(btn)
 
     Up_taches = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
     Down_taches = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
 
     Liste_Entrée=[Répondre_aux_mails,Réunion_improvisée,Rapport_express]
     Liste_Electricité=[Analyse_marché,Plan_stratégique,Présentation_finale]
-    Liste_Travail=[Brainstorming,Design_prototype,Pitch_client]
-    Liste_Machine=[Brainstorming,Analyse_marché]
-    Liste_Entrepôt=[Pitch_client,Design_prototype]
+
+    Liste_Machine=[Analyse_marché]
+    Liste_Entrepôt=[]
     Liste_Mange=[Plan_stratégique,Rapport_express]
     Tache_par_pièce={
         "Entrée":Liste_Entrée,
@@ -325,7 +330,7 @@ def Update_Objectif(objectif,liste_longeurs):
     Menu_taches.change_liste(Tache_par_pièce[bob_pièce])
 
 def fin_tour(client):
-    client.send_end_turn()
+    client().send_end_turn()
 
 def event_outil_panel(event, client):
     if var_open_panel:
@@ -402,7 +407,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
                 pygame.quit()
             event_outil_panel(event, client)
 
-        game_active = pageget() == 1
+        game_active = pageget() == Screen.GAME.value
 
         loading_animation_serveur(client)
 

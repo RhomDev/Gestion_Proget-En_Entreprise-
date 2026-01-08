@@ -17,7 +17,13 @@
   "loggy::btn:server": "Serveur",
 
   "logging:popup::text:wait": "Attente des autres joueur ...",
-  "logging:popup::btn:cancel": "Annuler"
+  "logging:popup::btn:cancel": "Annuler",
 
-
+  "game:tache:info::text": [
+    "Installer un programme",
+    "Réparer un ordinateur",
+    "Redémarrer le Wi-Fi ",
+    "Mise à jour système",
+    "Réparer une grosse panne"
+  ]
 }

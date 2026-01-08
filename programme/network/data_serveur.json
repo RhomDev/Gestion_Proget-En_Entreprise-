@@ -1,26 +1,10 @@
 {
-    "nb_player": 3,
-    "wait_nb_player": 3,
-    "player_maitre": 1,
+    "nb_player": 1,
+    "wait_nb_player": 1,
+    "player_maitre": 0,
     "players": [
         {
             "id": 0,
-            "statue": 0,
-            "tour": 0,
-            "bob": {
-                "stress": 0,
-                "fatigue": 0
-            },
-            "action_realisee": "",
-            "effet_actif": "",
-            "mission": [],
-            "mission_faite": [],
-            "nb_player": 3,
-            "wait_nb_player": 3,
-            "player_maitre": 0
-        },
-        {
-            "id": 1,
             "statue": 1,
             "tour": 0,
             "bob": {
@@ -31,24 +15,8 @@
             "effet_actif": "",
             "mission": [],
             "mission_faite": [],
-            "nb_player": 3,
-            "wait_nb_player": 3,
-            "player_maitre": 0
-        },
-        {
-            "id": 2,
-            "statue": 0,
-            "tour": 0,
-            "bob": {
-                "stress": 0,
-                "fatigue": 0
-            },
-            "action_realisee": "",
-            "effet_actif": "",
-            "mission": [],
-            "mission_faite": [],
-            "nb_player": 3,
-            "wait_nb_player": 3,
+            "nb_player": 1,
+            "wait_nb_player": 1,
             "player_maitre": 0
         }
     ]
