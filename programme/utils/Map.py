@@ -57,13 +57,14 @@ class Nodes:
         s.cb2       = Node([718, 762], "CB2")
         s.machine   = Node([636, 712], "Machine")
         s.entrepot  = Node([887, 871], "Entrepôt")
-        s.objectifs = {"Entrée":0,"Electricité":0,"Travail":0,"Mange":0,"Machine":0,"Entrepôt":0}
+        s.dehors    = Node([1462, 756], "Dehors")
+        s.objectifs = {"Entrée":0,"Electricité":0,"Travail":0,"Mange":0,"Machine":0,"Entrepôt":0,"Dehors":0}
         s.noeuds = {
             "EntréeBis": s.EntreeBis, "Entrée": s.Entree,
             "A": s.a, "Electricité": s.electric, "B": s.b,
             "Mange": s.mange, "BA": s.ba, "Travail": s.travail,
             "C": s.c, "CA1": s.ca1, "CA2": s.ca2, "CB2": s.cb2,
-            "Machine": s.machine, "Entrepôt": s.entrepot
+            "Machine": s.machine, "Entrepôt": s.entrepot,"Dehors":s.dehors
         }
 
 
@@ -78,6 +79,7 @@ class Nodes:
         link(s.Entree, s.b)
         link(s.Entree, s.c)
         link(s.Entree, s.ca1)
+        link(s.Entree, s.dehors)
 
         link(s.a, s.b)
         link(s.a, s.c)

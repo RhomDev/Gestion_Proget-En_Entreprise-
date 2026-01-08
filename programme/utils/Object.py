@@ -14,13 +14,13 @@ class Button:
             position_text=(0, 0),
             police_taille=1,
             taille=(0, 0),
-
+            argument=None,
             function=None,
 
     ):
         self.text_rect = None
         self.rect = None
-
+        self.argument = argument
         self.main_font = pygame.font.SysFont("Arial", police_taille * 8 * scale)
         self._input_text = text
         self._input_color = color_input
@@ -371,11 +371,13 @@ class Menu_Deroulent:
 
     def deroule(s,k):
         if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
-            #print("index : ",s.index ,"k:", k,"index + s.n:",s.index + s.n)
-            if k>0:
-                s.affiche[0].actif = False
-            if k<0:
-                s.affiche[-1].actif = False
+            print("index : ",s.index ,"k:", k,"index + s.n:",s.index + s.n,"taille liste", len(s.affiche))
+            if len(s.affiche) !=0:
+                if k>0:
+                    s.affiche[0].actif = False
+                if k<0:
+                    s.affiche[-1].actif = False
+            
             s.index=s.index + k
         s.affiche= s.liste[s.index:s.index+s.n]
         for i in range(s.n):
