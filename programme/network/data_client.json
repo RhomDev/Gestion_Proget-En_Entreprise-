@@ -7,8 +7,57 @@
         "fatigue": 0
     },
     "action_realisee": "",
+    "tache_realisee": [],
     "effet_actif": "",
-    "mission": [],
+    "mission": [
+        [
+            [
+                "Problème dehors",
+                50,
+                "sorties bloquées 2 tours + 20 burnout"
+            ],
+            [
+                "Réparer une petite panne",
+                30
+            ],
+            [
+                "Maintenance complète",
+                45,
+                "toutes les tâches coûtent +10 crédits pendant 1 tour"
+            ]
+        ],
+        [
+            [
+                "Coller des affiches",
+                20,
+                "aucun effet"
+            ],
+            [
+                "Donner des consignes",
+                20,
+                "prochaine tâche −5 crédits"
+            ],
+            [
+                "Changer une pièce",
+                35
+            ]
+        ],
+        [
+            [
+                "Réparer une grosse panne",
+                50
+            ],
+            [
+                "Gérer l’inventaire",
+                40,
+                "réparations coûtent +10 crédits ce tour"
+            ],
+            [
+                "Réunion de crise",
+                50
+            ]
+        ]
+    ],
     "mission_faite": [],
     "nb_player": 1,
     "wait_nb_player": 1,

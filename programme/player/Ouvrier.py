@@ -28,7 +28,8 @@ class Ouvrier:
         s.pose = s.node.data
         s.obj = s.pose
         
-
+    def get_Longueur(s, objectif):
+        return s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
 
     def Set_Objectif(s, objectif,liste_longeurs):
         print(objectif)

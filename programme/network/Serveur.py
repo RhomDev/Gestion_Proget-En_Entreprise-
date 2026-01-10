@@ -82,9 +82,17 @@ class Serveur(threading.Thread):
                 for i in range(self.shared_data["nb_player"]):
                     self.shared_data["players"][i]["action_realisee"] = msg["action"]
 
+            # 🔹 Tache du maître
+            elif msg["type"] == "task":
+                for i in range(self.shared_data["nb_player"]):
+                    self.shared_data["players"][i]["tache_realisee"] = msg["action"]
+
             # 🔹 Fin d’animation
             elif msg["type"] == "animation_done":
-                player["action_realisee"] = ""
+                if player["action_realisee"] != "":
+                    player["action_realisee"] = ""
+                if player["tache_realisee"]:
+                    player["tache_realisee"] = []
 
             # 🔹 Fin de tour
             elif msg["type"] == "end_turn" and player["statue"] == 1:
@@ -92,6 +100,11 @@ class Serveur(threading.Thread):
                 for i in range(self.shared_data["nb_player"]):
                     self.shared_data["players"][i]["tour"] +=1
                 self.select_new_master()
+
+            # 🔹 Fin de tour
+            elif msg["type"] == "loading_mission":
+                player["mission"] = msg["action"]
+                player["mission_faite"] = msg["action_second"]
 
             self.save_json()
             self.broadcast_state()

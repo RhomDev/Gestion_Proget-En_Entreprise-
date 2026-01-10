@@ -97,6 +97,11 @@ class Button:
         _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
         self.text = self.main_font.render(_text, True, color)
 
+    def set_input_color1(self,color):
+        self._input_color1=color
+    def set_input_color(self,color):
+        self._input_color=color
+
     def animation_check_color(self, position):
         if self._input_text != "":
             if self.rect.collidepoint(position):
@@ -164,13 +169,13 @@ class InputBox:
 # visuelle
 class TextView:
     def __init__(
-        self, screen, position, scale, text, color_input,language=None, color_input1=(255, 255, 255),police=8
+        self, screen, position, scale, text, color_input,language=None, color_input1=(255, 255, 255),police=8,
+            function=None
     ):
         self.screen = screen
         self.main_font = pygame.font.SysFont("Arial", police * scale)
-        self.rect = pygame.Rect(
-            position, (0, 0)
-        )  # Rect vide, car TextView n'a pas d'image
+
+        self.function = function
 
         self._input_text = text
         self.language = language
@@ -191,15 +196,26 @@ class TextView:
         self.text = self.main_font.render(_text, True, self._input_color)
         self.text_rect = self.text.get_rect(center=self.position_text)
 
+    def change_dim(self,dim, police_taille):
+        return None
+
+    def change_position(self, position):
+        self.position_text = position
+        self.text_rect = self.text.get_rect(center=position)
+
     def change_color(self, color):
         self._input_color = color
         self.text = self.main_font.render(self._input_text, True, self._input_color)
 
     def animation_check_color(self, position):
-        if self.rect.collidepoint(position):
+
+        if self.text_rect.collidepoint(position):
+
             self.text = self.main_font.render(
                 self._input_text, True, self._input_color1
             )
+            if self.function is not None:
+                self.function()
         else:
             _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
             self.text = self.main_font.render(_text, True, self._input_color)

@@ -12,8 +12,57 @@
                 "fatigue": 0
             },
             "action_realisee": "",
+            "tache_realisee": [],
             "effet_actif": "",
-            "mission": [],
+            "mission": [
+                [
+                    [
+                        "Probl\u00e8me dehors",
+                        50,
+                        "sorties bloqu\u00e9es 2 tours + 20 burnout"
+                    ],
+                    [
+                        "R\u00e9parer une petite panne",
+                        30
+                    ],
+                    [
+                        "Maintenance compl\u00e8te",
+                        45,
+                        "toutes les t\u00e2ches co\u00fbtent +10 cr\u00e9dits pendant 1 tour"
+                    ]
+                ],
+                [
+                    [
+                        "Coller des affiches",
+                        20,
+                        "aucun effet"
+                    ],
+                    [
+                        "Donner des consignes",
+                        20,
+                        "prochaine t\u00e2che \u22125 cr\u00e9dits"
+                    ],
+                    [
+                        "Changer une pi\u00e8ce",
+                        35
+                    ]
+                ],
+                [
+                    [
+                        "R\u00e9parer une grosse panne",
+                        50
+                    ],
+                    [
+                        "G\u00e9rer l\u2019inventaire",
+                        40,
+                        "r\u00e9parations co\u00fbtent +10 cr\u00e9dits ce tour"
+                    ],
+                    [
+                        "R\u00e9union de crise",
+                        50
+                    ]
+                ]
+            ],
             "mission_faite": [],
             "nb_player": 1,
             "wait_nb_player": 1,

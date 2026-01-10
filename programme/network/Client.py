@@ -45,6 +45,12 @@ class Client(threading.Thread):
             "action": action
         })
 
+    def send_task(self, task):
+        self.send({
+            "type": "task",
+            "action": task
+        })
+
     # 🔹 Fin d’animation
     def send_animation_done(self):
         self.send({
@@ -55,6 +61,13 @@ class Client(threading.Thread):
     def send_end_turn(self):
         self.send({
             "type": "end_turn"
+        })
+
+    def send_loading_mission(self,mission,mission_faite):
+        self.send({
+            "type": "loading_mission",
+            "action": mission,
+            "action_second" : mission_faite
         })
 
     def send(self, data):
