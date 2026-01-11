@@ -1,60 +1,76 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 0,
+    "tour": 6,
     "bob": {
         "stress": 0,
         "fatigue": 0
     },
     "action_realisee": "",
     "tache_realisee": [],
+    "credit_bonus": [
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "piece_ferme": [
+        [
+            "Dehors"
+        ],
+        [
+            "Dehors"
+        ],
+        [],
+        [],
+        []
+    ],
     "effet_actif": "",
     "mission": [
         [
-            [
-                "Problème dehors",
-                50,
-                "sorties bloquées 2 tours + 20 burnout"
-            ],
             [
                 "Réparer une petite panne",
                 30
             ],
             [
-                "Maintenance complète",
-                45,
-                "toutes les tâches coûtent +10 crédits pendant 1 tour"
-            ]
-        ],
-        [
-            [
-                "Coller des affiches",
-                20,
-                "aucun effet"
-            ],
-            [
-                "Donner des consignes",
-                20,
-                "prochaine tâche −5 crédits"
-            ],
-            [
-                "Changer une pièce",
-                35
-            ]
-        ],
-        [
-            [
-                "Réparer une grosse panne",
-                50
-            ],
-            [
-                "Gérer l’inventaire",
-                40,
-                "réparations coûtent +10 crédits ce tour"
+                "Redémarrer le Wi-Fi",
+                25,
+                "machine ferme pendant 1 tour"
             ],
             [
                 "Réunion de crise",
                 50
+            ]
+        ],
+        [
+            [
+                "Sécuriser l’installation",
+                45
+            ],
+            [
+                "Tester l’électricité",
+                20
+            ],
+            [
+                "Réparer une grosse panne",
+                50
+            ]
+        ],
+        [
+            [
+                "Résoudre un conflit",
+                40,
+                "toutes les salles débloquées + 10 stresse"
+            ],
+            [
+                "Tester l’électricité",
+                20
+            ],
+            [
+                "Maintenance complète",
+                45,
+                "toutes les tâches coûtent +10 crédits pendant 1 tour"
             ]
         ]
     ],

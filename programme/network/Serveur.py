@@ -106,6 +106,12 @@ class Serveur(threading.Thread):
                 player["mission"] = msg["action"]
                 player["mission_faite"] = msg["action_second"]
 
+            elif msg["type"] == "credit_bonus":
+                player["credit_bonus"] = msg["action"]
+           
+            elif msg["type"] == "piece_ferme":
+                player["piece_ferme"] = msg["action"]
+
             self.save_json()
             self.broadcast_state()
 

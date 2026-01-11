@@ -34,6 +34,7 @@ class Button:
         self.actif = True
         self.taille = taille
         self.language = language
+        self.piece_ferme = False
 
         self.hovered = False
         self.function = function
@@ -429,25 +430,30 @@ class Menu_Deroulent:
         s.init_flèche()
 
 class barre_de_vie:
-    def __init__(s,screen,position,dim,scale=1,color1=(192,192,192),color2=(255,200,0)):
+    def __init__(s,screen,position,dim,scale=1,scale_img=1,color1=(255,20,255),image=None):
         s.position=position
+        s.screen=screen
         s.dim=dim
         s.screen=screen
         s.color1=color1
-        s.color2=color2
         s.scale=scale
+        s.value = 0
+        s.scale_img=scale_img
+        s.image = pygame.transform.scale(image, (int(dim[0] * scale_img), int(dim[1] * scale_img)))
 
-        s.rect_bar = pygame.Rect(position, (int(dim[0] * scale), int(dim[1] * scale)))
-        s.rec_vie = pygame.Rect(position, (int(dim[0] * scale) * 1.0, int(dim[1] * scale)))
+        s.rect_bar = pygame.Rect([position[0],position[1]-107], (int(dim[0] * scale), int(dim[1] * scale)))
+        s.rec_vie = pygame.Rect(position, (int(dim[0] * scale) , int(dim[1] * scale )))
 
     def update(s):
-        pygame.draw.rect(s.screen, s.color1, s.rect_bar)
-        pygame.draw.rect(s.screen, s.color2, s.rec_vie)
+        s.screen.blit(s.image, s.rect_bar)
+        pygame.draw.rect(s.screen, s.color1, s.rec_vie)
 
     def change_dim(s,dim):
-        s.dim=dim
         s.rect = pygame.Rect(s.position, (int(dim[0] * s.scale), int(dim[1] * s.scale)))
+        return s.rect
     def set_value(s, vie):
-        s.rec_vie = pygame.Rect(s.position, (int(s.dim[0] * s.scale) * vie, int(s.dim[1] * s.scale)))
+        s.value = vie
+        s.rec_vie = s.change_dim( (s.dim[0] * s.value , int(s.dim[1]/8)) )
+        print("value burnout :", s.rec_vie)
 
 

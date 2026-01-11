@@ -12,25 +12,25 @@ def game_screen_init(screen):
     global \
         panel_outil,tache_bouton,deplacement_bouton,mission_bouton,hint_panel,var_open_panel,bob, mapes,bob_piece, \
         liste_deplacement,\
-        panel_deplacement,menu_Deroulent,Up,Down,Energie,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
+        panel_deplacement,menu_Deroulent,Up,Down,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
         Up_taches,Down_taches,panel_taches,list_mission_btn,Tache_par_pièce,\
-        background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit
-
+        background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit,i_btn,credit_effet,data_tache_effet,Burnout_bar
+        
     panel_deplacement = False
     panel_taches = False
-
+    data_tache_effet = read_json("src/data/tache_effet.json")
     var_open_panel = True
 
     img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
     img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
+    img_bar = pygame.image.load("src/img/game_img/bar.png")
     img_btn_fin_tour = pygame.image.load("src/img/game_img/btn_tour.png")
     img_btn_fin_tour = pygame.transform.scale(img_btn_fin_tour, (450, 70))
-    img_bar = pygame.image.load("src/img/game_img/bar_life.png")
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
-
+  
     align_left = 70
     sHeight = screen.get_height()
     sWidth = screen.get_width()
@@ -42,7 +42,7 @@ def game_screen_init(screen):
         scale=1,
     )
     credits_restants = credit_init
-    
+    credit_effet = 0
 # Bouton option
     tache_bouton = Button(
         screen,
@@ -68,18 +68,22 @@ def game_screen_init(screen):
 
 
     # Bouton Déplacement
-
+    i_btn = {}
     liste_deplacement=[]
-    for key in liste_longeurs:
+    for i,key in enumerate(liste_longeurs):
             btn = Button(
                     screen,
                     (0,0),
                     img_bouton_standard,
                     4,
                     text=key,
-                    function=lambda: description_bouton_update(liste_longeurs[key],pos=(1450,510),dim=(200,100),police_taille=36),
+                    function=lambda clé=key: description_bouton_update(liste_longeurs[clé],pos=(1450,510),dim=(200,100),police_taille=36),
                 )
             liste_deplacement.append(btn)
+            i_btn[key]=i
+
+
+
 
 
     Up = Button(screen,(0,0),img_bouton_standard,2,text="↑",police_taille=2,)
@@ -99,10 +103,9 @@ def game_screen_init(screen):
 
 
 # Barre
-    Energie = barre_de_vie(screen, (63,15), (300,30), scale=1)
-    Energie.set_value(0.25)
-    Stress = barre_de_vie(screen, (63,75), (300,30), scale=1,color2=(127,0,255))
-    Stress.set_value(0.60)
+
+    Burnout_bar = barre_de_vie(screen, (39,46), (160,120),image=img_bar, scale_img=2 , scale=1.8)
+    Burnout_bar.set_value(0)
 
     description_bouton = Button(screen, (125,125),img_bouton_standard,3,text="")
 
@@ -116,13 +119,14 @@ def game_screen_init(screen):
     for mission in missions:
         list_tache_a_faire = []
         for tache in mission:
-            print(tache)
+            #print(tache)
             tache_a_faire = TextView(screen, (0, 0), 1, tache[0], "Black", police=20)
             list_tache_a_faire.append(tache_a_faire)
         print_list_tache_a_faire.append(
             Menu_Deroulent(list_tache_a_faire, (243, 475), (180, 360), nombre_bouton_affiche=len(list_tache_a_faire),
                            police_taille=24))
     list_mission_btn=[]
+
     for i in range(len(print_list_tache_a_faire)):
         list_mission_btn.append(TextView(screen, (125,125),1,f"mission {i}","Black",function=lambda:print_list_tache_a_faire[i].update(),police=20))
     Menu_Liste_Attente = Menu_Deroulent(list_mission_btn,(63,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
@@ -174,14 +178,13 @@ def game_screen_init(screen):
 
 def game_update():
     data = cl.get_state()
-
+    #print(data)
     mapes.update()
     panel_outil.update()
     if data["statue"]==1:
         hint_panel.update()
     bob.update()
-    Energie.update()
-    Stress.update()
+    Burnout_bar.update()
     Menu_Liste_Attente.update()
     if var_open_panel:
         tache_bouton.update()
@@ -250,24 +253,33 @@ def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, 
 
 def Update_Objectif(objectif):
     global bob_piece,Tache_par_pièce
-
     bob.Set_Objectif(objectif,liste_longeurs)
     bob_piece=objectif
     Menu_taches.change_liste(Tache_par_pièce[bob_piece])
 
 def fin_tour(client):
     global credits_restants
+    init_next_tour(client)
+
+
     client().send_end_turn()
-    credits_restants=credit_init
+
+
+
     btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
+
+
+
 
 
 def event_outil_panel(event, client):
     global var_open_panel, panel_deplacement, panel_taches,bob_piece
-
-    def event_check(btn,function):
+    
+    def event_check(btn,function,functions=[]):
         btn.animation_check_color(pygame.mouse.get_pos())
         btn.event(event, pygame.mouse.get_pos(), function)
+        for func in functions:
+            btn.event_right(event, pygame.mouse.get_pos(), func)
 
     if var_open_panel:
         hint_panel.event(event, pygame.mouse.get_pos(), close_panel)
@@ -277,11 +289,12 @@ def event_outil_panel(event, client):
             event_check(Up,lambda: menu_Deroulent.deroule(-1))
             event_check(Down,lambda: menu_Deroulent.deroule(1))
             for btn in liste_deplacement:
-                if int(liste_longeurs[btn._input_text]) > credits_restants:
+                if int(liste_longeurs[btn._input_text]) > credits_restants or btn.piece_ferme:
                     btn.set_input_color1("Gray")
                 else:
                     btn.set_input_color1("White")
-                    btn.event(event, pygame.mouse.get_pos(), lambda: cl.send_action(btn._input_text))
+                    btn.event(event, pygame.mouse.get_pos(), lambda : cl.send_action(btn._input_text))
+                    
                 btn.animation_check_color(pygame.mouse.get_pos())
         event_check(deplacement_bouton, lambda: toggle_deplacement())
         
@@ -294,11 +307,14 @@ def event_outil_panel(event, client):
                     btn.set_input_color1("Gray")
                 else:
                     btn.set_input_color1("White")
-                    btn.event(event, pygame.mouse.get_pos(), lambda: client().send_task(btn.argument))
+                    
+                    btn.event(event, pygame.mouse.get_pos(), lambda cl = client: cl().send_task(btn._input_text) )
+                    btn.event(event, pygame.mouse.get_pos(), lambda cl =  client: executer_effets_tache(bob_piece, btn._input_text , cl))
+                    
                 btn.animation_check_color(pygame.mouse.get_pos())
         event_check(tache_bouton, lambda: toggle_taches())
 
-        event_check(btn_fin_tour, lambda : fin_tour(client))
+        event_check(btn_fin_tour, lambda clients = client: fin_tour(clients))
 
         for mission_btn in list_mission_btn:
             mission_btn.animation_check_color(pygame.mouse.get_pos())
@@ -307,21 +323,27 @@ def event_outil_panel(event, client):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 
 def loading_animation_serveur(client):
-    global var_open_panel,credits_restants
+    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet
     if client().get_state()["statue"] != 1 and var_open_panel:
         close_panel()
     if client().get_state()["action_realisee"] != "":
         act = client().get_state()["action_realisee"]
+        
+        
         if client().get_state()["statue"]  == 1:
-            credits_restants -= int(liste_longeurs[act])
+            credits_restants -= (int(liste_longeurs[act]) - credit_effet )
             btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
         Update_Objectif(act)
         client().send_animation_done()
     if client().get_state()["tache_realisee"]:
         data_task = client().get_state()["tache_realisee"]
-        data_json = read_json("src/data/tache.json")[data_task[2]]
+        
         if client().get_state()["statue"] == 1:
-            credits_restants -= data_task[0]
+            
+            credits_restants -= data_tache_effet[bob_piece][data_task]["credit"]
+            if data_tache_effet[bob_piece][data_task]["burnout"]:
+                burnout = Burnout_bar.value  + data_tache_effet[bob_piece][data_task]["burnout"]/100
+                Burnout_bar.set_value(burnout)
             btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
         client().send_animation_done()
 
@@ -375,3 +397,135 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 
         clock.tick(60)
         pygame.display.flip()
+
+
+
+# TOUT LES FONCTION D EFFET OU UTILE DU JEU , J'ai préféré les mettre la que de creer un fichier car il y a des probleme avec les variable global, comme tu disai ----------------------------------------------------------
+
+def credit_effets(client,credit,tour):
+    credit_bonus=client().get_state()["credit_bonus"]
+    id_tour= client().get_state()["tour"]
+    print("credit bonus ajouter :", credit_bonus , credit ,"au tour:",id_tour)
+
+    for n in range(1,tour+1):
+        credit_bonus[(id_tour%5+n)%5] += credit
+    client().send_credit(credit_bonus)
+    print("credit bonus ajouter :", credit_bonus , credit ,"au tour:",id_tour)
+    
+
+def ferme_piece(client,piece,tour):
+        piece_ferme=client().get_state()["piece_ferme"]
+        id_tour= client().get_state()["tour"]
+        for n in range(1,tour+1):
+            if piece not in piece_ferme[id_tour%5]:
+                piece_ferme[(id_tour%5+n)%5].append(piece)
+        print("piece ferme :", piece_ferme  ,"au tour:",id_tour)
+        client().send_piece(piece_ferme)
+
+def effet_credit(client,credit):
+    global credit_effet
+    credit_effet = credit
+
+
+def init_next_tour(client):
+    global credits_restants,liste_deplacement,i_btn
+    credit_effet = 0
+    credit_bonus = client().get_state()["credit_bonus"]
+    piece_ferme = client().get_state()["piece_ferme"]
+    id_tour= client().get_state()["tour"]+1
+
+    credits_restants=credit_init
+
+    if credit_bonus:
+        credits_restants+= credit_bonus[id_tour%5]
+        credit_bonus[id_tour%5] = 0
+        client().send_credit(credit_bonus)
+
+    
+    if piece_ferme:
+        for btn_piece in liste_deplacement:
+            if btn_piece._input_text not in piece_ferme[id_tour%5]:
+                btn_piece.piece_ferme = False
+
+        for piece in piece_ferme[id_tour%5]:
+            print("piece a ferme",liste_deplacement[i_btn[piece]]._input_text)
+            liste_deplacement[i_btn[piece]].piece_ferme = True
+
+    credit_bonus[id_tour%5] = 0
+    print("CREDIT BONUS:",credit_bonus)
+    client().send_credit(credit_bonus)
+    client().send_piece(piece_ferme)
+
+
+def executer_effets_tache(piece, nom_tache, client):
+
+    global data_tache_effet
+    data_tache = data_tache_effet
+    
+    if piece not in data_tache:
+        print(f"Erreur: La pièce '{piece}' n'existe pas dans le JSON")
+        return 0
+    
+    if nom_tache not in data_tache[piece]:
+        print(f"Erreur: La tâche '{nom_tache}' n'existe pas dans la pièce '{piece}'")
+        return 0
+
+    tache = data_tache[piece][nom_tache]
+    credit = tache.get('credit', 0)
+    effets = tache.get('effets', [])
+    
+    print(f"Exécution de la tâche : {nom_tache} (coût: {credit} crédits)")
+    
+
+    for effet in effets:
+        fonction = effet.get('fonction')
+        
+        if fonction == 'ferme_piece':
+
+            pieces = effet.get('piece', [])
+            duree = effet.get('duree', 1)
+            for piece_a_fermer in pieces:
+                ferme_piece(client, piece_a_fermer, duree)
+                
+        elif fonction == 'effet_credit':
+            # Modif credit pour ce tour
+            argument = effet.get('argument', 0)
+            duree = effet.get('duree', 0)
+            effet_credit(client, argument)
+            
+        elif fonction == 'credit_effets':
+            #Modif credit pour les prochain tour
+            argument = effet.get('argument', 0)
+            duree = effet.get('duree', 1)
+            credit_effets(client, argument, duree)
+            
+        elif fonction == 'burnout':
+
+            argument = effet.get('argument', 0)
+            burnout(client, argument)
+            
+        elif fonction == 'debloque_piece':
+            # Débloquer toutes les pièces
+            debloque_toutes_pieces(client)
+        
+        else:
+            print(f"Fonction inconnue : {fonction}")
+    
+
+
+
+def debloque_toutes_pieces(client):
+    """Débloque toutes les pièces fermées"""
+    piece_ferme = client().get_state()["piece_ferme"]
+    id_tour = client().get_state()["tour"]
+
+    for i in range(5):
+        piece_ferme[i] = []
+    
+    for btn_piece in liste_deplacement:
+        btn_piece.piece_ferme = False
+    
+    print("Toutes les pièces ont été débloquées")
+
+
+

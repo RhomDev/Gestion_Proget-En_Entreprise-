@@ -11,7 +11,7 @@
         "R_W": [
             "Redémarrer le Wi-Fi",
             25,
-            "machines inutilisables ce tour"
+            "machine ferme pendant 1 tour"
         ],
         "MJ_S": [
             "Mise à jour système",
