@@ -6,7 +6,7 @@
         {
             "id": 0,
             "statue": 1,
-            "tour": 6,
+            "tour": 5,
             "bob": {
                 "stress": 0,
                 "fatigue": 0
@@ -21,61 +21,63 @@
                 0
             ],
             "piece_ferme": [
+                [],
+                [],
+                [],
                 [
                     "Dehors"
                 ],
                 [
                     "Dehors"
-                ],
-                [],
-                [],
-                []
+                ]
             ],
             "effet_actif": "",
             "mission": [
                 [
                     [
-                        "R\u00e9parer une petite panne",
-                        30
+                        "Probl\u00e8me dehors",
+                        50,
+                        "sorties bloqu\u00e9es 2 tours + 20 burnout"
+                    ],
+                    [
+                        "Ranger le stock",
+                        30,
+                        "fabrication bloqu\u00e9e 1 tour"
                     ],
                     [
                         "Red\u00e9marrer le Wi-Fi",
                         25,
                         "machine ferme pendant 1 tour"
+                    ]
+                ],
+                [
+                    [
+                        "Faire la mascotte",
+                        30,
+                        "t\u00e2ches co\u00fbtent \u22125 cr\u00e9dits ce tour"
                     ],
                     [
                         "R\u00e9union de crise",
                         50
+                    ],
+                    [
+                        "D\u00e9marrer une machine",
+                        20
                     ]
                 ],
                 [
                     [
-                        "S\u00e9curiser l\u2019installation",
-                        45
+                        "Compter les stocks",
+                        35,
+                        "pi\u00e8ces (trucs meca et electrique) bloqu\u00e9s 1 tour"
                     ],
                     [
-                        "Tester l\u2019\u00e9lectricit\u00e9",
+                        "D\u00e9marrer une machine",
                         20
                     ],
                     [
-                        "R\u00e9parer une grosse panne",
-                        50
-                    ]
-                ],
-                [
-                    [
-                        "R\u00e9soudre un conflit",
-                        40,
-                        "toutes les salles d\u00e9bloqu\u00e9es + 10 stresse"
-                    ],
-                    [
-                        "Tester l\u2019\u00e9lectricit\u00e9",
-                        20
-                    ],
-                    [
-                        "Maintenance compl\u00e8te",
-                        45,
-                        "toutes les t\u00e2ches co\u00fbtent +10 cr\u00e9dits pendant 1 tour"
+                        "R\u00e9parer une petite panne",
+                        30
                     ]
                 ]
             ],

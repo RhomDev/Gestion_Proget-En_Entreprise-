@@ -175,7 +175,7 @@ def game_screen_init(screen):
     txt_heure = TextView(screen, (sWidth - 200,sHeight - 90), 1, "00:00", "Black",police=20)
 
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text=f"Fin de tour ({credits_restants}/{credit_init})",police_taille=4)
-
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def game_update():
     data = cl.get_state()
     #print(data)
@@ -271,7 +271,7 @@ def fin_tour(client):
 
 
 
-
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def event_outil_panel(event, client):
     global var_open_panel, panel_deplacement, panel_taches,bob_piece
     
@@ -309,7 +309,7 @@ def event_outil_panel(event, client):
                     btn.set_input_color1("White")
                     
                     btn.event(event, pygame.mouse.get_pos(), lambda cl = client: cl().send_task(btn._input_text) )
-                    btn.event(event, pygame.mouse.get_pos(), lambda cl =  client: executer_effets_tache(bob_piece, btn._input_text , cl))
+                    #btn.event(event, pygame.mouse.get_pos(), lambda cl = client: executer_effets_tache(bob_piece, btn._input_text , cl))
                     
                 btn.animation_check_color(pygame.mouse.get_pos())
         event_check(tache_bouton, lambda: toggle_taches())
@@ -321,7 +321,7 @@ def event_outil_panel(event, client):
         
     else:
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
-
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def loading_animation_serveur(client):
     global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet
     if client().get_state()["statue"] != 1 and var_open_panel:
@@ -336,17 +336,19 @@ def loading_animation_serveur(client):
         Update_Objectif(act)
         client().send_animation_done()
     if client().get_state()["tache_realisee"]:
-        data_task = client().get_state()["tache_realisee"]
+        tache = client().get_state()["tache_realisee"]
         
         if client().get_state()["statue"] == 1:
-            
-            credits_restants -= data_tache_effet[bob_piece][data_task]["credit"]
-            if data_tache_effet[bob_piece][data_task]["burnout"]:
-                burnout = Burnout_bar.value  + data_tache_effet[bob_piece][data_task]["burnout"]/100
+            credits_restants -= data_tache_effet[bob_piece][tache]["credit"] #Gère le crédit 
+            executer_effets_tache(bob_piece, tache , client)
+            if data_tache_effet[bob_piece][tache]["burnout"]: #Gère le burnout
+                burnout = Burnout_bar.value  + data_tache_effet[bob_piece][tache]["burnout"]/100
                 Burnout_bar.set_value(burnout)
+
+            
             btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
         client().send_animation_done()
-
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def init_game():
     bob.Set_Objectif("Entrée",liste_longeurs)
     Menu_taches.change_liste(Tache_par_pièce["Entrée"])
@@ -400,7 +402,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 
 
 
-# TOUT LES FONCTION D EFFET OU UTILE DU JEU , J'ai préféré les mettre la que de creer un fichier car il y a des probleme avec les variable global, comme tu disai ----------------------------------------------------------
+# TOUT LES FONCTION D EFFET UTILE DU JEU , J'ai préféré les mettre la que de creer un fichier car il y a des probleme avec les variable global, comme tu disai ----------------------------------------------------------
 
 def credit_effets(client,credit,tour):
     credit_bonus=client().get_state()["credit_bonus"]
@@ -427,7 +429,7 @@ def effet_credit(client,credit):
     credit_effet = credit
 
 
-def init_next_tour(client):
+def init_next_tour(client):#les effets qui ce update en fonction des tours
     global credits_restants,liste_deplacement,i_btn
     credit_effet = 0
     credit_bonus = client().get_state()["credit_bonus"]
@@ -498,11 +500,6 @@ def executer_effets_tache(piece, nom_tache, client):
             argument = effet.get('argument', 0)
             duree = effet.get('duree', 1)
             credit_effets(client, argument, duree)
-            
-        elif fonction == 'burnout':
-
-            argument = effet.get('argument', 0)
-            burnout(client, argument)
             
         elif fonction == 'debloque_piece':
             # Débloquer toutes les pièces

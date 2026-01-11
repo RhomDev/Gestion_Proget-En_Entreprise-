@@ -1,7 +1,7 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 6,
+    "tour": 5,
     "bob": {
         "stress": 0,
         "fatigue": 0
@@ -16,61 +16,63 @@
         0
     ],
     "piece_ferme": [
+        [],
+        [],
+        [],
         [
             "Dehors"
         ],
         [
             "Dehors"
-        ],
-        [],
-        [],
-        []
+        ]
     ],
     "effet_actif": "",
     "mission": [
         [
             [
-                "Réparer une petite panne",
-                30
+                "Problème dehors",
+                50,
+                "sorties bloquées 2 tours + 20 burnout"
+            ],
+            [
+                "Ranger le stock",
+                30,
+                "fabrication bloquée 1 tour"
             ],
             [
                 "Redémarrer le Wi-Fi",
                 25,
                 "machine ferme pendant 1 tour"
+            ]
+        ],
+        [
+            [
+                "Faire la mascotte",
+                30,
+                "tâches coûtent −5 crédits ce tour"
             ],
             [
                 "Réunion de crise",
                 50
+            ],
+            [
+                "Démarrer une machine",
+                20
             ]
         ],
         [
             [
-                "Sécuriser l’installation",
-                45
+                "Compter les stocks",
+                35,
+                "pièces (trucs meca et electrique) bloqués 1 tour"
             ],
             [
-                "Tester l’électricité",
+                "Démarrer une machine",
                 20
             ],
             [
-                "Réparer une grosse panne",
-                50
-            ]
-        ],
-        [
-            [
-                "Résoudre un conflit",
-                40,
-                "toutes les salles débloquées + 10 stresse"
-            ],
-            [
-                "Tester l’électricité",
-                20
-            ],
-            [
-                "Maintenance complète",
-                45,
-                "toutes les tâches coûtent +10 crédits pendant 1 tour"
+                "Réparer une petite panne",
+                30
             ]
         ]
     ],
