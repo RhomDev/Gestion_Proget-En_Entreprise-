@@ -6,7 +6,7 @@ from utils.Object import *
 from utils.Map import *
 from player.Ouvrier import *
 from utils.Read_Data import read_json, write_json, resource_path
-
+from popup.End_game.Game_Over import *
 from utils.Constant import Screen, Tache
 
 
@@ -17,7 +17,7 @@ def game_screen_init(screen):
         panel_deplacement,menu_Deroulent,Up,Down,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
         Up_taches,Down_taches,panel_taches,list_mission_btn,Tache_par_pièce,\
         background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit,i_btn,credit_effet,data_tache_effet,Burnout_bar,\
-        credit_bonus,piece_ferme
+        credit_bonus,piece_ferme,btn_affiche_effet,game_over
         
     panel_deplacement = False
     panel_taches = False
@@ -25,13 +25,15 @@ def game_screen_init(screen):
     var_open_panel = True
     piece_ferme = [[],[],[],[],[]]
     credit_bonus = [0,0,0,0,0]
-
+    game_over = Game_Over(screen)
+    
     img_background_outil = pygame.image.load(resource_path( "src/img/game_img/background_btn_option.jpg"))
     img_bouton_standard = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
     img_hint_panel = pygame.image.load(resource_path("src/img/game_img/hint_panel.png"))
     img_bar = pygame.image.load(resource_path("src/img/game_img/bar.png"))
     img_btn_fin_tour = pygame.image.load(resource_path("src/img/game_img/btn_tour.png"))
     img_btn_fin_tour = pygame.transform.scale(img_btn_fin_tour, (450, 70))
+    img_description = pygame.image.load(resource_path("src/img/game_img/description.jpg"))
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
@@ -163,7 +165,7 @@ def game_screen_init(screen):
 
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text=f"Fin de tour ({credits_restants}/{credit_init})",police_taille=4)
     
-    btn_affiche_effet = Button(screen, (sWidth - 525,70),img_bouton_standard,1,text=f"",police_taille=4)
+    btn_affiche_effet = Button(screen, (sWidth - 350,70),img_description,3,text=f"",police_taille=1,taille=(300,130))
 
 def print_mission(screen, list):
     print_list_tache_a_faire = []
@@ -194,6 +196,7 @@ def game_update():
     bob.update()
     Burnout_bar.update()
     Menu_Liste_Attente.update()
+    btn_affiche_effet.update()
     if var_open_panel:
         tache_bouton.update()
         deplacement_bouton.update()
@@ -330,7 +333,7 @@ def event_outil_panel(event, client):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def loading_animation_serveur(screen, client):
-    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn, next_turn,tour_act
+    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn, next_turn,tour_act,btn_affiche_effet
     burnout=None
     if client().get_state()["tour"] != tour_act:
         init_next_tour()
@@ -380,6 +383,7 @@ def loading_animation_serveur(screen, client):
                 credits_restants = 0
 
         executer_effets_tache(bob_piece, tache)
+        btn_affiche_effet.change_text(tache)
 
         if data_tache_effet[bob_piece][tache]["burnout"]:  # Gère le burnout
             burnout = Burnout_bar.value + data_tache_effet[bob_piece][tache]["burnout"] / 100
@@ -405,7 +409,7 @@ def tirage_taches():
     return result
 
 def Game_screen(screen,language, client, pageset, pageget, clock):
-    global lg, loading, cl, credit_init, liste_longeurs,bob_piece, missions, tour_act
+    global lg, loading, cl, credit_init, liste_longeurs,bob_piece, missions, tour_act , Burnout_bar
     lg = language
     bob_piece = "Entrée"
     liste_longeurs = {"Entrée": "0", "Electricité": "0", "Travail": "0", "Mange": "0", "Machine": "0", "Entrepôt": "0",
@@ -428,7 +432,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     while game_active:
         screen.fill((35, 206, 235))
         game_update()
-
+        Is_Game_Over(Burnout_bar,clock,pageset)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -441,7 +445,14 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
         clock.tick(60)
         pygame.display.flip()
 
+#Regarde si game over
 
+def Is_Game_Over(burnout,clock,pageset):
+    if burnout.value > 1:
+        game_over.update(clock)
+        burnout.value = 0
+        pageset(0)
+    
 
 # TOUT LES FONCTION D EFFET UTILE DU JEU , J'ai préféré les mettre la que de creer un fichier car il y a des probleme avec les variable global, comme tu disai ----------------------------------------------------------
 
