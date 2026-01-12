@@ -412,7 +412,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     global lg, loading, cl, credit_init, liste_longeurs,bob_piece, missions, tour_act , Burnout_bar
     lg = language
     bob_piece = "Entrée"
-    tour_fin = read_json(resource_path("src/config.json"))["nb_tour"]
+    tour_fin = read_json(resource_path("config.json")).get("nb_tour",40)
 
     liste_longeurs = {"Entrée": "0", "Electricité": "0", "Travail": "0", "Mange": "0", "Machine": "0", "Entrepôt": "0",
                       "Dehors": "0"}
@@ -453,7 +453,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 #Regarde si game over
 
 def Is_Game_Over(burnout,clock,pageset, tour, client):
-    if burnout.value > 1 or client().get_state().get("tour",40)>=tour:
+    if burnout.value > 1 or client().get_state().get("tour",0)>=tour:
         game_over.update(clock)
         burnout.value = 0
         pageset(0)
