@@ -5,7 +5,7 @@ from sympy.calculus.util import lcim
 from utils.Object import *
 from utils.Map import *
 from player.Ouvrier import *
-from utils.Read_Data import read_json, write_json
+from utils.Read_Data import read_json, write_json, resource_path
 
 from utils.Constant import Screen, Tache
 
@@ -21,16 +21,16 @@ def game_screen_init(screen):
         
     panel_deplacement = False
     panel_taches = False
-    data_tache_effet = read_json("src/data/tache_effet.json")
+    data_tache_effet = read_json(resource_path("src/data/tache_effet.json"))
     var_open_panel = True
     piece_ferme = [[],[],[],[],[]]
     credit_bonus = [0,0,0,0,0]
 
-    img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
-    img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
-    img_hint_panel = pygame.image.load("src/img/game_img/hint_panel.png")
-    img_bar = pygame.image.load("src/img/game_img/bar.png")
-    img_btn_fin_tour = pygame.image.load("src/img/game_img/btn_tour.png")
+    img_background_outil = pygame.image.load(resource_path( "src/img/game_img/background_btn_option.jpg"))
+    img_bouton_standard = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
+    img_hint_panel = pygame.image.load(resource_path("src/img/game_img/hint_panel.png"))
+    img_bar = pygame.image.load(resource_path("src/img/game_img/bar.png"))
+    img_btn_fin_tour = pygame.image.load(resource_path("src/img/game_img/btn_tour.png"))
     img_btn_fin_tour = pygame.transform.scale(img_btn_fin_tour, (450, 70))
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
@@ -125,7 +125,7 @@ def game_screen_init(screen):
     Down_taches = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
     
     def init_tache(piece):
-            data_tache = read_json("src/data/tache_effet.json")[piece]
+            data_tache = read_json(resource_path("src/data/tache_effet.json"))[piece]
             Liste_tache = []
             for tache in data_tache:
                 credit_in = str(data_tache[tache]["credit"]) + " crédits"
@@ -156,8 +156,8 @@ def game_screen_init(screen):
     # system tour
 
     background_meca_tour = ImageView(screen, (sWidth - 300,sHeight - 90),0.6,
-                                     "src/img/game_img/background_meca_tour.png")
-    img_statue = ImageView(screen, (sWidth - 300,sHeight - 130),0.8,"src/img/game_img/statue/statue_loading.png")
+                                     resource_path("src/img/game_img/background_meca_tour.png"))
+    img_statue = ImageView(screen, (sWidth - 300,sHeight - 130),0.8,resource_path("src/img/game_img/statue/statue_loading.png"))
     txt_N_tour = TextView(screen, (sWidth - 420,sHeight - 90),1,"0 tour","Black",police=20)
     txt_heure = TextView(screen, (sWidth - 200,sHeight - 90), 1, "00:00", "Black",police=20)
 
@@ -321,7 +321,7 @@ def event_outil_panel(event, client):
 def loading_animation_serveur(screen, client):
     global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn, next_turn,tour_act
     burnout=None
-    if client().get_state()["tour"] == tour_act:
+    if client().get_state()["tour"] != tour_act:
         init_next_tour()
         tour_act=client().get_state()["tour"]
     if client().get_state()["statue"] != 1 and var_open_panel:

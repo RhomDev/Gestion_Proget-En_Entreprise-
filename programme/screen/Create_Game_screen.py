@@ -12,7 +12,7 @@ from network.Client import Client
 
 from screen.popup.game.Wait_connect import Wait_Popup
 
-from utils.Read_Data import read_json
+from utils.Read_Data import read_json, resource_path
 
 import re
 
@@ -32,8 +32,8 @@ def create_game_screen_init(screen):
     global edit_surname, edit_ip, edit_port, edit_nb_player, btn_valide, btn_cancel, btn_server, panel_background, \
     txt_err_msg
 
-    img_btn_std = pygame.image.load("../programme/src/img/util/btn_standard.png")
-    img_panel = pygame.image.load("../programme/src/img/game_img/background_btn_option.jpg")
+    img_btn_std = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
+    img_panel = pygame.image.load(resource_path("src/img/game_img/background_btn_option.jpg"))
 
     panel_background = RectangleView(screen,((screen.get_width() / 2)-200, (screen.get_height() / 2)-250), (400,500), 1, img=img_panel)
 
@@ -108,7 +108,6 @@ def joint_server(page,set_client):
 
     if not is_valid_ip(ip):
         txt_err_msg.change_text("Adresse IP invalide")
-        return
     if not is_valid_port(port_text):
         txt_err_msg.change_text("Port invalide")
         return

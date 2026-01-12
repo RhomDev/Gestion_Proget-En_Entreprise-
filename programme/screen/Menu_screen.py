@@ -6,6 +6,8 @@ from utils.Object import *
 import screen.popup.menu.Quit_Popup as Popup
 from utils.Constant import Screen
 
+from utils.Read_Data import resource_path
+
 def button_center(event, page):
     Start_bouton.animation_check_color(pygame.mouse.get_pos())
     Start_bouton.event(event, pygame.mouse.get_pos(), lambda: page(Screen.LOBBY.value))
@@ -16,7 +18,7 @@ def button_center(event, page):
 
 def menu_init(screen):
     global Start_bouton, Option_bouton, Quit_bouton
-    img_boutton = pygame.image.load("src/img/util/btn_standard.png")
+    img_boutton = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
     Start_bouton = Button(screen,((screen.get_width() / 2) - 20, (screen.get_height() / 2) - 80),
                           img_boutton, 3,language=lg, text="menu::btn:start",
                           color_input='Black',color_input1='Red')

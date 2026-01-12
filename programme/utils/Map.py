@@ -1,5 +1,5 @@
 from math import sqrt
-from tkinter.constants import FALSE, TRUE
+from utils.Read_Data import resource_path
 
 import pygame
 
@@ -16,7 +16,7 @@ class Map:
     def __init__(s, screen, choix):
         s.screen = screen
         s.resolution = (s.screen.get_width(), s.screen.get_height())
-        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
+        s.image = pygame.image.load(resource_path(f"src/img/map/map{choix}.png"))
         s.image = pygame.transform.scale(s.image, s.resolution)
         s.nodes = Nodes()
 
@@ -24,7 +24,7 @@ class Map:
         s.screen.blit(s.image, (0, 0))
 
     def Set_Map(s, choix):
-        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
+        s.image = pygame.image.load(resource_path(f"src/img/map/map{choix}.png"))
         s.image = pygame.transform.scale(s.image, s.resolution)
 
     def update(s):
@@ -38,7 +38,7 @@ class Node:
         s.lien = []
         s.pointe = None
         s.score = 1000000
-        s.visited = FALSE
+        s.visited = False
 
 
 class Nodes:
@@ -110,7 +110,7 @@ class Nodes:
             return 0
         for nod in s.noeuds.values():
             nod.score = 100000
-            nod.visited = FALSE
+            nod.visited = False
             nod.pointe = None
         start = s.noeuds[deb]
         end = s.noeuds[fin]
@@ -122,7 +122,7 @@ class Nodes:
             noeud = priorité[a]  
             #print("Noeud : ", noeud.name)
             sup = priorité.pop(a)
-            noeud.visited = TRUE
+            noeud.visited = True
             for i in noeud.lien:
                 if i.name == fin:
                     end.pointe = noeud
