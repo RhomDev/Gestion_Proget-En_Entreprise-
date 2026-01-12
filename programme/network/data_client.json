@@ -14,34 +14,30 @@
     ],
     "piece_ferme": [
         [],
-        [
-            "Travail"
-        ],
         [],
-        [
-            "Travail"
-        ],
+        [],
+        [],
         []
     ],
     "effet_actif": "",
     "mission": [
         [
-            "Démarrer une machine",
-            "Réparer une machine critique",
-            "Coller des affiches"
+            "Grosse réparation électrique",
+            "Événement public",
+            "Donner des consignes"
         ],
         [
-            "Distribuer des flyers",
-            "Distribuer des flyers",
-            "Changer une pièce"
+            "Problème dehors",
+            "Sécuriser l'installation",
+            "Grosse réparation électrique"
         ],
-        []
+        [
+            "Événement public",
+            "Installer un programme",
+            "Réunion de crise"
+        ]
     ],
-    "mission_faite": [
-        "Mise à jour système",
-        "Coller des affiches",
-        "Mise à jour système"
-    ],
+    "mission_faite": [],
     "nb_player": 1,
     "wait_nb_player": 1,
     "player_maitre": 0

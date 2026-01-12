@@ -14,12 +14,15 @@ def game_screen_init(screen):
         liste_deplacement,\
         panel_deplacement,menu_Deroulent,Up,Down,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
         Up_taches,Down_taches,panel_taches,list_mission_btn,Tache_par_pièce,\
-        background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit,i_btn,credit_effet,data_tache_effet,Burnout_bar
+        background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit,i_btn,credit_effet,data_tache_effet,Burnout_bar,\
+        credit_bonus,piece_ferme
         
     panel_deplacement = False
     panel_taches = False
     data_tache_effet = read_json("src/data/tache_effet.json")
     var_open_panel = True
+    piece_ferme = [[],[],[],[],[]]
+    credit_bonus = [0,0,0,0,0]
 
     img_background_outil = pygame.image.load( "src/img/game_img/background_btn_option.jpg")
     img_bouton_standard = pygame.image.load("src/img/util/btn_standard.png")
@@ -316,8 +319,8 @@ def event_outil_panel(event, client):
 
         event_check(btn_fin_tour, lambda clients = client: fin_tour(clients))
 
-        for mission_btn in list_mission_btn:
-            mission_btn.animation_check_color(pygame.mouse.get_pos())
+    for mission_btn in list_mission_btn:
+        mission_btn.animation_check_color(pygame.mouse.get_pos())
         
     else:
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
@@ -343,9 +346,10 @@ def loading_animation_serveur(screen, client):
 
         fait = client().get_state()["mission_faite"]
         for mission in missions:
-            if mission[0]==tache:
-                fait.append(tache)
-                mission.remove(tache)
+            if len(mission) > 0:
+                if mission[0]==tache:
+                    fait.append(tache)
+                    mission.remove(tache)
         Menu_Liste_Attente,list_mission_btn = print_mission(screen, missions)
 
         if client().get_state()["statue"] == 1:
@@ -422,18 +426,17 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 # TOUT LES FONCTION D EFFET UTILE DU JEU , J'ai préféré les mettre la que de creer un fichier car il y a des probleme avec les variable global, comme tu disai ----------------------------------------------------------
 
 def credit_effets(client,credit,tour):
-    credit_bonus=client().get_state()["credit_bonus"]
+    global credit_bonus
     id_tour= client().get_state()["tour"]
     print("credit bonus ajouter :", credit_bonus , credit ,"au tour:",id_tour)
 
     for n in range(1,tour+1):
         credit_bonus[(id_tour%5+n)%5] += credit
-    client().send_credit(credit_bonus)
     print("credit bonus ajouter :", credit_bonus , credit ,"au tour:",id_tour)
     
 
 def ferme_piece(client,piece,tour):
-        piece_ferme=client().get_state()["piece_ferme"]
+        global piece_ferme
         id_tour= client().get_state()["tour"]
         for n in range(1,tour+1):
             if piece not in piece_ferme[id_tour%5]:
@@ -447,10 +450,8 @@ def effet_credit(client,credit):
 
 
 def init_next_tour(client):#les effets qui ce update en fonction des tours
-    global credits_restants,liste_deplacement,i_btn
+    global credits_restants,liste_deplacement,i_btn, piece_ferme, credit_bonus
     credit_effet = 0
-    credit_bonus = client().get_state()["credit_bonus"]
-    piece_ferme = client().get_state()["piece_ferme"]
     id_tour= client().get_state()["tour"]+1
 
     credits_restants=credit_init
@@ -458,7 +459,6 @@ def init_next_tour(client):#les effets qui ce update en fonction des tours
     if credit_bonus:
         credits_restants+= credit_bonus[id_tour%5]
         credit_bonus[id_tour%5] = 0
-        client().send_credit(credit_bonus)
 
     
     if piece_ferme:
@@ -472,9 +472,6 @@ def init_next_tour(client):#les effets qui ce update en fonction des tours
 
     credit_bonus[id_tour%5] = 0
     print("CREDIT BONUS:",credit_bonus)
-    client().send_credit(credit_bonus)
-    client().send_piece(piece_ferme)
-
 
 def executer_effets_tache(piece, nom_tache, client):
 

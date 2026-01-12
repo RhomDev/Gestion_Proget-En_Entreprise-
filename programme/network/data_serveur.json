@@ -19,34 +19,30 @@
             ],
             "piece_ferme": [
                 [],
-                [
-                    "Travail"
-                ],
                 [],
-                [
-                    "Travail"
-                ],
+                [],
+                [],
                 []
             ],
             "effet_actif": "",
             "mission": [
                 [
-                    "D\u00e9marrer une machine",
-                    "R\u00e9parer une machine critique",
-                    "Coller des affiches"
+                    "Grosse r\u00e9paration \u00e9lectrique",
+                    "\u00c9v\u00e9nement public",
+                    "Donner des consignes"
                 ],
                 [
-                    "Distribuer des flyers",
-                    "Distribuer des flyers",
-                    "Changer une pi\u00e8ce"
+                    "Probl\u00e8me dehors",
+                    "S\u00e9curiser l'installation",
+                    "Grosse r\u00e9paration \u00e9lectrique"
                 ],
-                []
+                [
+                    "\u00c9v\u00e9nement public",
+                    "Installer un programme",
+                    "R\u00e9union de crise"
+                ]
             ],
-            "mission_faite": [
-                "Mise \u00e0 jour syst\u00e8me",
-                "Coller des affiches",
-                "Mise \u00e0 jour syst\u00e8me"
-            ],
+            "mission_faite": [],
             "nb_player": 1,
             "wait_nb_player": 1,
             "player_maitre": 0
