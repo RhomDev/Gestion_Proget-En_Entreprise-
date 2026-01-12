@@ -264,7 +264,10 @@ def Update_Objectif(objectif):
     Menu_taches.change_liste(Tache_par_pièce[bob_piece])
 
 def fin_tour(client):
+    global next_turn
     client().send_end_turn()
+    next_turn = True
+
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def event_outil_panel(event, client):
@@ -374,7 +377,7 @@ def tirage_taches():
     return result
 
 def Game_screen(screen,language, client, pageset, pageget, clock):
-    global lg, loading, cl, credit_init, liste_longeurs,bob_piece, missions
+    global lg, loading, cl, credit_init, liste_longeurs,bob_piece, missions, next_turn
     lg = language
     bob_piece = "Entrée"
     liste_longeurs = {"Entrée": "0", "Electricité": "0", "Travail": "0", "Mange": "0", "Machine": "0", "Entrepôt": "0",
@@ -384,7 +387,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     for i in range(3):
         missions.append(tirage_taches())
 
-
+    next_turn = True
     credit_init = 100
     cl = client()
     loading = True

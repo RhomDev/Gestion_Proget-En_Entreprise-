@@ -1,7 +1,7 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 1,
+    "tour": 2,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": "",
@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Ouvrir les cartons",
+            "Réparer un ordinateur",
             "Mise à jour système",
-            "Réparer une panne"
+            "Maintenance complète"
         ],
         [
-            "Coller des affiches",
-            "Problème de livraison",
-            "Réparer une machine critique"
+            "Changer une pièce",
+            "Donner des consignes",
+            "Réunion de crise"
         ],
         [
-            "Coller des affiches",
-            "Problème dehors",
-            "Réparer un ordinateur"
+            "Ranger le stock",
+            "Événement public",
+            "Maintenance complète"
         ]
     ],
     "mission_faite": [],
