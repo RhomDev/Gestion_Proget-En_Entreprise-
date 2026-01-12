@@ -91,8 +91,12 @@ class Serveur(threading.Thread):
             elif msg["type"] == "animation_done":
                 if player["action_realisee"] != "":
                     player["action_realisee"] = ""
-                if player["tache_realisee"]:
-                    player["tache_realisee"] = []
+                if player["tache_realisee"] != "":
+                    player["tache_realisee"] = ""
+                if msg["action"] is not None:
+                    player["mission"] = msg["action"][0]
+                    player["mission_faite"] = msg["action"][1]
+
 
             # 🔹 Fin de tour
             elif msg["type"] == "end_turn" and player["statue"] == 1:

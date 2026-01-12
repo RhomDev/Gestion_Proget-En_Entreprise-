@@ -98,10 +98,6 @@ def game_screen_init(screen):
         police_taille=30
     )
 
-    
-
-
-
 # Barre
 
     Burnout_bar = barre_de_vie(screen, (39,46), (160,120),image=img_bar, scale_img=2 , scale=1.8)
@@ -138,24 +134,24 @@ def game_screen_init(screen):
     Down_taches = Button(screen,(0,0),img_bouton_standard,2,text="↓",police_taille=2,)
     
     def init_tache(piece):
-            data_tache = read_json("src/data/tache.json")[piece]
+            data_tache = read_json("src/data/tache_effet.json")[piece]
             Liste_tache = []
-            for key in data_tache:
-                credit_in = str(data_tache[key][1]) + " crédits"
-                btn = Button(screen,(0,0),img_bouton_standard,1,text=data_tache[key][0] , police_taille=2,
-                                function=lambda credit = credit_in: description_bouton_update(credit,pos=(283,700),dim=(200,100),police_taille=36),argument=[data_tache[key][1],key,piece])
+            for tache in data_tache:
+                credit_in = str(data_tache[tache]["credit"]) + " crédits"
+                btn = Button(screen,(0,0),img_bouton_standard,1,text=tache , police_taille=2,
+                                function=lambda credit = credit_in: description_bouton_update(credit,pos=(283,700),dim=(200,100),police_taille=36),argument=[data_tache[tache]["credit"],data_tache[tache],piece])
                 Liste_tache.append(btn)
             return Liste_tache
     
 
     Tache_par_pièce={
         "Entrée":[],
-        "Electricité":init_tache("electricite"),
-        "Travail":init_tache("travail"),
-        "Machine":init_tache("machine"),
-        "Entrepôt":init_tache("reception"),
-        "Mange":init_tache("reunion"),
-        "Dehors":init_tache("dehors"),
+        "Electricité":init_tache("Electricité"),
+        "Travail":init_tache("Travail"),
+        "Machine":init_tache("Machine"),
+        "Entrepôt":init_tache("Entrepôt"),
+        "Mange":init_tache("Mange"),
+        "Dehors":init_tache("Dehors"),
     }
     Menu_taches=Menu_Deroulent(
         Tache_par_pièce[bob_piece],
@@ -293,7 +289,7 @@ def event_outil_panel(event, client):
                     btn.set_input_color1("Gray")
                 else:
                     btn.set_input_color1("White")
-                    btn.event(event, pygame.mouse.get_pos(), lambda : cl.send_action(btn._input_text))
+                    btn.event(event, pygame.mouse.get_pos(), lambda : client().send_action(btn.get_text()))
                     
                 btn.animation_check_color(pygame.mouse.get_pos())
         event_check(deplacement_bouton, lambda: toggle_deplacement())
@@ -308,8 +304,7 @@ def event_outil_panel(event, client):
                 else:
                     btn.set_input_color1("White")
                     
-                    btn.event(event, pygame.mouse.get_pos(), lambda cl = client: cl().send_task(btn._input_text) )
-                    #btn.event(event, pygame.mouse.get_pos(), lambda cl = client: executer_effets_tache(bob_piece, btn._input_text , cl))
+                    btn.event(event, pygame.mouse.get_pos(), lambda: client().send_task(btn.get_text()))
                     
                 btn.animation_check_color(pygame.mouse.get_pos())
         event_check(tache_bouton, lambda: toggle_taches())
@@ -323,44 +318,60 @@ def event_outil_panel(event, client):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def loading_animation_serveur(client):
-    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet
+    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions
+    burnout=None
+
     if client().get_state()["statue"] != 1 and var_open_panel:
         close_panel()
     if client().get_state()["action_realisee"] != "":
         act = client().get_state()["action_realisee"]
-        
-        
         if client().get_state()["statue"]  == 1:
             credits_restants -= (int(liste_longeurs[act]) - credit_effet )
             btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
         Update_Objectif(act)
+        client().get_state()["action_realisee"] = ""
         client().send_animation_done()
+
+
     if client().get_state()["tache_realisee"]:
         tache = client().get_state()["tache_realisee"]
-        
-        if client().get_state()["statue"] == 1:
-            credits_restants -= data_tache_effet[bob_piece][tache]["credit"] #Gère le crédit 
-            executer_effets_tache(bob_piece, tache , client)
-            if data_tache_effet[bob_piece][tache]["burnout"]: #Gère le burnout
-                burnout = Burnout_bar.value  + data_tache_effet[bob_piece][tache]["burnout"]/100
-                Burnout_bar.set_value(burnout)
 
-            
+        fait = client().get_state()["mission_faite"]
+        for mission in missions:
+            if mission[0]==tache:
+                fait.append(tache)
+                mission.remove(tache)
+
+        if client().get_state()["statue"] == 1:
+            text_ = btn_fin_tour.get_text()
+            credits_ = int(text_.split("(")[1].split("/")[0])
+            print(credits_restants," : ", credits_)
+            credits_restants = credits_ - data_tache_effet[bob_piece][tache]["credit"] #Gère le crédit
+
+            print(credits_restants)
+
             btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
-        client().send_animation_done()
+
+        executer_effets_tache(bob_piece, tache, client)
+        if data_tache_effet[bob_piece][tache]["burnout"]:  # Gère le burnout
+            burnout = Burnout_bar.value + data_tache_effet[bob_piece][tache]["burnout"] / 100
+            Burnout_bar.set_value(burnout)
+        client().get_state()["tache_realisee"] = ""
+
+        client().send_animation_done([mission,fait])
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def init_game():
     bob.Set_Objectif("Entrée",liste_longeurs)
     Menu_taches.change_liste(Tache_par_pièce["Entrée"])
 
 def tirage_taches():
-    data_tache = read_json("src/data/tache.json")
+    data_tache = read_json("src/data/tache_effet.json")
     result =[]
     for i in range(3):
         lieu = random.choice(list(data_tache.keys()))
 
         code_tache = random.choice(list(data_tache[lieu].keys()))
-        result.append(data_tache[lieu][code_tache])
+        result.append(code_tache)
     return result
 
 def Game_screen(screen,language, client, pageset, pageget, clock):

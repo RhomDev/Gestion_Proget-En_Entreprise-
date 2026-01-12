@@ -13,6 +13,8 @@ class Client(threading.Thread):
         self.shared_data = j.read_json("network/data_player.json")
         self.lock = threading.Lock()
 
+        self.history_task = ""
+
 
         self.save_data()
 
@@ -46,16 +48,19 @@ class Client(threading.Thread):
         })
 
     def send_task(self, task):
-        self.send({
-            "type": "task",
-            "action": task
-        })
+        if self.history_task !=task:
+            self.send({
+                "type": "task",
+                "action": task
+            })
+            self.history_task=task
 
 
-    # 🔹 Fin d’animation
-    def send_animation_done(self):
+        # 🔹 Fin d’animation
+    def send_animation_done(self, mise=None):
         self.send({
-            "type": "animation_done"
+            "type": "animation_done",
+            "action": mise
         })
 
     # 🔹 Fin de tour

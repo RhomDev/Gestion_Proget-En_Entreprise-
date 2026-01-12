@@ -77,6 +77,9 @@ class Button:
     def get_screen(self):
         return self.screen
 
+    def get_text(self):
+        return self._input_text
+
     def change_image(self, image):
         self.image = image
 
@@ -118,9 +121,11 @@ class Button:
         if self.rect.collidepoint(position):
             if event.type == pygame.MOUSEBUTTONDOWN and self.actif:
                 function()
+                print("BUTTON " , self.get_text())
             self.hovered = True
         else:
             self.hovered = False
+
 class InputBox:
     def __init__(self,screen,lang , position, dimension, font_size=32, text_hint=""):
         self.rect = pygame.Rect(position, dimension)
@@ -177,6 +182,7 @@ class TextView:
         self.main_font = pygame.font.SysFont("Arial", police * scale)
 
         self.function = function
+        self.hovered=False
 
         self._input_text = text
         self.language = language
@@ -190,6 +196,8 @@ class TextView:
 
     def update(self):
         self.screen.blit(self.text, self.text_rect)
+        if self.hovered and self.function is not None:
+            self.function()
 
     def change_text(self, text):
         self._input_text = text
@@ -215,11 +223,12 @@ class TextView:
             self.text = self.main_font.render(
                 self._input_text, True, self._input_color1
             )
-            if self.function is not None:
-                self.function()
+            self.hovered = True
         else:
             _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
             self.text = self.main_font.render(_text, True, self._input_color)
+            self.hovered = False
+
 class ImageView:
     def __init__(self, screen, position, scale, image_path):
         self.screen = screen

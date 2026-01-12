@@ -62,7 +62,7 @@
         }
     },
     "Electricité": {
-        "Tester l'électricité": {
+        "Tester l’électricité": {
             "credit": 20,
             "burnout": 0,
             "effets": []

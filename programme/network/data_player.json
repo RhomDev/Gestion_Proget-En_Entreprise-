@@ -5,13 +5,10 @@
 
     "tour": 0,
 
-    "bob": {
-        "stress": 0,
-        "fatigue": 0
-    },
+    "bob_burnout": 0,
 
     "action_realisee": "",
-    "tache_realisee": [],
+    "tache_realisee": "",
     
     "credit_bonus": [0,0,0,0,0],
     "piece_ferme":[[],[],[],[],[]],

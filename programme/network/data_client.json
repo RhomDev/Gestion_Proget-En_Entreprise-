@@ -1,13 +1,10 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 5,
-    "bob": {
-        "stress": 0,
-        "fatigue": 0
-    },
+    "tour": 0,
+    "bob_burnout": 0,
     "action_realisee": "",
-    "tache_realisee": [],
+    "tache_realisee": "",
     "credit_bonus": [
         0,
         0,
@@ -17,66 +14,22 @@
     ],
     "piece_ferme": [
         [],
-        [],
-        [],
         [
-            "Dehors"
+            "Machine",
+            "Machine"
         ],
-        [
-            "Dehors"
-        ]
+        [],
+        [],
+        []
     ],
     "effet_actif": "",
     "mission": [
-        [
-            [
-                "Problème dehors",
-                50,
-                "sorties bloquées 2 tours + 20 burnout"
-            ],
-            [
-                "Ranger le stock",
-                30,
-                "fabrication bloquée 1 tour"
-            ],
-            [
-                "Redémarrer le Wi-Fi",
-                25,
-                "machine ferme pendant 1 tour"
-            ]
-        ],
-        [
-            [
-                "Faire la mascotte",
-                30,
-                "tâches coûtent −5 crédits ce tour"
-            ],
-            [
-                "Réunion de crise",
-                50
-            ],
-            [
-                "Démarrer une machine",
-                20
-            ]
-        ],
-        [
-            [
-                "Compter les stocks",
-                35,
-                "pièces (trucs meca et electrique) bloqués 1 tour"
-            ],
-            [
-                "Démarrer une machine",
-                20
-            ],
-            [
-                "Réparer une petite panne",
-                30
-            ]
-        ]
+        "Maintenance complète",
+        "Mise à jour système"
     ],
-    "mission_faite": [],
+    "mission_faite": [
+        "Réparer un ordinateur"
+    ],
     "nb_player": 1,
     "wait_nb_player": 1,
     "player_maitre": 0
