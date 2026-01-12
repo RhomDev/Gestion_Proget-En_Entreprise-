@@ -33,7 +33,7 @@ def game_screen_init(screen):
     img_bar = pygame.image.load(resource_path("src/img/game_img/bar.png"))
     img_btn_fin_tour = pygame.image.load(resource_path("src/img/game_img/btn_tour.png"))
     img_btn_fin_tour = pygame.transform.scale(img_btn_fin_tour, (450, 70))
-    img_description = pygame.image.load(resource_path("src/img/game_img/description.jpg"))
+    img_description = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
 
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
     img_hint_panel = pygame.transform.rotate(img_hint_panel, 90)
@@ -437,7 +437,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     while game_active:
         screen.fill((35, 206, 235))
         game_update()
-        Is_Game_Over(Burnout_bar,clock,pageset, tour_fin)
+        Is_Game_Over(Burnout_bar,clock,pageset, tour_fin, client)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -452,8 +452,8 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 
 #Regarde si game over
 
-def Is_Game_Over(burnout,clock,pageset, tour):
-    if burnout.value > 1 or cl.get_state["tour"]>=tour:
+def Is_Game_Over(burnout,clock,pageset, tour, client):
+    if burnout.value > 1 or client().get_state().get("tour",40)>=tour:
         game_over.update(clock)
         burnout.value = 0
         pageset(0)
