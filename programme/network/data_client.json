@@ -1,40 +1,26 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 1,
+    "tour": 3,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": "",
-    "credit_bonus": [
-        0,
-        0,
-        0,
-        0,
-        0
-    ],
-    "piece_ferme": [
-        [],
-        [],
-        [],
-        [],
-        []
-    ],
     "effet_actif": "",
     "mission": [
         [
-            "Installer un programme",
-            "Problème dehors",
-            "Donner des consignes"
-        ],
-        [
-            "Compter les stocks",
-            "Problème de livraison",
-            "Compter les stocks"
-        ],
-        [
             "Coller des affiches",
-            "Réparer une petite panne",
-            "Sécuriser l'installation"
+            "Ranger le stock",
+            "Réparer un ordinateur"
+        ],
+        [
+            "Remplacer un fusible",
+            "Sécuriser l'installation",
+            "Démarrer une machine"
+        ],
+        [
+            "Réunion de crise",
+            "Redémarrer le Wi-Fi",
+            "Ouvrir les cartons"
         ]
     ],
     "mission_faite": [],

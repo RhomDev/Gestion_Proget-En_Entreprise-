@@ -323,8 +323,7 @@ def loading_animation_serveur(screen, client):
     global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn, next_turn
     burnout=None
     if client().get_state()["statue"] == 1 and next_turn:
-        init_next_tour(client)
-        print("Mise a jour")
+        init_next_tour()
         next_turn=False
     if client().get_state()["statue"] != 1 and var_open_panel:
         close_panel()
@@ -351,9 +350,10 @@ def loading_animation_serveur(screen, client):
         if client().get_state()["statue"] == 1:
             text_ = btn_fin_tour.get_text()
             credits_ = int(text_.split("(")[1].split("/")[0])
-            credits_restants = credits_ - data_tache_effet[bob_piece][tache]["credit"]
+            credits_restants = credits_ - data_tache_effet[bob_piece][tache]["credit"] - credit_effet
 
-        executer_effets_tache(bob_piece, tache, client)
+        executer_effets_tache(bob_piece, tache)
+
         if data_tache_effet[bob_piece][tache]["burnout"]:  # Gère le burnout
             burnout = Burnout_bar.value + data_tache_effet[bob_piece][tache]["burnout"] / 100
             Burnout_bar.set_value(burnout)
@@ -418,55 +418,51 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 
 # TOUT LES FONCTION D EFFET UTILE DU JEU , J'ai préféré les mettre la que de creer un fichier car il y a des probleme avec les variable global, comme tu disai ----------------------------------------------------------
 
-def credit_effets(client,credit,tour):
+def credit_effets(credit,tour):
     global credit_bonus
-    id_tour= client().get_state()["tour"]
-    print("credit bonus ajouter :", credit_bonus , credit ,"au tour:",id_tour)
+    for i in range(tour):
+        if len(credit_bonus) > i+1:
+            credit_bonus[i] += credit
+        else:
+            credit_bonus.append(credit)
 
-    for n in range(1,tour+1):
-        credit_bonus[(id_tour%5+n)%5] += credit
-    print("credit bonus ajouter :", credit_bonus , credit ,"au tour:",id_tour)
-    
-
-def ferme_piece(client,piece,tour):
+def ferme_piece(piece,tour):
         global piece_ferme
-        id_tour= client().get_state()["tour"]
-        for n in range(1,tour+1):
-            if piece not in piece_ferme[id_tour%5]:
-                piece_ferme[(id_tour%5+n)%5].append(piece)
-        print("piece ferme :", piece_ferme  ,"au tour:",id_tour)
-        client().send_piece(piece_ferme)
 
-def effet_credit(client,credit):
+        for n in range(tour):
+            if len(piece_ferme) > n+1:
+                for p in piece:
+                    if p not in piece_ferme[n]:
+                        piece_ferme[n].append(p)
+            else:
+                piece_ferme.append(piece)
+
+def effet_credit(credit):
     global credit_effet
     credit_effet = credit
 
 
-def init_next_tour(client):#les effets qui ce update en fonction des tours
+def init_next_tour():#les effets qui ce update en fonction des tours
     global credits_restants,liste_deplacement,i_btn, piece_ferme, credit_bonus
-    id_tour= client().get_state()["tour"]+1
 
     credits_restants=credit_init
+    debloque_toutes_pieces()
 
-    if credit_bonus:
-        credits_restants+= credit_bonus[id_tour%5]
-        credit_bonus[id_tour%5] = 0
+    if len(credit_bonus)>0:
+        bonus = credit_bonus[0]
+        credits_restants+=bonus
+        credit_bonus.remove(bonus)
+    if len(piece_ferme)>0:
+        for i in range(len(piece_ferme[0])):
+            for btn_piece in liste_deplacement:
+                if btn_piece._input_text in piece_ferme[0][i]:
+                    print("Piece en question : ", piece_ferme[i])
+                    btn_piece.piece_ferme = True
+        piece_ferme.remove(piece_ferme[0])
 
-    
-    if piece_ferme:
-        for btn_piece in liste_deplacement:
-            if btn_piece._input_text not in piece_ferme[id_tour%5]:
-                btn_piece.piece_ferme = False
-
-        for piece in piece_ferme[id_tour%5]:
-            print("piece a ferme",liste_deplacement[i_btn[piece]]._input_text)
-            liste_deplacement[i_btn[piece]].piece_ferme = True
-
-    credit_bonus[id_tour%5] = 0
     print("CREDIT BONUS:",credit_bonus)
 
-def executer_effets_tache(piece, nom_tache, client):
-
+def executer_effets_tache(piece, nom_tache):
     global data_tache_effet
     data_tache = data_tache_effet
     
@@ -489,42 +485,28 @@ def executer_effets_tache(piece, nom_tache, client):
         fonction = effet.get('fonction')
         
         if fonction == 'ferme_piece':
-
             pieces = effet.get('piece', [])
             duree = effet.get('duree', 1)
-            for piece_a_fermer in pieces:
-                ferme_piece(client, piece_a_fermer, duree)
+            ferme_piece(pieces, duree)
                 
         elif fonction == 'effet_credit':
             # Modif credit pour ce tour
             argument = effet.get('argument', 0)
-            duree = effet.get('duree', 0)
-            effet_credit(client, argument)
+            effet_credit(argument)
             
         elif fonction == 'credit_effets':
             #Modif credit pour les prochain tour
             argument = effet.get('argument', 0)
             duree = effet.get('duree', 1)
-            credit_effets(client, argument, duree)
+            credit_effets(argument, duree)
             
         elif fonction == 'debloque_piece':
             # Débloquer toutes les pièces
-            debloque_toutes_pieces(client)
-        
-        else:
-            print(f"Fonction inconnue : {fonction}")
-    
+            debloque_toutes_pieces()
 
 
-
-def debloque_toutes_pieces(client):
+def debloque_toutes_pieces():
     """Débloque toutes les pièces fermées"""
-    piece_ferme = client().get_state()["piece_ferme"]
-    id_tour = client().get_state()["tour"]
-
-    for i in range(5):
-        piece_ferme[i] = []
-    
     for btn_piece in liste_deplacement:
         btn_piece.piece_ferme = False
     
