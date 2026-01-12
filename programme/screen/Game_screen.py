@@ -324,6 +324,7 @@ def loading_animation_serveur(screen, client):
     burnout=None
     if client().get_state()["statue"] == 1 and next_turn:
         init_next_tour(client)
+        print("Mise a jour")
         next_turn=False
     if client().get_state()["statue"] != 1 and var_open_panel:
         close_panel()
@@ -331,7 +332,6 @@ def loading_animation_serveur(screen, client):
         act = client().get_state()["action_realisee"]
         if client().get_state()["statue"]  == 1:
             credits_restants -= (int(liste_longeurs[act]) - credit_effet )
-            btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
         Update_Objectif(act)
         client().get_state()["action_realisee"] = ""
         client().send_animation_done()
@@ -351,8 +351,7 @@ def loading_animation_serveur(screen, client):
         if client().get_state()["statue"] == 1:
             text_ = btn_fin_tour.get_text()
             credits_ = int(text_.split("(")[1].split("/")[0])
-            credits_restants = credits_ - data_tache_effet[bob_piece][tache]["credit"] #Gère le crédit
-            btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
+            credits_restants = credits_ - data_tache_effet[bob_piece][tache]["credit"]
 
         executer_effets_tache(bob_piece, tache, client)
         if data_tache_effet[bob_piece][tache]["burnout"]:  # Gère le burnout
@@ -361,6 +360,8 @@ def loading_animation_serveur(screen, client):
         client().get_state()["tache_realisee"] = ""
 
         client().send_animation_done([missions,fait])
+
+    btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def init_game():
     bob.Set_Objectif("Entrée",liste_longeurs)
@@ -443,7 +444,6 @@ def effet_credit(client,credit):
 
 def init_next_tour(client):#les effets qui ce update en fonction des tours
     global credits_restants,liste_deplacement,i_btn, piece_ferme, credit_bonus
-    credit_effet = 0
     id_tour= client().get_state()["tour"]+1
 
     credits_restants=credit_init

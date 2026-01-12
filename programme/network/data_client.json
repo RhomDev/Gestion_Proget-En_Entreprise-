@@ -1,7 +1,7 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 2,
+    "tour": 1,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": "",
@@ -22,23 +22,23 @@
     "effet_actif": "",
     "mission": [
         [
-            "Réparer un ordinateur",
-            "Mise à jour système",
-            "Maintenance complète"
+            "Installer un programme",
+            "Problème dehors",
+            "Donner des consignes"
         ],
         [
-            "Changer une pièce",
-            "Donner des consignes",
-            "Réunion de crise"
+            "Compter les stocks",
+            "Problème de livraison",
+            "Compter les stocks"
         ],
         [
-            "Ranger le stock",
-            "Événement public",
-            "Maintenance complète"
+            "Coller des affiches",
+            "Réparer une petite panne",
+            "Sécuriser l'installation"
         ]
     ],
     "mission_faite": [],
-    "nb_player": 2,
-    "wait_nb_player": 2,
+    "nb_player": 1,
+    "wait_nb_player": 1,
     "player_maitre": 0
 }
