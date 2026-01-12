@@ -1,7 +1,7 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 2,
+    "tour": 1,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": "",
@@ -22,23 +22,23 @@
     "effet_actif": "",
     "mission": [
         [
-            "Grosse réparation électrique",
-            "Événement public",
-            "Donner des consignes"
+            "Ouvrir les cartons",
+            "Mise à jour système",
+            "Réparer une panne"
         ],
         [
+            "Coller des affiches",
+            "Problème de livraison",
+            "Réparer une machine critique"
+        ],
+        [
+            "Coller des affiches",
             "Problème dehors",
-            "Sécuriser l'installation",
-            "Grosse réparation électrique"
-        ],
-        [
-            "Événement public",
-            "Installer un programme",
-            "Réunion de crise"
+            "Réparer un ordinateur"
         ]
     ],
     "mission_faite": [],
-    "nb_player": 1,
-    "wait_nb_player": 1,
+    "nb_player": 2,
+    "wait_nb_player": 2,
     "player_maitre": 0
 }

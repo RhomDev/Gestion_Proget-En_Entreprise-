@@ -1,5 +1,7 @@
 import random
 
+from sympy.calculus.util import lcim
+
 from utils.Object import *
 from utils.Map import *
 from player.Ouvrier import *
@@ -262,18 +264,7 @@ def Update_Objectif(objectif):
     Menu_taches.change_liste(Tache_par_pièce[bob_piece])
 
 def fin_tour(client):
-    global credits_restants
-    init_next_tour(client)
-
-
     client().send_end_turn()
-
-
-
-    btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
-
-
-
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def event_outil_panel(event, client):
@@ -326,9 +317,11 @@ def event_outil_panel(event, client):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def loading_animation_serveur(screen, client):
-    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn
+    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn, next_turn
     burnout=None
-
+    if client().get_state()["statue"] == 1 and next_turn:
+        init_next_tour(client)
+        next_turn=False
     if client().get_state()["statue"] != 1 and var_open_panel:
         close_panel()
     if client().get_state()["action_realisee"] != "":
@@ -355,11 +348,7 @@ def loading_animation_serveur(screen, client):
         if client().get_state()["statue"] == 1:
             text_ = btn_fin_tour.get_text()
             credits_ = int(text_.split("(")[1].split("/")[0])
-            print(credits_restants," : ", credits_)
             credits_restants = credits_ - data_tache_effet[bob_piece][tache]["credit"] #Gère le crédit
-
-            print(credits_restants)
-
             btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
 
         executer_effets_tache(bob_piece, tache, client)
