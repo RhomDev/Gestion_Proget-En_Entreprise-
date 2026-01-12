@@ -266,7 +266,6 @@ def Update_Objectif(objectif):
 def fin_tour(client):
     global next_turn
     client().send_end_turn()
-    next_turn = True
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -320,11 +319,11 @@ def event_outil_panel(event, client):
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def loading_animation_serveur(screen, client):
-    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn, next_turn
+    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn, next_turn,tour_act
     burnout=None
-    if client().get_state()["statue"] == 1 and next_turn:
+    if client().get_state()["tour"] == tour_act:
         init_next_tour()
-        next_turn=False
+        tour_act=client().get_state()["tour"]
     if client().get_state()["statue"] != 1 and var_open_panel:
         close_panel()
     if client().get_state()["action_realisee"] != "":
@@ -378,7 +377,7 @@ def tirage_taches():
     return result
 
 def Game_screen(screen,language, client, pageset, pageget, clock):
-    global lg, loading, cl, credit_init, liste_longeurs,bob_piece, missions, next_turn
+    global lg, loading, cl, credit_init, liste_longeurs,bob_piece, missions, tour_act
     lg = language
     bob_piece = "Entrée"
     liste_longeurs = {"Entrée": "0", "Electricité": "0", "Travail": "0", "Mange": "0", "Machine": "0", "Entrepôt": "0",
@@ -388,7 +387,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     for i in range(3):
         missions.append(tirage_taches())
 
-    next_turn = True
+    tour_act = 0
     credit_init = 100
     cl = client()
     loading = True
