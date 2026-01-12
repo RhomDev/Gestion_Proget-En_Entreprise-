@@ -264,7 +264,8 @@ def Update_Objectif(objectif):
     Menu_taches.change_liste(Tache_par_pièce[bob_piece])
 
 def fin_tour(client):
-    global next_turn
+    global next_turn, credit_effet
+    credit_effet = 0
     client().send_end_turn()
 
 
@@ -286,7 +287,12 @@ def event_outil_panel(event, client):
             event_check(Up,lambda: menu_Deroulent.deroule(-1))
             event_check(Down,lambda: menu_Deroulent.deroule(1))
             for btn in liste_deplacement:
-                if int(liste_longeurs[btn._input_text]) > credits_restants or btn.piece_ferme:
+
+                credit_depense = int(liste_longeurs[btn._input_text])+credit_effet 
+                if credit_depense < 0:
+                    credit_depense = 0
+                
+                if credit_depense > credits_restants or btn.piece_ferme:
                     btn.set_input_color1("Gray")
                 else:
                     btn.set_input_color1("White")
@@ -300,7 +306,10 @@ def event_outil_panel(event, client):
             event_check(Up_taches,lambda: Menu_taches.deroule(-1))
             event_check(Down_taches,lambda: Menu_taches.deroule(1))
             for btn in Tache_par_pièce[bob_piece]:
-                if btn.argument[0] > credits_restants:
+                credit_depense = btn.argument[0]+credit_effet
+                if credit_depense < 0:
+                    credit_depense = 0
+                if credit_depense > credits_restants:
                     btn.set_input_color1("Gray")
                 else:
                     btn.set_input_color1("White")
@@ -329,7 +338,16 @@ def loading_animation_serveur(screen, client):
     if client().get_state()["action_realisee"] != "":
         act = client().get_state()["action_realisee"]
         if client().get_state()["statue"]  == 1:
-            credits_restants -= (int(liste_longeurs[act]) - credit_effet )
+           
+            credit_depense = int(liste_longeurs[act]) + 0 if int(liste_longeurs[act]) else credit_effet
+            print("credit depense",credit_depense)
+            if credit_depense < 0:
+                credit_depense = 0
+
+            credits_restants -=  credit_depense
+            if credits_restants <0:
+                credits_restants = 0
+
         Update_Objectif(act)
         client().get_state()["action_realisee"] = ""
         client().send_animation_done()
@@ -349,7 +367,15 @@ def loading_animation_serveur(screen, client):
         if client().get_state()["statue"] == 1:
             text_ = btn_fin_tour.get_text()
             credits_ = int(text_.split("(")[1].split("/")[0])
-            credits_restants = credits_ - data_tache_effet[bob_piece][tache]["credit"] - credit_effet
+
+            credit_depense = data_tache_effet[bob_piece][tache]["credit"] + credit_effet
+
+            if credit_depense < 0:
+                credit_depense = 0
+
+            credits_restants = credits_ - credit_depense
+            if credits_restants <0:
+                credits_restants = 0
 
         executer_effets_tache(bob_piece, tache)
 
