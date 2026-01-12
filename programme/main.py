@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
 
-    data_ = read_json(resource_path("src/config.json"))
+    data_ = read_json(resource_path("config.json"))
 
     resolution_str = str(data_["resolution"]).strip("()'\"")
     largeur, hauteur = map(int, resolution_str.split('x'))
