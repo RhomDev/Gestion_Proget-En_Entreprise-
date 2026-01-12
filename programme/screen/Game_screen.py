@@ -162,6 +162,8 @@ def game_screen_init(screen):
     txt_heure = TextView(screen, (sWidth - 200,sHeight - 90), 1, "00:00", "Black",police=20)
 
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text=f"Fin de tour ({credits_restants}/{credit_init})",police_taille=4)
+    
+    btn_affiche_effet = Button(screen, (sWidth - 525,70),img_bouton_standard,1,text=f"",police_taille=4)
 
 def print_mission(screen, list):
     print_list_tache_a_faire = []
