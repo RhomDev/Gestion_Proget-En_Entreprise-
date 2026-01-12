@@ -174,60 +174,84 @@ class InputBox:
 
 # visuelle
 class TextView:
-    def __init__(
-        self, screen, position, scale, text, color_input,language=None, color_input1=(255, 255, 255),police=8,
-            function=None
+    def __init__(self, screen,position,scale,text,color_input,language=None,
+        color_input1=(255, 255, 255),police=8,function=None,box_size=(300, 100)
     ):
         self.screen = screen
         self.main_font = pygame.font.SysFont("Arial", police * scale)
 
         self.function = function
-        self.hovered=False
+        self.hovered = False
 
         self._input_text = text
         self.language = language
         self._input_color = color_input
         self._input_color1 = color_input1
-        self.position_text=position
 
-        _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
-        self.text = self.main_font.render(_text, True, self._input_color)
-        self.text_rect = self.text.get_rect(center=position)
+        self.position_text = position
+
+        self.box_rect = pygame.Rect(0, 0, *box_size)
+        self.box_rect.center = position
+
+        self.lines = []
+        self._wrap_text()
+
+    def _wrap_text(self):
+        self.lines = []
+        text = self._input_text if self.language is None else self.language.get_text(self._input_text)
+        words = text.split(" ")
+
+        current_line = ""
+        for word in words:
+            test_line = current_line + (" " if current_line else "") + word
+            width, _ = self.main_font.size(test_line)
+
+            if width <= self.box_rect.width:
+                current_line = test_line
+            else:
+                self.lines.append(current_line)
+                current_line = word
+
+        if current_line:
+            self.lines.append(current_line)
 
     def update(self):
-        self.screen.blit(self.text, self.text_rect)
+        color = self._input_color1 if self.hovered else self._input_color
+
+        total_height = len(self.lines) * self.main_font.get_height()
+        y = self.box_rect.centery - total_height // 2
+
+        for line in self.lines:
+            surf = self.main_font.render(line, True, color)
+            rect = surf.get_rect(centerx=self.box_rect.centerx, y=y)
+            self.screen.blit(surf, rect)
+            y += self.main_font.get_height()
+
         if self.hovered and self.function is not None:
             self.function()
 
     def change_text(self, text):
         self._input_text = text
-        _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
-        self.text = self.main_font.render(_text, True, self._input_color)
-        self.text_rect = self.text.get_rect(center=self.position_text)
+        self._wrap_text()
 
-    def change_dim(self,dim, police_taille):
-        return None
+    def change_dim(self, dim, police_taille=None):
+        self.box_rect.size = dim
+        if police_taille is not None:
+            self.main_font = pygame.font.SysFont("Arial", police_taille)
+        self._wrap_text()
 
     def change_position(self, position):
         self.position_text = position
-        self.text_rect = self.text.get_rect(center=position)
+        self.box_rect.center = position
 
     def change_color(self, color):
         self._input_color = color
-        self.text = self.main_font.render(self._input_text, True, self._input_color)
 
     def animation_check_color(self, position):
+        self.hovered = self.box_rect.collidepoint(position)
 
-        if self.text_rect.collidepoint(position):
-
-            self.text = self.main_font.render(
-                self._input_text, True, self._input_color1
-            )
-            self.hovered = True
-        else:
-            _text = (self._input_text if self.language is None else self.language.get_text(self._input_text))
-            self.text = self.main_font.render(_text, True, self._input_color)
-            self.hovered = False
+    def draw_debug(self, color=(255, 0, 0)):
+        pygame.draw.rect(self.screen, color, self.box_rect, 1)
 
 class ImageView:
     def __init__(self, screen, position, scale, image_path):

@@ -56,6 +56,7 @@ def game_screen_init(screen):
         (align_left + 230 * 2, sHeight - 110),
         img_bouton_standard,
         4,
+
         text="Deplacement",
     )
     mission_bouton = Button(
@@ -111,22 +112,7 @@ def game_screen_init(screen):
     bob = Ouvrier(screen, mapes)
 
 # Mission + Tache a faire
-    print_list_tache_a_faire = []
-    for mission in missions:
-        list_tache_a_faire = []
-        for tache in mission:
-            #print(tache)
-            tache_a_faire = TextView(screen, (0, 0), 1, tache[0], "Black", police=20)
-            list_tache_a_faire.append(tache_a_faire)
-        print_list_tache_a_faire.append(
-            Menu_Deroulent(list_tache_a_faire, (243, 475), (180, 360), nombre_bouton_affiche=len(list_tache_a_faire),
-                           police_taille=24))
-    list_mission_btn=[]
-
-    for i in range(len(print_list_tache_a_faire)):
-        list_mission_btn.append(TextView(screen, (125,125),1,f"mission {i}","Black",function=lambda:print_list_tache_a_faire[i].update(),police=20))
-    Menu_Liste_Attente = Menu_Deroulent(list_mission_btn,(63,475),(180,360),nombre_bouton_affiche=3,police_taille=24)
-
+    Menu_Liste_Attente,list_mission_btn = print_mission(screen,missions)
 
 # Bouton Tache
 
@@ -171,6 +157,25 @@ def game_screen_init(screen):
     txt_heure = TextView(screen, (sWidth - 200,sHeight - 90), 1, "00:00", "Black",police=20)
 
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text=f"Fin de tour ({credits_restants}/{credit_init})",police_taille=4)
+
+def print_mission(screen, list):
+    print_list_tache_a_faire = []
+    for mission in list:
+        list_tache_a_faire = []
+        for i, task in enumerate(mission):
+            list_tache_a_faire.append(
+                TextView(screen, (0, 0), 1, task, "Green" if i == 0 else "Black", police=20)
+            )
+        print_list_tache_a_faire.append(None if len(list_tache_a_faire)==0 else
+            Menu_Deroulent(list_tache_a_faire, (243, 475), (180, 360), nombre_bouton_affiche=len(list_tache_a_faire),
+                           police_taille=24))
+    list_mission_btn=[]
+
+    for i, list in enumerate(print_list_tache_a_faire):
+        print(list)
+        list_mission_btn.append(TextView(screen, (125,125),1,f"mission {i}","Green" if list is None else "Black" ,function= list if list is None else lambda l = list :l.update(),police=20))
+    return Menu_Deroulent(list_mission_btn,(63,475),(180,360),nombre_bouton_affiche=3,police_taille=24),list_mission_btn
+
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def game_update():
     data = cl.get_state()
@@ -317,8 +322,8 @@ def event_outil_panel(event, client):
     else:
         hint_panel.event(event, pygame.mouse.get_pos(), open_panel)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
-def loading_animation_serveur(client):
-    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions
+def loading_animation_serveur(screen, client):
+    global var_open_panel,credits_restants,credit_effet,Burnout_bar,data_tache_effet,missions,Menu_Liste_Attente,list_mission_btn
     burnout=None
 
     if client().get_state()["statue"] != 1 and var_open_panel:
@@ -341,6 +346,7 @@ def loading_animation_serveur(client):
             if mission[0]==tache:
                 fait.append(tache)
                 mission.remove(tache)
+        Menu_Liste_Attente,list_mission_btn = print_mission(screen, missions)
 
         if client().get_state()["statue"] == 1:
             text_ = btn_fin_tour.get_text()
@@ -358,7 +364,7 @@ def loading_animation_serveur(client):
             Burnout_bar.set_value(burnout)
         client().get_state()["tache_realisee"] = ""
 
-        client().send_animation_done([mission,fait])
+        client().send_animation_done([missions,fait])
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def init_game():
     bob.Set_Objectif("Entrée",liste_longeurs)
@@ -406,7 +412,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 
         game_active = pageget() == Screen.GAME.value
 
-        loading_animation_serveur(client)
+        loading_animation_serveur(screen,client)
 
         clock.tick(60)
         pygame.display.flip()

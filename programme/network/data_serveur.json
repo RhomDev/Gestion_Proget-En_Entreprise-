@@ -6,7 +6,7 @@
         {
             "id": 0,
             "statue": 1,
-            "tour": 0,
+            "tour": 2,
             "bob_burnout": 0,
             "action_realisee": "",
             "tache_realisee": "",
@@ -20,20 +20,32 @@
             "piece_ferme": [
                 [],
                 [
-                    "Machine",
-                    "Machine"
+                    "Travail"
                 ],
                 [],
-                [],
+                [
+                    "Travail"
+                ],
                 []
             ],
             "effet_actif": "",
             "mission": [
-                "Maintenance compl\u00e8te",
-                "Mise \u00e0 jour syst\u00e8me"
+                [
+                    "D\u00e9marrer une machine",
+                    "R\u00e9parer une machine critique",
+                    "Coller des affiches"
+                ],
+                [
+                    "Distribuer des flyers",
+                    "Distribuer des flyers",
+                    "Changer une pi\u00e8ce"
+                ],
+                []
             ],
             "mission_faite": [
-                "R\u00e9parer un ordinateur"
+                "Mise \u00e0 jour syst\u00e8me",
+                "Coller des affiches",
+                "Mise \u00e0 jour syst\u00e8me"
             ],
             "nb_player": 1,
             "wait_nb_player": 1,

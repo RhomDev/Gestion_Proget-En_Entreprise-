@@ -1,7 +1,7 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 0,
+    "tour": 2,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": "",
@@ -15,20 +15,32 @@
     "piece_ferme": [
         [],
         [
-            "Machine",
-            "Machine"
+            "Travail"
         ],
         [],
-        [],
+        [
+            "Travail"
+        ],
         []
     ],
     "effet_actif": "",
     "mission": [
-        "Maintenance complète",
-        "Mise à jour système"
+        [
+            "Démarrer une machine",
+            "Réparer une machine critique",
+            "Coller des affiches"
+        ],
+        [
+            "Distribuer des flyers",
+            "Distribuer des flyers",
+            "Changer une pièce"
+        ],
+        []
     ],
     "mission_faite": [
-        "Réparer un ordinateur"
+        "Mise à jour système",
+        "Coller des affiches",
+        "Mise à jour système"
     ],
     "nb_player": 1,
     "wait_nb_player": 1,
