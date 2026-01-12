@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 import os
 import sys
 
@@ -11,6 +12,8 @@ import screen.Create_Game_screen as create_game_screen
 
 from utils.Constant import Screen
 from utils.LanguageManage import LanguageManager
+
+from utils.Read_Data import read_json, resource_path
 
 # Déclarer les variables globales
 screen_page = None
@@ -34,9 +37,20 @@ def get_page():
 if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
-    screen = pygame.display.set_mode((1920 , 1080))
+
+    data_ = read_json(resource_path("src/config.json"))
+
+    resolution_str = str(data_["resolution"]).strip("()'\"")
+    largeur, hauteur = map(int, resolution_str.split('x'))
+    screen = pygame.display.set_mode((largeur, hauteur))
+    if data_.get("fullcreen",False):
+        screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+    manager = pygame_gui.UIManager(screen.get_size())
+
     pygame.display.set_caption("En Entreprise !")
-    #pygame.display.toggle_fullscreen()
+
+    pygame.mixer.music.set_volume(0.5)
 
     language = LanguageManager()
 
@@ -55,7 +69,7 @@ if __name__ == '__main__':
         elif screen_page == Screen.GAME.value:
             game_screen.Game_screen(screen, language, get_client, change_page, get_page, clock)
         elif screen_page == Screen.OPTION.value:
-            option_screen.option_screen(screen, language, change_page, get_page, clock)
+            option_screen.option_screen(screen,manager, language, change_page, get_page, clock)
         elif screen_page == Screen.LOBBY.value:
             create_game_screen.Create_Game_screen(screen, language, set_client, get_client, change_page, get_page, clock)
 
