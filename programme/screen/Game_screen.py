@@ -421,6 +421,9 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     for i in range(3):
         missions.append(tirage_taches())
 
+    pygame.mixer.music.load(resource_path("src/sound/music_fond_low_burnout.wav"))
+    pygame.mixer.music.play()
+
     tour_act = 0
     credit_init = 100
     cl = client()
