@@ -1,0 +1,30 @@
+{
+    "id": 0,
+    "statue": 1,
+    "tour": 3,
+    "bob_burnout": 0,
+    "action_realisee": "",
+    "tache_realisee": "",
+    "effet_actif": "",
+    "mission": [
+        [
+            "Coller des affiches",
+            "Ranger le stock",
+            "Réparer un ordinateur"
+        ],
+        [
+            "Remplacer un fusible",
+            "Sécuriser l'installation",
+            "Démarrer une machine"
+        ],
+        [
+            "Réunion de crise",
+            "Redémarrer le Wi-Fi",
+            "Ouvrir les cartons"
+        ]
+    ],
+    "mission_faite": [],
+    "nb_player": 1,
+    "wait_nb_player": 1,
+    "player_maitre": 0
+}

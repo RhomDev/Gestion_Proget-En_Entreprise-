@@ -1,0 +1,29 @@
+{
+  "menu::text:title": "En Entreprise",
+  "menu::btn:start": "Nouvelle Partie",
+  "menu::btn:option": "Option",
+  "menu::btn:exit": "Quitter",
+
+  "menu:popup::text:answer": "Voulez vous vraiment quitter ?",
+  "menu:popup::btn:yes": "Yes",
+  "menu:popup::btn:no": "Non",
+
+  "loggy::edit:surname": "surnom",
+  "loggy::edit:ip": "Id du Serveur",
+  "loggy::edit:port":"Port",
+  "loggy::edit:nb_player": "Nb de joueur",
+  "loggy::btn:valid": "Valider",
+  "loggy::btn:cancel": "Annuler\nA",
+  "loggy::btn:server": "Serveur",
+
+  "logging:popup::text:wait": "Attente des autres joueur ...",
+  "logging:popup::btn:cancel": "Annuler",
+
+  "game:tache:info::text": [
+    "Installer un programme",
+    "Réparer un ordinateur",
+    "Redémarrer le Wi-Fi ",
+    "Mise à jour système",
+    "Réparer une grosse panne"
+  ]
+}

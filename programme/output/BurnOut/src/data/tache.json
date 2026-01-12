@@ -1,0 +1,144 @@
+{
+    "travail": {
+        "I_P": [
+            "Installer un programme",
+            20
+        ],
+        "R_O": [
+            "Réparer un ordinateur",
+            30
+        ],
+        "R_W": [
+            "Redémarrer le Wi-Fi",
+            25,
+            "machine ferme pendant 1 tour"
+        ],
+        "MJ_S": [
+            "Mise à jour système",
+            40,
+            "salle d’info bloquée 1 tour"
+        ],
+        "R_GP": [
+            "Réparer une grosse panne",
+            50
+        ]
+    },
+    "machine": {
+        "D_M": [
+            "Démarrer une machine",
+            20
+        ],
+        "R_P": [
+            "Réparer une petite panne",
+            30
+        ],
+        "C_P": [
+            "Changer une pièce",
+            35
+        ],
+        "M_C": [
+            "Maintenance complète",
+            45,
+            "toutes les tâches coûtent +10 crédits pendant 1 tour"
+        ],
+        "R_MC": [
+            "Réparer une machine critique",
+            50,
+            "salle fermée 2 tours"
+        ]
+    },
+    "electricite": {
+        "T_E": [
+            "Tester l’électricité",
+            20
+        ],
+        "R_F": [
+            "Remplacer un fusible",
+            25,
+            "machines arrêtées ce tour"
+        ],
+        "R_P_E": [
+            "Réparer une panne",
+            40,
+            "électricité coupée 1 tour"
+        ],
+        "S_I": [
+            "Sécuriser l’installation",
+            45
+        ],
+        "G_R_E": [
+            "Grosse réparation électrique",
+            50,
+            "Salle info et elec bloqué pendant 3 tours"
+        ]
+    },
+    "reception": {
+        "O_C": [
+            "Ouvrir les cartons",
+            20
+        ],
+        "R_S": [
+            "Ranger le stock",
+            30,
+            "fabrication bloquée 1 tour"
+        ],
+        "C_S": [
+            "Compter les stocks",
+            35,
+            "pièces (trucs meca et electrique) bloqués 1 tour"
+        ],
+        "G_I": [
+            "Gérer l’inventaire",
+            40,
+            "réparations coûtent +10 crédits ce tour"
+        ],
+        "P_L": [
+            "Problème de livraison",
+            50,
+            "plus de pièces 2 tours"
+        ]
+    },
+    "reunion": {
+        "D_C": [
+            "Donner des consignes",
+            20,
+            "prochaine tâche −5 crédits"
+        ],
+        "R_C": [
+            "Résoudre un conflit",
+            40,
+            "toutes les salles débloquées + 10 stresse"
+        ],
+        "R_C_G": [
+            "Réunion de crise",
+            50
+        ]
+    },
+    "dehors": {
+        "C_A": [
+            "Coller des affiches",
+            20,
+            "aucun effet"
+        ],
+        "D_F": [
+            "Distribuer des flyers",
+            25,
+            "+10 crédits au prochain tour"
+        ],
+        "F_M": [
+            "Faire la mascotte",
+            30,
+            "tâches coûtent −5 crédits ce tour"
+        ],
+        "E_P": [
+            "Événement public",
+            40,
+            "bonus crédits 2 tours + 10 burnout"
+        ],
+        "P_D": [
+            "Problème dehors",
+            50,
+            "sorties bloquées 2 tours + 20 burnout"
+        ]
+    }
+}
