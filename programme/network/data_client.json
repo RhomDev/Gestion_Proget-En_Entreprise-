@@ -1,7 +1,7 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 1,
+    "tour": 9,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": [],
@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Gérer l'inventaire",
-            "Gérer l'inventaire",
-            "Réunion de crise"
+            "Résoudre un conflit",
+            "Remplacer un fusible",
+            "Coller des affiches"
         ],
         [
-            "Problème dehors",
-            "Changer une pièce",
-            "Réparer une grosse panne"
+            "Réparer une panne",
+            "Distribuer des flyers",
+            "Remplacer un fusible"
         ],
         [
-            "Redémarrer le Wi-Fi",
-            "Grosse réparation électrique",
-            "Mise à jour système"
+            "Réparer un ordinateur",
+            "Installer un programme",
+            "Ouvrir les cartons"
         ]
     ],
     "mission_faite": [],

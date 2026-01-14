@@ -6,7 +6,7 @@
         {
             "id": 0,
             "statue": 1,
-            "tour": 1,
+            "tour": 9,
             "bob_burnout": 0,
             "action_realisee": "",
             "tache_realisee": [],
@@ -27,19 +27,19 @@
             "effet_actif": "",
             "mission": [
                 [
-                    "G\u00e9rer l'inventaire",
-                    "G\u00e9rer l'inventaire",
-                    "R\u00e9union de crise"
+                    "R\u00e9soudre un conflit",
+                    "Remplacer un fusible",
+                    "Coller des affiches"
                 ],
                 [
-                    "Probl\u00e8me dehors",
-                    "Changer une pi\u00e8ce",
-                    "R\u00e9parer une grosse panne"
+                    "R\u00e9parer une panne",
+                    "Distribuer des flyers",
+                    "Remplacer un fusible"
                 ],
                 [
-                    "Red\u00e9marrer le Wi-Fi",
-                    "Grosse r\u00e9paration \u00e9lectrique",
-                    "Mise \u00e0 jour syst\u00e8me"
+                    "R\u00e9parer un ordinateur",
+                    "Installer un programme",
+                    "Ouvrir les cartons"
                 ]
             ],
             "mission_faite": [],

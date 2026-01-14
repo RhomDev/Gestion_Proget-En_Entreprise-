@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     data_ = read_json(resource_path("config.json"))
 
-    data_ = read_json(path)
+ 
     print(data_["resolution"])
     resolution_str = str(data_["resolution"]).strip("()'\"")
     largeur, hauteur = map(int, resolution_str.split('x'))
