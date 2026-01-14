@@ -67,13 +67,24 @@ def create_game_update():
 
 def create_server(set_client):
     global serveur
-    if edit_nb_player.get_text() != "":
-        if is_valid_port(edit_port.get_text()):
+    if 1:
+        if 1:
             try:
 
-                    port = int(edit_port.get_text())
+
+
+                    port = edit_port.get_text()
+                    nb_wait = edit_nb_player.get_text()
                     # Créer le serveur
-                    serveur = Serveur(port=port, nb_wait=int(edit_nb_player.get_text()))
+                    if port == '' and nb_wait == '' :
+                        port=55555
+                        nb = 1
+                    else:
+                        port = int(port)
+                        nb = int(nb_wait)
+
+                
+                    serveur = Serveur(port= port  , nb_wait= nb)
 
                     serveur.start()
 

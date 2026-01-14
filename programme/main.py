@@ -13,7 +13,7 @@ import screen.Create_Game_screen as create_game_screen
 from utils.Constant import Screen
 from utils.LanguageManage import LanguageManager
 
-from utils.Read_Data import read_json, resource_path
+from utils.Read_Data import read_json
 
 # Déclarer les variables globales
 screen_page = None
@@ -34,17 +34,31 @@ def change_page(page):
 def get_page():
     return screen_page
 
+def resource_path(relative_path):
+    """ Retourne le chemin absolu vers la ressource """
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        # __file__ = main.py qui est dans programme/
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    
+    return os.path.normpath(os.path.join(base_path, relative_path))
 if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
 
-    data_ = read_json(resource_path("src/config.json"))
+    path = resource_path("config.json")
 
+    print(f"DEBUG: Chemin généré : {path}")
+    print(f"DEBUG: Le fichier existe-t-il ? {os.path.exists(path)}")
+
+    data_ = read_json(path)
+    print(data_["resolution"])
     resolution_str = str(data_["resolution"]).strip("()'\"")
     largeur, hauteur = map(int, resolution_str.split('x'))
     screen = pygame.display.set_mode((largeur, hauteur))
     if data_.get("fullcreen",False):
-        screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN| pygame.SCALED)
 
     manager = pygame_gui.UIManager(screen.get_size())
 

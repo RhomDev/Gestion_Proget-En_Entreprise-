@@ -2,60 +2,60 @@
     "Travail": {
         "Installer un programme": {
             "credit": 20,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Réparer un ordinateur": {
             "credit": 30,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Redémarrer le Wi-Fi": {
             "credit": 25,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
             ]
         },
         "Mise à jour système": {
             "credit": 40,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Travail"], "duree": 1}
             ]
         },
         "Réparer une grosse panne": {
             "credit": 50,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         }
     },
     "Machine": {
         "Démarrer une machine": {
             "credit": 20,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Réparer une petite panne": {
             "credit": 30,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Changer une pièce": {
             "credit": 35,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Maintenance complète": {
             "credit": 45,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": 10, "duree": 1}
             ]
         },
         "Réparer une machine critique": {
             "credit": 50,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 2}
             ]
@@ -64,31 +64,31 @@
     "Electricité": {
         "Tester l’électricité": {
             "credit": 20,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Remplacer un fusible": {
             "credit": 25,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
             ]
         },
         "Réparer une panne": {
             "credit": 40,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Electricité"], "duree": 1}
             ]
         },
         "Sécuriser l'installation": {
             "credit": 45,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Grosse réparation électrique": {
             "credit": 50,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Travail", "Electricité"], "duree": 3}
             ]
@@ -97,40 +97,40 @@
     "Entrepôt": {
         "Ouvrir les cartons": {
             "credit": 20,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Ranger le stock": {
             "credit": 30,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
             ]
         },
         "Compter les stocks": {
             "credit": 35,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
             ]
         },
         "Gérer l'inventaire": {
             "credit": 40,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": 10, "duree": 1}
             ]
         },
         "Problème de livraison": {
             "credit": 50,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         }
     },
     "Mange": {
         "Donner des consignes": {
             "credit": 20,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": -10, "duree": 1}
             ]
@@ -144,26 +144,26 @@
         },
         "Réunion de crise": {
             "credit": 50,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         }
     },
     "Dehors": {
         "Coller des affiches": {
             "credit": 20,
-            "burnout": 0,
+            "burnout":10,
             "effets": []
         },
         "Distribuer des flyers": {
             "credit": 25,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "credit_effets", "argument": 10, "duree": 1}
             ]
         },
         "Faire la mascotte": {
             "credit": 30,
-            "burnout": 0,
+            "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": -5, "duree": 1}
             ]

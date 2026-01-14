@@ -7,7 +7,7 @@ import sys
 # la sortie est un tableau soit: data = read_json("file.json")
 # data["nom_variable"]
 def read_json(path, retry=10, delay=0.1):
-    for _ in range(retry):
+    for i in range(retry):
         if not os.path.exists(path):
             time.sleep(delay)
             continue
@@ -16,12 +16,15 @@ def read_json(path, retry=10, delay=0.1):
                 content = f.read().strip()
                 if content:
                     return json.loads(content)
-        except json.JSONDecodeError:
-            pass  # fichier en cours d'écriture
+                else:
+                    print(f"Tentative {i}: Fichier vide")
+        except json.JSONDecodeError as e:
+            print(f"Tentative {i}: Erreur de lecture JSON ({e})")
+        
         time.sleep(delay)
-        print(_)
+    
+    print(f"ERREUR FATALE: Impossible de lire {path} après {retry} essais.")
     return None
-
 
 # il faut que data soit un tableau
 def write_json(file, data):
@@ -29,12 +32,13 @@ def write_json(file, data):
         json.dump(data, file, indent=4, ensure_ascii=False)
 
 def resource_path(relative_path):
-    """Retourne le chemin correct vers un fichier, même dans un exe PyInstaller"""
+    """ Retourne le chemin absolu vers la ressource """
     try:
-        # _MEIPASS est le dossier temporaire créé par PyInstaller
-        base_path = sys._MEIPASS
+        base_path = sys._MEIPASS  # PyInstaller
     except AttributeError:
-        # Quand on est en mode développement
-        base_path = os.path.abspath(".")
+        # Remonter au dossier parent (programme/) depuis utils/
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    
+    return os.path.normpath(os.path.join(base_path, relative_path))
 
-    return os.path.join(base_path, relative_path)
+

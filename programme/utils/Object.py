@@ -35,6 +35,7 @@ class Button:
         self.taille = taille
         self.language = language
         self.piece_ferme = False
+        self.blocked = False
 
         self.hovered = False
         self.function = function
@@ -46,10 +47,11 @@ class Button:
 
 
     def update(self):
+        
         self.screen.blit(self.image, self.rect)
         if self._input_text != "":
             self.screen.blit(self.text, self.text_rect)
-        if self.hovered and self.function is not None:
+        if self.hovered and self.function is not None and not self.blocked:
             self.function()
 
     def change_dim(self,dim, police_taille):
@@ -119,7 +121,7 @@ class Button:
 
     def event(self, event, position, function):
         if self.rect.collidepoint(position):
-            if event.type == pygame.MOUSEBUTTONDOWN and self.actif:
+            if event.type == pygame.MOUSEBUTTONDOWN and self.actif and not self.blocked:
                 function()
                 print("BUTTON " , self.get_text())
             self.hovered = True

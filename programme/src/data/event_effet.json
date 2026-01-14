@@ -1,0 +1,32 @@
+{
+
+    "Event Arrêt maladie": {
+        "effets": [{"fonction": "fin_tour"}]
+    },
+    "Event Journée compliquée": {
+        "effets": [{"fonction": "credit_effets", "argument": -20, "duree": 1}]
+    },
+    "Event Rush forcer": {
+        "effets": [{"fonction": "credit_effets", "argument": -20, "duree": 1},{"fonction": "effet_credit", "argument": -20, "duree": 1}]
+    },
+    "Event Réunion surprise": {
+        "effets": [{"fonction": "Go_Mange"}]
+    },
+        "Event Bureau inaccessible": {
+        "effets": [{"fonction": "bloque_piece"}]
+    },
+    "Event Procédure supplémentaire": {
+        "effets": [{"fonction": "bonus_next_task", "argument": 20}]
+    },"Event Outil bien configuré": {
+        "effets": [{"fonction": "bonus_next_task", "argument": -20}]
+    },"Event Erreur": {
+        "effets": [{"fonction": "Ajout_Tache"}]
+    },"Event Ordre prioritaire":{
+        "effets": [{"fonction": "Ajout_Tache_Prioritaire"}]
+    },"Event Motivation soudaine": {
+        "burnout": -20,
+        "effets": [{"fonction": "credit_effets", "argument": 10, "duree": 3}]
+    },"Event Épuisement progressif": {
+        "burnout": 20
+    }
+}

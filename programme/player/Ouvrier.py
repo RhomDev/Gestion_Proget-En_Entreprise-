@@ -1,13 +1,15 @@
-from math import sqrt
+from math import sqrt,floor
 import pygame
 
 
 class Ouvrier:
     def __init__(s, fenetre,  map):
         s.state = 0
-        s.etat = ["Fixe", "Cour"]
+        s.etat = ["Fixe", "Cour", "Anim"]
         s.image = pygame.image.load("src/img/perso/homme.png")
         s.width_image, s.heigth_image = s.image.get_size()[0] // 3, s.image.get_size()[1] // 3
+        s.img_anim = pygame.image.load("src/img/perso/bob_anim.png")
+        s.width_anim, s.heigth_anim = s.img_anim.get_size()[0] // 3, s.img_anim.get_size()[1]
         s.image_flip = pygame.transform.flip(s.image, True, False)
         s.flip = 0
         s.fenetre = fenetre
@@ -17,7 +19,7 @@ class Ouvrier:
 
         s.i = 0
         s.k = 0
-
+        s.frame = 0
         s.scale = 0.6
         s.map = map
 
@@ -27,7 +29,7 @@ class Ouvrier:
         s.node = map.nodes.EntreeBis
         s.pose = s.node.data
         s.obj = s.pose
-        
+
     def get_Longueur(s, objectif):
         return s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
 
@@ -35,7 +37,7 @@ class Ouvrier:
         print(objectif)
         liste_longeurs_int = s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
         for key in liste_longeurs_int:
-            liste_longeurs[key] = str(liste_longeurs_int[key])
+            liste_longeurs[key] = str(int(liste_longeurs_int[key]/5)*5)
         print(liste_longeurs)
         bool = s.nodes.Chemin(objectif, s.node.name)
         if bool:
@@ -61,16 +63,28 @@ class Ouvrier:
             img = images[0].subsurface((0, 0, s.width_image, s.heigth_image))
             image_scale = pygame.transform.scale_by(img, s.scale)
             s.fenetre.blit(image_scale, position)
+        elif s.etat[state] == "Anim":
+            img = s.img_anim.subsurface( ( (i % 2) * s.width_anim, 0, s.width_anim, s.heigth_anim ) )
+            image_scale = pygame.transform.scale_by(img, 1.5)
+            position = [s.pose[0]-45, s.pose[1]-180]
+            s.fenetre.blit(image_scale, position)
+            s.frame = s.frame + 1
+            if s.frame > 60:
+                s.frame = 0
+                s.state = 0
+ 
+
 
     def Position(s):
-            #if pygame.mouse.get_pressed()[0]:
-               #print(pygame.mouse.get_pos())
+            if pygame.mouse.get_pressed()[0]:
+               print(pygame.mouse.get_pos())
 
             x = s.obj[0] - s.pose[0]
             y = s.obj[1] - s.pose[1]
             norm = sqrt(x**2 + y**2)
             if norm == 0:
-                s.state = 0
+                if s.state != 2:
+                    s.state = 0
                 return
             x = x / norm
             y = y / norm
@@ -85,7 +99,9 @@ class Ouvrier:
                 if s.node.name == s.objectif or s.node is None:
                     s.pose[0] = s.obj[0]
                     s.pose[1] = s.obj[1]
-                    s.state = 0
+                    if s.state != 2:
+                        print("Arrivé à l'objectif :", s.objectif)
+                        s.state = 0
                 else:
                     if s.node.pointe is not None:
                         s.node = s.node.pointe
@@ -94,7 +110,12 @@ class Ouvrier:
                     s.obj = s.node.data
 
             s.flip = 1 if x < 0 else 0
-            
+
+    def anim(s):
+        s.state = 2
+                
+
+
 
     def update(s):
         s.Draw()
