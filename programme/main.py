@@ -47,10 +47,7 @@ if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
 
-    path = resource_path("config.json")
-
-    print(f"DEBUG: Chemin généré : {path}")
-    print(f"DEBUG: Le fichier existe-t-il ? {os.path.exists(path)}")
+    data_ = read_json(resource_path("config.json"))
 
     data_ = read_json(path)
     print(data_["resolution"])
