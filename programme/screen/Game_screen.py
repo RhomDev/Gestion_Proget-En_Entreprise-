@@ -21,7 +21,7 @@ def game_screen_init(screen):
 
     panel_deplacement = False
     panel_taches = False
-    Event_sound = pygame.mixer.Sound(resource_path("src/sound/event.wav"))
+    Event_sound = pygame.mixer.Sound(resource_path("src/sound/event.mp3"))
     data_tache_effet = read_json(resource_path("src/data/tache_effet.json"))
     event_tache_effet = read_json(resource_path("src/data/event_effet.json"))
     var_open_panel = True

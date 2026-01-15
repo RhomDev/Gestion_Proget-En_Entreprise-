@@ -1,10 +1,10 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 0,
+    "tour": 10,
     "bob_burnout": 0,
     "action_realisee": "",
-    "tache_realisee": "",
+    "tache_realisee": [],
     "credit_bonus": [
         0,
         0,
@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Faire la mascotte",
-            "Installer un programme",
-            "Ranger le stock"
+            "Démarrer une machine",
+            "Donner des consignes",
+            "Réparer une petite panne"
         ],
         [
+            "Réparer un ordinateur",
             "Changer une pièce",
-            "Ranger le stock",
-            "Événement public"
+            "Maintenance complète"
         ],
         [
-            "Coller des affiches",
-            "Résoudre un conflit",
-            "Remplacer un fusible"
+            "Événement public",
+            "Installer un programme",
+            "Tester l’électricité"
         ]
     ],
     "mission_faite": [],
