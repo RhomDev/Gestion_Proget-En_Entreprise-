@@ -17,10 +17,11 @@ def game_screen_init(screen):
         panel_deplacement,menu_Deroulent,Up,Down,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
         Up_taches,Down_taches,panel_taches,list_mission_btn,Tache_par_pièce,\
         background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit,i_btn,credit_effet,data_tache_effet,Burnout_bar,\
-        credit_bonus,piece_ferme,btn_affiche_effet,game_over,event_tache_effet,bonus_next_task,ecran,tache_a_faire,btn_tache_a_faire
+        credit_bonus,piece_ferme,btn_affiche_effet,game_over,event_tache_effet,bonus_next_task,ecran,tache_a_faire,btn_tache_a_faire,Event_sound
 
     panel_deplacement = False
     panel_taches = False
+    Event_sound = pygame.mixer.Sound(resource_path("src/sound/event.wav"))
     data_tache_effet = read_json(resource_path("src/data/tache_effet.json"))
     event_tache_effet = read_json(resource_path("src/data/event_effet.json"))
     var_open_panel = True
@@ -540,7 +541,7 @@ def init_next_tour():#les effets qui ce update en fonction des tours
 
 
 def executer_effets_tache(piece, nom_tache):
-    global data_tache_effet,bob,event_tache_effet,Burnout_bar,liste_deplacement
+    global data_tache_effet,bob,event_tache_effet,Burnout_bar,liste_deplacement,Even
     data_tache = data_tache_effet
     burnout = 0
 
@@ -556,6 +557,7 @@ def executer_effets_tache(piece, nom_tache):
         bob.anim()
         #print("BOURNOUT TACHE:", burnout)
     else:
+        Event_sound.play()
         event = event_tache_effet[nom_tache]
         effets = event.get('effets', [])
         burnout = event.get('burnout', 0)
