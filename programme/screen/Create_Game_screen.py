@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui.elements as gui
 import sys,os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -28,36 +29,52 @@ def is_valid_port(port_string):
     except ValueError:
         return False
 
-def create_game_screen_init(screen):
-    global edit_surname, edit_ip, edit_port, edit_nb_player, btn_valide, btn_cancel, btn_server, panel_background, \
-    txt_err_msg
+def create_game_screen_init(screen,manage):
+    global edit_surname, edit_ip, edit_port, btn_valide, btn_cancel, btn_server, panel_background, \
+    txt_err_msg, text_surname,text_ip,text_port
 
-    img_btn_std = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
-    img_panel = pygame.image.load(resource_path("src/img/game_img/background_btn_option.jpg"))
+    img_btn_std = pygame.image.load(resource_path("src/img/lobby/btn_.png"))
+    img_btn_std = pygame.transform.scale(img_btn_std, (400, 80))
 
-    panel_background = RectangleView(screen,((screen.get_width() / 2)-200, (screen.get_height() / 2)-250), (400,500), 1, img=img_panel)
+    img_panel = pygame.image.load(resource_path("src/img/lobby/fond_lobby.png"))
 
-    edit_surname = InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-200),(250,30),text_hint="loggy::edit:surname")
-    edit_ip =InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-150),(250,30),text_hint="loggy::edit:ip")
-    edit_port =InputBox(screen, lg, ((screen.get_width() / 2)-100, (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:port")
-    edit_nb_player =InputBox(screen, lg, ((screen.get_width() / 2), (screen.get_height() / 2)-100),(100,30),text_hint="loggy::edit:nb_player")
+    panel_background = RectangleView(screen,(200, 150), (1600, 800), 1, img=img_panel)
 
-    txt_err_msg = TextView(screen,((screen.get_width() / 2), (screen.get_height() / 2)-50),3,"", "Red", lg)
+    text_surname = TextView(screen, (350, 250), 4,
+                            "loggy::edit:surname", "White", lg)
+    edit_surname = gui.UITextEntryLine(
+        relative_rect=pygame.Rect((290, 270),(400,50)),
+        manager=manage)
 
-    btn_valide = Button(screen, ((screen.get_width()/2)-100,screen.get_height()/2), img_btn_std, 2, lg,"loggy::btn:valid", 16,
-                        color_input1='Red')
-    btn_server = Button(screen, ((screen.get_width() / 2) - 100, (screen.get_height() / 2)+50), img_btn_std, 2, lg,
-                        "loggy::btn:server", 16, color_input1='Red')
-    btn_cancel = Button(screen, ((screen.get_width() / 2), (screen.get_height() / 2)), img_btn_std, 2, lg, "loggy::btn:cancel", 16,
-                        color_input1='Red')
+    text_ip= TextView(screen, ((screen.get_width() / 2), 250), 4,
+                            "loggy::edit:ip", "White", lg)
+    edit_ip = gui.UITextEntryLine(
+        relative_rect=pygame.Rect(((screen.get_width() / 2)-100, 270),(400,50)),
+        manager=manage)
+
+    text_port = TextView(screen, ((screen.get_width() / 2)-50, 400), 4,
+                       "loggy::edit:port", "White", lg)
+    edit_port =gui.UITextEntryLine(
+        relative_rect=pygame.Rect(((screen.get_width() / 2)-100, 420),(200,50)),
+        manager=manage)
+
+    txt_err_msg = TextView(screen,((screen.get_width() / 2), (screen.get_height() / 2)-50),3,"", "Red")
+
+    btn_valide = Button(screen, ((screen.get_width()/2)+350,270), img_btn_std, 1, lg,"loggy::btn:join",
+                        "White", color_input1='Red', police_taille=8)
+
+    btn_server = Button(screen, ((screen.get_width()/2)+350,400), img_btn_std, 1, lg,
+                        "loggy::btn:server", "White", color_input1='Red', police_taille=8)
+    btn_cancel = Button(screen, (350, screen.get_height()-300), img_btn_std, 1, lg, "loggy::btn:cancel",
+                        "White", color_input1='Red', police_taille=7)
 
 
 def create_game_update():
     panel_background.update()
-    edit_surname.update()
-    edit_ip.update()
-    edit_port.update()
-    edit_nb_player.update()
+
+    text_surname.update()
+    text_ip.update()
+    text_port.update()
 
     txt_err_msg.update()
 
@@ -67,91 +84,72 @@ def create_game_update():
 
 def create_server(set_client):
     global serveur
-    if 1:
-        if 1:
-            try:
 
+    try:
+            port = int(edit_port.get_text())
+            # Créer le serveur
+            serveur = Serveur(port=port, nb_wait=int(data_config.get("nb_player",1)))
+            set_client(serveur)
+            serveur.start()
+            time.sleep(1)
+            joint_server(set_client)
 
-
-                    port = edit_port.get_text()
-                    nb_wait = edit_nb_player.get_text()
-                    # Créer le serveur
-                    if port == '' and nb_wait == '' :
-                        port=55555
-                        nb = 1
-                    else:
-                        port = int(port)
-                        nb = int(nb_wait)
-
-                
-                    serveur = Serveur(port= port  , nb_wait= nb)
-
-                    serveur.start()
-
-                    time.sleep(1)
-
-                    client = Client(port=port)
-                    client.start()
-                    set_client(client)
-
-                    time.sleep(1)
-
-                    popup_wait.set_client(client)
-
-                    popup_wait.change_active()
-
-
-            except OSError as e:
-                # Erreur de création de socket (port occupé ou invalide)
-                txt_err_msg.change_text(f"Erreur serveur")
-                print(f"Erreur serveur : {e}")
-            except Exception as e:
-                txt_err_msg.change_text(f"Erreur serveur")
-                print(f"Erreur serveur : {e}")
+    except ValueError as e:
+        if data_config.get("dev_mod",False) == True:
+            print("coucou")
+            serveur = Serveur()
+            set_client(serveur)
+            serveur.start()
+            time.sleep(1)
+            joint_server(set_client)
         else:
-            txt_err_msg.change_text("Port invalide")
-    else:
-        txt_err_msg.change_text("Nombre de joueur incorrect")
+            txt_err_msg.change_text(lg.get_text("lobby:error::port_input"))
 
-def joint_server(page,set_client):
+    except OSError as e:
+        # Erreur de création de socket (port occupé ou invalide)
+        txt_err_msg.change_text(lg.get_text("lobby:error::port_fail"))
+        print(f"Erreur serveur : {e}")
+    except Exception as e:
+        text_error = lg.get_text("lobby:error::server_fail")
+        txt_err_msg.change_text(f"{text_error} : {e}")
+        print(f"Erreur serveur : {e}")
+
+def joint_server(set_client):
     ip = edit_ip.get_text()
     port_text = edit_port.get_text()
-
-    if not is_valid_ip(ip):
-        txt_err_msg.change_text("Adresse IP invalide")
-    if not is_valid_port(port_text):
-        txt_err_msg.change_text("Port invalide")
-        return
-
     try:
         port = int(port_text)
         client = Client(host=ip, port=port)
 
         set_client(client)
-
+        time.sleep(1)
         popup_wait.set_client(client)
-
         popup_wait.change_active()
 
+    except ValueError as e:
+        if data_config.get("dev_mod",False) == True:
+            client = Client()
+
+            set_client(client)
+            time.sleep(1)
+            popup_wait.set_client(client)
+            popup_wait.change_active()
+        else:
+            txt_err_msg.change_text(lg.get_text("lobby:error::port_input"))
     except ConnectionRefusedError:
-        txt_err_msg.change_text("Connexion refusée : serveur inaccessible")
-        print("Connexion refusée : serveur inaccessible")
+        txt_err_msg.change_text(lg.get_text("lobby:error::client_connect"))
     except TimeoutError:
-        txt_err_msg.change_text("Connexion au serveur timeout")
+        txt_err_msg.change_text("lobby:error::client_timeout")
         print("Connexion au serveur timeout")
     except OSError as e:
-        txt_err_msg.change_text(f"Erreur réseau : {e}")
+        text_error = lg.get_text("lobby:error::client_error")
+        txt_err_msg.change_text(f"{text_error}: {e}")
         print(f"Erreur réseau : {e}")
     except Exception as e:
         txt_err_msg.change_text(f"Erreur : {e}")
         print(f"Erreur : {e}")
 
 def event_create_game(event,page,set_cl):
-    edit_surname.handle_event(event)
-    edit_ip.handle_event(event)
-    edit_port.handle_event(event)
-    edit_nb_player.handle_event(event)
-
     btn_valide.animation_check_color(pygame.mouse.get_pos())
     btn_valide.event(event, pygame.mouse.get_pos(), lambda: joint_server(page,set_cl))
     btn_cancel.animation_check_color(pygame.mouse.get_pos())
@@ -183,20 +181,23 @@ def verif_wait(page, cl):
 
 
 
-def Create_Game_screen(screen,lang, set_cl, get_cl,page,get, clock):
-    global lg, popup_wait, serveur
+def Create_Game_screen(screen,manage,lang, set_cl, get_cl,page,get, clock):
+    global lg, popup_wait, serveur, data_config
     serveur=None
+    data_config = read_json(resource_path("config.json"))
     lg = lang
     game_active = True
-    create_game_screen_init(screen)
+    create_game_screen_init(screen,manage)
 
     popup_wait = Wait_Popup(screen,lang,(int(screen.get_width()/2)-250, int(screen.get_height()/2)-100))
 
     while (game_active):
         screen.fill((146, 147, 147))
+        time_delta = clock.tick(60) / 1000.0
         create_game_update()
 
         for event in pygame.event.get():
+            manage.process_events(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
             if not popup_wait.get_active():
@@ -213,5 +214,9 @@ def Create_Game_screen(screen,lang, set_cl, get_cl,page,get, clock):
 
         popup_wait.update()
 
+        manage.update(time_delta)
+        manage.draw_ui(screen)
+
         clock.tick(60)
         pygame.display.flip()
+    manage.get_root_container().clear()

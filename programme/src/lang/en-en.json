@@ -1,2 +1,47 @@
 {
+  "language::fr-fr": "French",
+  "language::en-en": "English",
+  "language::es-es": "Spanish",
+  "language::de-de": "German",
+  "language::ar-dz": "Algerian",
+
+  "menu::text:title": "In Company",
+  "menu::btn:start": "New Game",
+  "menu::btn:option": "Options",
+  "menu::btn:exit": "Exit",
+
+  "menu:popup::text:answer": "Do you really want to quit?",
+  "menu:popup::btn:yes": "Yes",
+  "menu:popup::btn:no": "No",
+
+  "option::text:langue": "Language",
+  "option::text:tour": "Number of rounds",
+  "option::text:player": "Number of players",
+  "option::text:volume": "Sound volume",
+
+  "loggy::edit:surname": "Nickname",
+  "loggy::edit:ip": "Server ID",
+  "loggy::edit:port": "Port",
+  "loggy::edit:nb_player": "Number of players",
+  "loggy::btn:join": "Join",
+  "loggy::btn:cancel": "Cancel",
+  "loggy::btn:server": "Server",
+
+  "lobby:error::port_fail": "Port occupied or invalid",
+  "lobby:error::port_input": "Invalid port input",
+  "lobby:error::server_fail": "Server error",
+  "lobby:error::client_connect": "Connection refused: server unreachable",
+  "lobby:error::client_timeout": "Server connection timeout",
+  "lobby:error::client_error": "Network error",
+
+  "logging:popup::text:wait": "Waiting for other players...",
+  "logging:popup::btn:cancel": "Cancel",
+
+  "game:tache:info::text": [
+    "Install a program",
+    "Repair a computer",
+    "Restart Wi-Fi",
+    "System update",
+    "Fix a major failure"
+  ]
 }

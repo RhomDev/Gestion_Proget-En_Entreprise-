@@ -5,7 +5,7 @@ import random
 import utils.Read_Data as j
 
 class Serveur(threading.Thread):
-    def __init__(self, host="0.0.0.0", port=5555, file="network/data_serveur.json", nb_wait=0):
+    def __init__(self, host="0.0.0.0", port=5555, file="network/data_serveur.json", nb_wait=1):
         super().__init__(daemon=True)
         self.host = host
         self.port = port
@@ -105,12 +105,6 @@ class Serveur(threading.Thread):
             elif msg["type"] == "loading_mission":
                 player["mission"] = msg["action"]
                 player["mission_faite"] = msg["action_second"]
-
-            elif msg["type"] == "credit_bonus":
-                player["credit_bonus"] = msg["action"]
-           
-            elif msg["type"] == "piece_ferme":
-                player["piece_ferme"] = msg["action"]
 
             self.save_json()
             self.broadcast_state()

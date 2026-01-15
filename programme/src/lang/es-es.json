@@ -1,0 +1,47 @@
+{
+  "language::fr-fr": "Francés",
+  "language::en-en": "Inglés",
+  "language::es-es": "Español",
+  "language::de-de": "Alemán",
+  "language::ar-dz": "Argelino",
+
+  "menu::text:title": "En Empresa",
+  "menu::btn:start": "Nueva partida",
+  "menu::btn:option": "Opciones",
+  "menu::btn:exit": "Salir",
+
+  "menu:popup::text:answer": "¿Desea salir realmente?",
+  "menu:popup::btn:yes": "Sí",
+  "menu:popup::btn:no": "No",
+
+  "option::text:langue": "Idioma",
+  "option::text:tour": "Número de turnos",
+  "option::text:player": "Número de jugadores",
+  "option::text:volume": "Volumen de sonido",
+
+  "loggy::edit:surname": "Apodo",
+  "loggy::edit:ip": "ID del servidor",
+  "loggy::edit:port": "Puerto",
+  "loggy::edit:nb_player": "Número de jugadores",
+  "loggy::btn:join": "Unirse",
+  "loggy::btn:cancel": "Cancelar",
+  "loggy::btn:server": "Servidor",
+
+  "lobby:error::port_fail": "Puerto ocupado o inválido",
+  "lobby:error::port_input": "Entrada de puerto incorrecta",
+  "lobby:error::server_fail": "Error del servidor",
+  "lobby:error::client_connect": "Conexión rechazada: servidor inaccesible",
+  "lobby:error::client_timeout": "Tiempo de espera de conexión agotado",
+  "lobby:error::client_error": "Error de red",
+
+  "logging:popup::text:wait": "Esperando a otros jugadores...",
+  "logging:popup::btn:cancel": "Cancelar",
+
+  "game:tache:info::text": [
+    "Instalar un programa",
+    "Reparar un ordenador",
+    "Reiniciar el Wi-Fi",
+    "Actualización del sistema",
+    "Reparar una avería grave"
+  ]
+}
