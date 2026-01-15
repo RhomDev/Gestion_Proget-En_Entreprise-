@@ -1,6 +1,6 @@
 import pygame
 
-from programme.main import resource_path
+from utils.Read_Data import resource_path
 
 # actionneur
 class Button:
@@ -39,7 +39,8 @@ class Button:
         self.piece_ferme = False
         self.blocked = False
         self.hover_sound_effect = pygame.mixer.Sound(resource_path("src/sound/hover.wav"))
-        #self.clicked_sound_effect = pygame.mixer.Sound("src/sound/click.wav")
+        self.last_hovered = False
+        self.clicked_sound_effect = pygame.mixer.Sound(resource_path("src/sound/click.wav"))
         self.hovered = False
         self.function = function
         # Charger et redimensionner l'image
@@ -126,11 +127,16 @@ class Button:
         if self.rect.collidepoint(position):
             if event.type == pygame.MOUSEBUTTONDOWN and self.actif and not self.blocked:
                 function()
+                self.clicked_sound_effect.play()
                 print("BUTTON " , self.get_text())
             self.hovered = True
-            self.hover_sound_effect.play()
+            if self.last_hovered == False:
+                self.hover_sound_effect.play()
+                self.last_hovered = True
         else:
             self.hovered = False
+            self.last_hovered = False
+            self.hover_sound_effect.stop()
 
 class InputBox:
     def __init__(self,screen,lang , position, dimension, font_size=32, text_hint=""):

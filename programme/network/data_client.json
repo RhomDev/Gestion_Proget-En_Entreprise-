@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Réparer un ordinateur",
-            "Mise à jour système",
-            "Coller des affiches"
+            "Faire la mascotte",
+            "Installer un programme",
+            "Ranger le stock"
         ],
         [
-            "Mise à jour système",
-            "Compter les stocks",
-            "Résoudre un conflit"
+            "Changer une pièce",
+            "Ranger le stock",
+            "Événement public"
         ],
         [
-            "Mise à jour système",
-            "Réparer une petite panne",
-            "Installer un programme"
+            "Coller des affiches",
+            "Résoudre un conflit",
+            "Remplacer un fusible"
         ]
     ],
     "mission_faite": [],
