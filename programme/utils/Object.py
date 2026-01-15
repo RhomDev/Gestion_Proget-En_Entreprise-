@@ -41,6 +41,10 @@ class Button:
         self.hover_sound_effect = pygame.mixer.Sound(resource_path("src/sound/hover.wav"))
         self.last_hovered = False
         self.clicked_sound_effect = pygame.mixer.Sound(resource_path("src/sound/click.wav"))
+
+        self.hover_sound_effect.set_volume(0.2)
+        self.clicked_sound_effect.set_volume(0.2)
+
         self.hovered = False
         self.function = function
         # Charger et redimensionner l'image

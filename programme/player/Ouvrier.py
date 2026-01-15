@@ -20,6 +20,7 @@ class Ouvrier:
         s.centre = (s.width / 2, s.heigth / 2)
         s.walk_sound = pygame.mixer.Sound(resource_path("src/sound/walk.wav"))
 
+
         s.i = 0
         s.k = 0
         s.frame = 0
