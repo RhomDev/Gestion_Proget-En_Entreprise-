@@ -548,7 +548,16 @@ def executer_effets_tache(piece, nom_tache):
 
 
 
-    if nom_tache[0:5] != "Event":
+    if nom_tache[0:5] == "Event":
+
+        Event_sound.play()
+        event = event_tache_effet[nom_tache]
+        effets = event.get('effets', [])
+        burnout = event.get('burnout', 0)
+        #print("BOURNOUT EVENT :", burnout)
+
+
+    else:
 
         piece = data_tache.get(piece, {})
         tache = piece.get(nom_tache, {})
@@ -556,12 +565,6 @@ def executer_effets_tache(piece, nom_tache):
         burnout = tache.get('burnout', 0)
         bob.anim()
         #print("BOURNOUT TACHE:", burnout)
-    else:
-        Event_sound.play()
-        event = event_tache_effet[nom_tache]
-        effets = event.get('effets', [])
-        burnout = event.get('burnout', 0)
-        #print("BOURNOUT EVENT :", burnout)
 
 
 
