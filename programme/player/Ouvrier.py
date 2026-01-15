@@ -1,6 +1,8 @@
 from math import sqrt,floor
 import pygame
 
+from utils.Read_Data import resource_path
+
 
 class Ouvrier:
     def __init__(s, fenetre,  map):
@@ -16,6 +18,7 @@ class Ouvrier:
         s.width = fenetre.get_size()[0]
         s.heigth = fenetre.get_size()[1]
         s.centre = (s.width / 2, s.heigth / 2)
+        s.walk_sound = pygame.mixer.Sound(resource_path("src/sound/walk.wav"))
 
         s.i = 0
         s.k = 0
@@ -35,6 +38,7 @@ class Ouvrier:
 
     def Set_Objectif(s, objectif,liste_longeurs):
         print(objectif)
+        s.walk_sound.play(-1)
         liste_longeurs_int = s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
         for key in liste_longeurs_int:
             liste_longeurs[key] = str(int(liste_longeurs_int[key]/5)*5)
@@ -101,6 +105,7 @@ class Ouvrier:
                     s.pose[1] = s.obj[1]
                     if s.state != 2:
                         print("Arrivé à l'objectif :", s.objectif)
+                        s.walk_sound.stop()
                         s.state = 0
                 else:
                     if s.node.pointe is not None:
