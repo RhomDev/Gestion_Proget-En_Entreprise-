@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Gérer l'inventaire",
-            "Événement public",
-            "Redémarrer le Wi-Fi"
-        ],
-        [
-            "Réunion de crise",
-            "Compter les stocks",
-            "Événement public"
-        ],
-        [
-            "Événement public",
-            "Maintenance complète",
+            "Installer un programme",
+            "Résoudre un conflit",
             "Sécuriser l'installation"
+        ],
+        [
+            "Événement public",
+            "Changer une pièce",
+            "Réparer une machine critique"
+        ],
+        [
+            "Ranger le stock",
+            "Réparer une grosse panne",
+            "Réunion de crise"
         ]
     ],
     "mission_faite": [],

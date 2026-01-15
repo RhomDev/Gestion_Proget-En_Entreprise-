@@ -27,19 +27,19 @@
             "effet_actif": "",
             "mission": [
                 [
-                    "G\u00e9rer l'inventaire",
-                    "\u00c9v\u00e9nement public",
-                    "Red\u00e9marrer le Wi-Fi"
-                ],
-                [
-                    "R\u00e9union de crise",
-                    "Compter les stocks",
-                    "\u00c9v\u00e9nement public"
-                ],
-                [
-                    "\u00c9v\u00e9nement public",
-                    "Maintenance compl\u00e8te",
+                    "Installer un programme",
+                    "R\u00e9soudre un conflit",
                     "S\u00e9curiser l'installation"
+                ],
+                [
+                    "\u00c9v\u00e9nement public",
+                    "Changer une pi\u00e8ce",
+                    "R\u00e9parer une machine critique"
+                ],
+                [
+                    "Ranger le stock",
+                    "R\u00e9parer une grosse panne",
+                    "R\u00e9union de crise"
                 ]
             ],
             "mission_faite": [],
