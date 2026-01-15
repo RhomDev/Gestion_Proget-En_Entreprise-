@@ -14,7 +14,7 @@ class Game_Over(Popup):
 
     def update(self,clock):
         Popup.update(self)
-        img_game_over = pygame.image.load(resource_path("src/img/game_img/description.jpg"))
+        img_game_over = pygame.image.load(resource_path("src/img/game_img/TestGameOver.png"))
        
         self.screen.blit(img_game_over, (500,500))
         pygame.time.delay(2000)
