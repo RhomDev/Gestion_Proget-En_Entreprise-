@@ -84,14 +84,16 @@
         "Sécuriser l'installation": {
             "credit": 45,
             "burnout":10,
-            "effets": []
+            "effets": [],
+            "Description":"Text"
         },
         "Grosse réparation électrique": {
             "credit": 50,
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Travail", "Electricité"], "duree": 3}
-            ]
+            ],
+            "Description":"Text"
         }
     },
     "Entrepôt": {
@@ -105,14 +107,16 @@
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
-            ]
+            ],
+            "Description":"Text"
         },
         "Compter les stocks": {
             "credit": 35,
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
-            ]
+            ],
+            "Description":"Text"
         },
         "Gérer l'inventaire": {
             "credit": 40,

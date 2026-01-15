@@ -134,9 +134,11 @@ def game_screen_init(screen):
             data_tache = read_json(resource_path("src/data/tache_effet.json"))[piece]
             Liste_tache = []
             for tache in data_tache:
-                credit_in = str(data_tache[tache]["credit"]) + " crédits"
+                task = data_tache[tache]
+                credit_in = str(task["credit"]) + " crédits"
+                text= credit_in +"\n"+ task.get("Description", "")
                 btn = Button(screen,(0,0),img_bouton_standard,1,text=tache , police_taille=2,
-                                function=lambda credit = credit_in: description_bouton_update(credit,pos=(283,700),dim=(200,100),police_taille=36),argument=[data_tache[tache]["credit"],data_tache[tache],piece])
+                                function=lambda texts = text: description_bouton_update(text,pos=(283,700),dim=(200,100),police_taille=36),argument=[task["credit"],task,piece])
                 Liste_tache.append(btn)
             return Liste_tache
 
