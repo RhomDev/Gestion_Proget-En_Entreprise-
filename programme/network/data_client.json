@@ -1,10 +1,10 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 0,
+    "tour": 9,
     "bob_burnout": 0,
     "action_realisee": "",
-    "tache_realisee": "",
+    "tache_realisee": [],
     "credit_bonus": [
         0,
         0,
@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Réparer un ordinateur",
-            "Ouvrir les cartons",
-            "Distribuer des flyers"
-        ],
-        [
-            "Installer un programme",
             "Donner des consignes",
-            "Grosse réparation électrique"
+            "Problème dehors",
+            "Remplacer un fusible"
         ],
         [
-            "Grosse réparation électrique",
-            "Résoudre un conflit",
-            "Coller des affiches"
+            "Problème dehors",
+            "Redémarrer le Wi-Fi",
+            "Réparer une panne"
+        ],
+        [
+            "Changer une pièce",
+            "Gérer l'inventaire",
+            "Mise à jour système"
         ]
     ],
     "mission_faite": [],

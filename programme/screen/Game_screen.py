@@ -594,7 +594,7 @@ def executer_effets_tache(piece, nom_tache):
             #Modif credit pour les prochain tour
             argument = effet.get('argument', 0)
             duree = effet.get('duree', 1)
-            print("ARGUMENT CREDIT EFFET:", argument, duree)
+            #print("ARGUMENT CREDIT EFFET:", argument, duree)
             credit_effets(argument, duree)
 
         elif fonction == 'debloque_piece':
@@ -605,7 +605,7 @@ def executer_effets_tache(piece, nom_tache):
             fin_tour()
 
         elif fonction == "Go_Reception":
-            print("EXECUTION Go_Reception")
+            #print("EXECUTION Go_Reception")
             Go_Reception()
 
         elif fonction == "bloque_piece":
@@ -645,7 +645,7 @@ def Go_Reception():
     for btn in liste_deplacement:
         if btn.get_text() != "Reception":
             btn.blocked = True
-            print("Désactivation du bouton:", btn.get_text())
+            #print("Désactivation du bouton:", btn.get_text())
 
 
 
@@ -654,4 +654,4 @@ def debloque_toutes_pieces():
     for btn_piece in liste_deplacement:
         btn_piece.piece_ferme = False
 
-    print("Toutes les pièces ont été débloquées")
+    #print("Toutes les pièces ont été débloquées")
