@@ -1,5 +1,5 @@
 {
-    "Travail": {
+    "Info": {
         "Installer un programme": {
             "credit": 20,
             "burnout":10,
@@ -21,8 +21,8 @@
             "credit": 40,
             "burnout":10,
             "effets": [
-                {"fonction": "ferme_piece", "piece": ["Travail"], "duree": 1}
-            ],"Description":"Bloque la salle d’info \n(\"Travail\") pendant 1 tour"
+                {"fonction": "ferme_piece", "piece": ["Info"], "duree": 1}
+            ],"Description":"Bloque la salle d’info \n pendant 1 tour"
         },
         "Réparer une grosse panne": {
             "credit": 50,
@@ -90,7 +90,7 @@
             "credit": 50,
             "burnout":10,
             "effets": [
-                {"fonction": "ferme_piece", "piece": ["Travail", "Electricité"], "duree": 3}
+                {"fonction": "ferme_piece", "piece": ["Info", "Electricité"], "duree": 3}
             ],
             "Description":"Bloque les salles\n info et électricité \nles 3 prochains tours"
         }
@@ -131,7 +131,7 @@
             "effets": []
         }
     },
-    "Mange": {
+    "Reception": {
         "Donner des consignes": {
             "credit": 20,
             "burnout":10,

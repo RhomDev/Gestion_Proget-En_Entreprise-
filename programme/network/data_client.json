@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Sécuriser l'installation",
-            "Démarrer une machine",
-            "Donner des consignes"
+            "Réparer un ordinateur",
+            "Mise à jour système",
+            "Coller des affiches"
         ],
         [
-            "Réparer une machine critique",
-            "Remplacer un fusible",
-            "Donner des consignes"
+            "Mise à jour système",
+            "Compter les stocks",
+            "Résoudre un conflit"
         ],
         [
-            "Démarrer une machine",
-            "Distribuer des flyers",
-            "Grosse réparation électrique"
+            "Mise à jour système",
+            "Réparer une petite panne",
+            "Installer un programme"
         ]
     ],
     "mission_faite": [],

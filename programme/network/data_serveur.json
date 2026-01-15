@@ -27,19 +27,19 @@
             "effet_actif": "",
             "mission": [
                 [
-                    "S\u00e9curiser l'installation",
-                    "D\u00e9marrer une machine",
-                    "Donner des consignes"
+                    "R\u00e9parer un ordinateur",
+                    "Mise \u00e0 jour syst\u00e8me",
+                    "Coller des affiches"
                 ],
                 [
-                    "R\u00e9parer une machine critique",
-                    "Remplacer un fusible",
-                    "Donner des consignes"
+                    "Mise \u00e0 jour syst\u00e8me",
+                    "Compter les stocks",
+                    "R\u00e9soudre un conflit"
                 ],
                 [
-                    "D\u00e9marrer une machine",
-                    "Distribuer des flyers",
-                    "Grosse r\u00e9paration \u00e9lectrique"
+                    "Mise \u00e0 jour syst\u00e8me",
+                    "R\u00e9parer une petite panne",
+                    "Installer un programme"
                 ]
             ],
             "mission_faite": [],

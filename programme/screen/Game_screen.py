@@ -83,6 +83,7 @@ def game_screen_init(screen):
     i_btn = {}
     liste_deplacement=[]
     for i,key in enumerate(liste_longeurs):
+
             btn = Button(
                     screen,
                     (0,0),
@@ -135,7 +136,7 @@ def game_screen_init(screen):
             data_tache = read_json(resource_path("src/data/tache_effet.json"))[piece]
             Liste_tache = []
             for tache in data_tache:
-                task = data_tache[tache]
+                task = data_tache[tache] 
                 credit_in = str(task["credit"]) + " crédits"
                 text= credit_in +"\n"+ task.get("Description", "")
                 print("DESCRIPTION TACHE:", text)
@@ -148,10 +149,10 @@ def game_screen_init(screen):
     Tache_par_pièce={
         "Entrée":[],
         "Electricité":init_tache("Electricité"),
-        "Travail":init_tache("Travail"),
+        "Info":init_tache("Info"),
         "Machine":init_tache("Machine"),
         "Entrepôt":init_tache("Entrepôt"),
-        "Mange":init_tache("Mange"),
+        "Reception":init_tache("Reception"),
         "Dehors":init_tache("Dehors"),
     }
     Menu_taches=Menu_Deroulent(
@@ -275,7 +276,7 @@ def description_bouton_update(texte,pos=(125,125),dim=(200,50),police_taille=3, 
 
 def Update_Objectif(objectif):
     global bob_piece,Tache_par_pièce,tache_bouton
-    if objectif == "Mange":
+    if objectif == "Reception":
         tache_bouton.blocked = False
         toggle_taches()
         for btn in liste_deplacement:
@@ -433,7 +434,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     bob_piece = "Entrée"
     tour_fin = read_json(resource_path("config.json")).get("nb_tour",40)
 
-    liste_longeurs = {"Entrée": "0", "Electricité": "0", "Travail": "0", "Mange": "0", "Machine": "0", "Entrepôt": "0",
+    liste_longeurs = {"Entrée": "0", "Electricité": "0", "Info": "0", "Reception": "0", "Machine": "0", "Entrepôt": "0",
                       "Dehors": "0"}
 
     missions = []
@@ -597,9 +598,9 @@ def executer_effets_tache(piece, nom_tache):
         elif fonction == "fin_tour":
             fin_tour()
 
-        elif fonction == "Go_Mange":
-            print("EXECUTION Go_Mange")
-            Go_Mange()
+        elif fonction == "Go_Reception":
+            print("EXECUTION Go_Reception")
+            Go_Reception()
 
         elif fonction == "bloque_piece":
             piece = random.choice(liste_deplacement)
@@ -629,14 +630,14 @@ def ajout_tache():
     Menu_Liste_Attente,list_mission_btn = print_mission(ecran, missions)
     cl.send_animation_done([missions,fait])
 
-def Go_Mange():
+def Go_Reception():
     global tache_bouton,panel_taches
     tache_bouton.blocked = True
     if panel_taches:
         toggle_taches()
 
     for btn in liste_deplacement:
-        if btn.get_text() != "Mange":
+        if btn.get_text() != "Reception":
             btn.blocked = True
             print("Désactivation du bouton:", btn.get_text())
 
