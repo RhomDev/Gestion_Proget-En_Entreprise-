@@ -111,11 +111,12 @@ def game_screen_init(screen):
     )
 
 # Barre
+    img_description = pygame.image.load(resource_path("src/img/game_img/btn_tour.png"))
 
     Burnout_bar = barre_de_vie(screen, (39,80), (160,120),image=img_bar, scale_img=2 , scale=1.8)
     Burnout_bar.set_value(0)
 
-    description_bouton = Button(screen, (125,125),img_bouton_standard,3,text="")
+    description_bouton = Button(screen, (125,125),img_description,3,text="")
 
     hint_panel = Button(screen, (sWidth - 80, sHeight - 170), img_hint_panel, 1)
 
@@ -137,8 +138,9 @@ def game_screen_init(screen):
                 task = data_tache[tache]
                 credit_in = str(task["credit"]) + " crédits"
                 text= credit_in +"\n"+ task.get("Description", "")
+                print("DESCRIPTION TACHE:", text)
                 btn = Button(screen,(0,0),img_bouton_standard,1,text=tache , police_taille=2,
-                                function=lambda texts = text: description_bouton_update(text,pos=(283,700),dim=(200,100),police_taille=36),argument=[task["credit"],task,piece])
+                                function=lambda texts = text: description_bouton_update(texts,pos=(287, 588),dim=(300,320),police_taille=36),argument=[task["credit"],task,piece])
                 Liste_tache.append(btn)
             return Liste_tache
 

@@ -6,10 +6,10 @@
         {
             "id": 0,
             "statue": 1,
-            "tour": 9,
+            "tour": 0,
             "bob_burnout": 0,
             "action_realisee": "",
-            "tache_realisee": [],
+            "tache_realisee": "",
             "credit_bonus": [
                 0,
                 0,
@@ -27,19 +27,19 @@
             "effet_actif": "",
             "mission": [
                 [
-                    "R\u00e9soudre un conflit",
+                    "S\u00e9curiser l'installation",
+                    "D\u00e9marrer une machine",
+                    "Donner des consignes"
+                ],
+                [
+                    "R\u00e9parer une machine critique",
                     "Remplacer un fusible",
-                    "Coller des affiches"
+                    "Donner des consignes"
                 ],
                 [
-                    "R\u00e9parer une panne",
+                    "D\u00e9marrer une machine",
                     "Distribuer des flyers",
-                    "Remplacer un fusible"
-                ],
-                [
-                    "R\u00e9parer un ordinateur",
-                    "Installer un programme",
-                    "Ouvrir les cartons"
+                    "Grosse r\u00e9paration \u00e9lectrique"
                 ]
             ],
             "mission_faite": [],

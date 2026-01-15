@@ -15,14 +15,14 @@
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
-            ]
+            ],"Description":"Ferme la salle \n machine pendant 1 tour"
         },
         "Mise à jour système": {
             "credit": 40,
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Travail"], "duree": 1}
-            ]
+            ],"Description":"Bloque la salle d’info \n(\"Travail\") pendant 1 tour"
         },
         "Réparer une grosse panne": {
             "credit": 50,
@@ -51,14 +51,14 @@
             "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": 10, "duree": 1}
-            ]
+            ],"Description":"Toutes les tâches \n coûtent +10 crédits ce tour"
         },
         "Réparer une machine critique": {
             "credit": 50,
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 2}
-            ]
+            ],"Description":"Bloque la salle machine\n pendant les \n2 prochains tours"
         }
     },
     "Electricité": {
@@ -72,20 +72,19 @@
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
-            ]
+            ],"Description":"Bloque la salle \n machine le prochain tours"
         },
         "Réparer une panne": {
             "credit": 40,
             "burnout":10,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Electricité"], "duree": 1}
-            ]
+            ],"Description":"Coupe l’électricité \npendant le prochain tour"
         },
         "Sécuriser l'installation": {
             "credit": 45,
             "burnout":10,
-            "effets": [],
-            "Description":"Text"
+            "effets": []
         },
         "Grosse réparation électrique": {
             "credit": 50,
@@ -93,7 +92,7 @@
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Travail", "Electricité"], "duree": 3}
             ],
-            "Description":"Text"
+            "Description":"Bloque les salles\n info et électricité \nles 3 prochains tours"
         }
     },
     "Entrepôt": {
@@ -108,7 +107,7 @@
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
             ],
-            "Description":"Text"
+            "Description":"Bloque la salle\n machine pendant\n le prochain tour"
         },
         "Compter les stocks": {
             "credit": 35,
@@ -116,14 +115,15 @@
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Machine"], "duree": 1}
             ],
-            "Description":"Text"
+            "Description":"Bloque la salle\n machine pendant\n le prochain tour"
         },
         "Gérer l'inventaire": {
             "credit": 40,
             "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": 10, "duree": 1}
-            ]
+            ],
+            "Description":"Toutes les tâches\n coûtent +10 crédits ce tour"
         },
         "Problème de livraison": {
             "credit": 50,
@@ -137,14 +137,15 @@
             "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": -10, "duree": 1}
-            ]
+            ],
+            "Description":"Toutes les tâches\ncoûtent -10 crédits\nce tour"
         },
         "Résoudre un conflit": {
             "credit": 40,
             "burnout": 10,
             "effets": [
                 {"fonction": "debloque_piece"}
-            ]
+            ],"Description":"Toutes les salles\ndébloquées,\n mais +10 burnout"
         },
         "Réunion de crise": {
             "credit": 50,
@@ -163,28 +164,32 @@
             "burnout":10,
             "effets": [
                 {"fonction": "credit_effets", "argument": 10, "duree": 1}
-            ]
+            ],
+            "Description":"+10 crédits \n au prochain tour"
         },
         "Faire la mascotte": {
             "credit": 30,
             "burnout":10,
             "effets": [
                 {"fonction": "effet_credit", "argument": -5, "duree": 1}
-            ]
+            ],
+            "Description":"Toutes les tâches\ncoûtent -5 crédits ce tour"
         },
         "Événement public": {
             "credit": 40,
             "burnout": 10,
             "effets": [
                 {"fonction": "credit_effets", "argument": -10, "duree": 2}
-            ]
+            ],
+            "Description":"Bonus crédits\npendant les 2 prochains\ntours, mais +10 burnout"
         },
         "Problème dehors": {
             "credit": 50,
             "burnout": 20,
             "effets": [
                 {"fonction": "ferme_piece", "piece": ["Dehors"], "duree": 2}
-            ]
+            ],
+            "Description":"Sorties bloquées\npendant les 2 prochains tours,\nmais +20 burnout"
         }
     }
 }
