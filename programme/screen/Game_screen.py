@@ -459,14 +459,15 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
     while game_active:
         screen.fill((35, 206, 235))
         game_update()
-        Is_Game_Over(Burnout_bar,clock,pageset, tour_fin, client)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
             event_outil_panel(event, client)
 
         game_active = pageget() == Screen.GAME.value
-
+        print("GAME ACTIVE :", game_active)
+        Is_Game_Over(Burnout_bar,pageset, tour_fin, client)
         loading_animation_serveur(screen,client)
 
         clock.tick(60)
@@ -474,11 +475,12 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 
 #Regarde si game over
 
-def Is_Game_Over(burnout,clock,pageset, tour, client):
+def Is_Game_Over(burnout,pageset, tour, client):
     if burnout.value > 1 or client().get_state().get("tour",0)>=tour:
-        game_over.update(clock)
+        pygame.mixer.music.stop()
+        game_over.gameisover()
         burnout.value = 0
-        pageset(0)
+        pageset(5)
 
 
 # TOUT LES FONCTION D EFFET UTILE DU JEU , J'ai préféré les mettre la que de creer un fichier car il y a des probleme avec les variable global, comme tu disai ----------------------------------------------------------

@@ -6,7 +6,8 @@ class Screen(Enum):
     GAME = 1
     OPTION = 2
     LOBBY = 3
-
+    GAME_WIN = 4
+    GAME_OVER = 5
 class Tache(Enum):
     MACHINE = {"Démarrer une machine":[20],
                "Réparer une petite panne ": [30],

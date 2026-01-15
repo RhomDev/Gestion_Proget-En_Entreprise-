@@ -9,6 +9,7 @@ import screen.Menu_screen as menu_screen
 import screen.Game_screen as game_screen
 import screen.Option_screen as option_screen
 import screen.Create_Game_screen as create_game_screen
+import screen.popup.End_game.Game_Over as game_over
 
 from utils.Constant import Screen
 from utils.LanguageManage import LanguageManager
@@ -43,9 +44,11 @@ def resource_path(relative_path):
         base_path = os.path.dirname(os.path.abspath(__file__))
     
     return os.path.normpath(os.path.join(base_path, relative_path))
+
 if __name__ == '__main__':
     # Initialisation de Pygame
     pygame.init()
+
 
     data_ = read_json(resource_path("config.json"))
 
@@ -83,5 +86,7 @@ if __name__ == '__main__':
             option_screen.option_screen(screen,manager, language, change_page, get_page, clock)
         elif screen_page == Screen.LOBBY.value:
             create_game_screen.Create_Game_screen(screen, language, set_client, get_client, change_page, get_page, clock)
+        elif screen_page == Screen.GAME_OVER.value:
+            game_over.Game_Over_screen(change_page)
 
     pygame.quit()
