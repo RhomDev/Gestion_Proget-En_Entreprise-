@@ -1,5 +1,7 @@
 import pygame
 
+from programme.main import resource_path
+
 # actionneur
 class Button:
     def __init__(
@@ -36,7 +38,8 @@ class Button:
         self.language = language
         self.piece_ferme = False
         self.blocked = False
-
+        self.hover_sound_effect = pygame.mixer.Sound(resource_path("src/sound/hover.wav"))
+        #self.clicked_sound_effect = pygame.mixer.Sound("src/sound/click.wav")
         self.hovered = False
         self.function = function
         # Charger et redimensionner l'image
@@ -125,6 +128,7 @@ class Button:
                 function()
                 print("BUTTON " , self.get_text())
             self.hovered = True
+            self.hover_sound_effect.play()
         else:
             self.hovered = False
 
