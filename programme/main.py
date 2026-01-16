@@ -87,6 +87,6 @@ if __name__ == '__main__':
         elif screen_page == Screen.LOBBY.value:
             create_game_screen.Create_Game_screen(screen, language, set_client, get_client, change_page, get_page, clock)
         elif screen_page == Screen.GAME_OVER.value:
-            game_over.Game_Over_screen(change_page)
+            game_over.Game_Over_screen(change_page,screen,get_page)
 
     pygame.quit()

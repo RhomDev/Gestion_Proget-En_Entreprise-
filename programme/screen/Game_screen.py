@@ -17,7 +17,7 @@ def game_screen_init(screen):
         panel_deplacement,menu_Deroulent,Up,Down,description_bouton,Stress,Menu_Liste_Attente,Menu_taches,\
         Up_taches,Down_taches,panel_taches,list_mission_btn,Tache_par_pièce,\
         background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit,i_btn,credit_effet,data_tache_effet,Burnout_bar,\
-        credit_bonus,piece_ferme,btn_affiche_effet,game_over,event_tache_effet,bonus_next_task,ecran,tache_a_faire,btn_tache_a_faire,Event_sound
+        credit_bonus,piece_ferme,btn_affiche_effet,event_tache_effet,bonus_next_task,ecran,tache_a_faire,btn_tache_a_faire,Event_sound
 
     panel_deplacement = False
     panel_taches = False
@@ -30,7 +30,7 @@ def game_screen_init(screen):
     ecran = screen
     tache_a_faire = ""
     btn_tache_a_faire = Button(screen,(397, 33),pygame.image.load(resource_path("src/img/util/btn_standard.png")),4,taille=(400,200),text="",police_taille=1)
-    game_over = Game_Over(screen)
+
     bonus_next_task = 0
     img_background_outil = pygame.image.load(resource_path( "src/img/game_img/background_btn_option.jpg"))
     img_bouton_standard = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
@@ -478,7 +478,6 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
 def Is_Game_Over(burnout,pageset, tour, client):
     if burnout.value > 1 or client().get_state().get("tour",0)>=tour:
         pygame.mixer.music.stop()
-        game_over.gameisover()
         burnout.value = 0
         pageset(5)
 
@@ -553,6 +552,7 @@ def executer_effets_tache(piece, nom_tache):
     if nom_tache[0:5] == "Event":
 
         Event_sound.play()
+        Event_sound.set_volume(0.35)
         event = event_tache_effet[nom_tache]
         effets = event.get('effets', [])
         burnout = event.get('burnout', 0)
