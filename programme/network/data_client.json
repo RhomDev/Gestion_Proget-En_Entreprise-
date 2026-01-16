@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Réparer un ordinateur",
-            "Sécuriser l'installation",
-            "Donner des consignes"
-        ],
-        [
             "Réparer une grosse panne",
-            "Coller des affiches",
-            "Problème dehors"
+            "Redémarrer le Wi-Fi",
+            "Faire la mascotte"
         ],
         [
-            "Problème de livraison",
-            "Redémarrer le Wi-Fi",
+            "Maintenance complète",
+            "Événement public",
             "Grosse réparation électrique"
+        ],
+        [
+            "Événement public",
+            "Changer une pièce",
+            "Faire la mascotte"
         ]
     ],
     "mission_faite": [],
