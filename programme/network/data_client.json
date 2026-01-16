@@ -1,10 +1,10 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 22,
+    "tour": 0,
     "bob_burnout": 0,
     "action_realisee": "",
-    "tache_realisee": [],
+    "tache_realisee": "",
     "credit_bonus": [
         0,
         0,
@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Réparer une petite panne",
-            "Problème dehors",
+            "Faire la mascotte",
+            "Démarrer une machine",
+            "Installer un programme"
+        ],
+        [
+            "Gérer l'inventaire",
+            "Grosse réparation électrique",
+            "Réparer une petite panne"
+        ],
+        [
+            "Installer un programme",
+            "Faire la mascotte",
             "Résoudre un conflit"
-        ],
-        [
-            "Redémarrer le Wi-Fi",
-            "Réparer une petite panne",
-            "Mise à jour système"
-        ],
-        [
-            "Mise à jour système",
-            "Sécuriser l'installation",
-            "Tester l’électricité"
         ]
     ],
     "mission_faite": [],

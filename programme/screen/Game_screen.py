@@ -466,7 +466,7 @@ def Game_screen(screen,language, client, pageset, pageget, clock):
             event_outil_panel(event, client)
 
         game_active = pageget() == Screen.GAME.value
-        print("GAME ACTIVE :", game_active)
+        #print("GAME ACTIVE :", game_active)
         Is_Game_Over(Burnout_bar,pageset, tour_fin, client)
         loading_animation_serveur(screen,client)
 

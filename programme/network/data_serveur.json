@@ -6,10 +6,10 @@
         {
             "id": 0,
             "statue": 1,
-            "tour": 22,
+            "tour": 0,
             "bob_burnout": 0,
             "action_realisee": "",
-            "tache_realisee": [],
+            "tache_realisee": "",
             "credit_bonus": [
                 0,
                 0,
@@ -27,19 +27,19 @@
             "effet_actif": "",
             "mission": [
                 [
-                    "R\u00e9parer une petite panne",
-                    "Probl\u00e8me dehors",
+                    "Faire la mascotte",
+                    "D\u00e9marrer une machine",
+                    "Installer un programme"
+                ],
+                [
+                    "G\u00e9rer l'inventaire",
+                    "Grosse r\u00e9paration \u00e9lectrique",
+                    "R\u00e9parer une petite panne"
+                ],
+                [
+                    "Installer un programme",
+                    "Faire la mascotte",
                     "R\u00e9soudre un conflit"
-                ],
-                [
-                    "Red\u00e9marrer le Wi-Fi",
-                    "R\u00e9parer une petite panne",
-                    "Mise \u00e0 jour syst\u00e8me"
-                ],
-                [
-                    "Mise \u00e0 jour syst\u00e8me",
-                    "S\u00e9curiser l'installation",
-                    "Tester l\u2019\u00e9lectricit\u00e9"
                 ]
             ],
             "mission_faite": [],
