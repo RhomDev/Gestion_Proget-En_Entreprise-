@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     pygame.mixer.music.set_volume(0.5)
 
-    language = LanguageManager()
+    language = LanguageManager(data_["language"])
 
     running = True
     fullscreen = False
@@ -85,7 +85,7 @@ if __name__ == '__main__':
         elif screen_page == Screen.OPTION.value:
             option_screen.option_screen(screen,manager, language, change_page, get_page, clock)
         elif screen_page == Screen.LOBBY.value:
-            create_game_screen.Create_Game_screen(screen, language, set_client, get_client, change_page, get_page, clock)
+            create_game_screen.Create_Game_screen(screen, manager, language, set_client, get_client, change_page, get_page, clock)
         elif screen_page == Screen.GAME_OVER.value:
             game_over.Game_Over_screen(change_page,screen,get_page)
 

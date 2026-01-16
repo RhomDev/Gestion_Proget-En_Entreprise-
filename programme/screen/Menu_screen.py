@@ -34,14 +34,6 @@ def menu_update():
     Option_bouton.update()
     Quit_bouton.update()
 
-def evnt_fullscreen():
-    global fullscreen, screen
-    fullscreen = not fullscreen
-    if fullscreen:
-        screen = pygame.display.set_mode((800,600), pygame.FULLSCREEN)
-    else:
-        screen = pygame.display.set_mode((800,600))
-
 
 def menu_screen(screen,lang, pageset, pageget, clock):
     global popup_quit, lg

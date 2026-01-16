@@ -4,9 +4,10 @@ import json
 import utils.Read_Data as j
 
 class Client(threading.Thread):
-    def __init__(self, host="127.0.0.1", port=5555):
+    def __init__(self, host="127.0.0.1", port=5555, time_out=10.0):
         super().__init__(daemon=True)
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.settimeout(time_out)
         self.socket.connect((host, port))
         self.running = True
 
@@ -74,16 +75,6 @@ class Client(threading.Thread):
             "type": "loading_mission",
             "action": mission,
             "action_second" : mission_faite
-        })
-    def send_credit(self,credit):
-            self.send({
-            "type": "credit_bonus",
-            "action": credit,
-        })
-    def send_piece(self,piece_ferme):
-            self.send({
-            "type": "piece_ferme",
-            "action": piece_ferme,
         })
 
     def send(self, data):
