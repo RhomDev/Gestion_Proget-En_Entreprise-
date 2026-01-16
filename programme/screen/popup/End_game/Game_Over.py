@@ -22,6 +22,9 @@ def Game_Over_screen(pageset,screen,get_page):#appelé depuis main.py en boucle
     init_gameisover(screen)
     while Screen.GAME_OVER.value == get_page():
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:# Si une touche est pressée on quitte l'écran game over
                     pageset(0)
                     

@@ -1,7 +1,7 @@
 {
     "id": 0,
     "statue": 1,
-    "tour": 20,
+    "tour": 22,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": [],
@@ -22,19 +22,19 @@
     "effet_actif": "",
     "mission": [
         [
-            "Réparer une grosse panne",
+            "Réparer une petite panne",
+            "Problème dehors",
+            "Résoudre un conflit"
+        ],
+        [
             "Redémarrer le Wi-Fi",
-            "Faire la mascotte"
+            "Réparer une petite panne",
+            "Mise à jour système"
         ],
         [
-            "Maintenance complète",
-            "Événement public",
-            "Grosse réparation électrique"
-        ],
-        [
-            "Événement public",
-            "Changer une pièce",
-            "Faire la mascotte"
+            "Mise à jour système",
+            "Sécuriser l'installation",
+            "Tester l’électricité"
         ]
     ],
     "mission_faite": [],
