@@ -39,7 +39,7 @@ class Ouvrier:
 
     def Set_Objectif(s, objectif,liste_longeurs):
         print(objectif)
-        s.walk_sound.stop()
+        s.walk_sound.stop() #fix
         liste_longeurs_int = s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
         for key in liste_longeurs_int:
             liste_longeurs[key] = str(int(liste_longeurs_int[key]/5)*5)
