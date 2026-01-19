@@ -5,42 +5,28 @@
     "players": [
         {
             "id": 0,
-            "name": "Benoit",
+            "name": "Player_0",
             "statue": 1,
-            "tour": 3,
+            "tour": 6,
             "bob_burnout": 0,
             "action_realisee": "",
             "tache_realisee": [],
-            "credit_bonus": [
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "piece_ferme": [
-                [],
-                [],
-                [],
-                [],
-                []
-            ],
             "effet_actif": "",
             "mission": [
                 [
-                    "G\u00e9rer l'inventaire",
-                    "Probl\u00e8me dehors",
-                    "Mise \u00e0 jour syst\u00e8me"
-                ],
-                [
                     "Ouvrir les cartons",
-                    "Mise \u00e0 jour syst\u00e8me",
-                    "R\u00e9parer une machine critique"
+                    "Probl\u00e8me de livraison",
+                    "Ranger le stock"
                 ],
                 [
-                    "R\u00e9union de crise",
+                    "G\u00e9rer l'inventaire",
+                    "R\u00e9parer un ordinateur",
+                    "Changer une pi\u00e8ce"
+                ],
+                [
                     "Compter les stocks",
-                    "R\u00e9soudre un conflit"
+                    "Remplacer un fusible",
+                    "R\u00e9union de crise"
                 ]
             ],
             "mission_faite": [],

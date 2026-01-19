@@ -1,49 +1,33 @@
 {
-<<<<<<< HEAD
-    "id": 1,
-    "statue": 0,
-    "tour": 0,
-    "bob": {
-        "stress": 0,
-        "fatigue": 0
-    },
-=======
     "id": 0,
-    "name": "Benoit",
+    "name": "Player_0",
     "statue": 1,
-    "tour": 2,
+    "tour": 6,
     "bob_burnout": 0,
->>>>>>> f28e7af0046300c04ec257c4277ba4551682f946
     "action_realisee": "",
-    "tache_realisee": "",
+    "tache_realisee": [],
     "effet_actif": "",
     "mission": [
         [
-            "Démarrer une machine",
-            "Réparer un ordinateur",
+            "Ouvrir les cartons",
+            "Problème de livraison",
             "Ranger le stock"
         ],
         [
-            "Résoudre un conflit",
-            "Grosse réparation électrique",
-            "Donner des consignes"
+            "Gérer l'inventaire",
+            "Réparer un ordinateur",
+            "Changer une pièce"
         ],
         [
-            "Grosse réparation électrique",
+            "Compter les stocks",
             "Remplacer un fusible",
-            "Gérer l'inventaire"
+            "Réunion de crise"
         ]
     ],
     "mission_faite": [],
-<<<<<<< HEAD
-    "nb_player": 2,
-    "wait_nb_player": 2,
-    "player_maitre": 0
-=======
     "nb_player": 1,
     "nb_player_win": 0,
     "wait_nb_player": 1,
     "player_maitre": 0,
-    "player_maitre_name": "Benoit"
->>>>>>> f28e7af0046300c04ec257c4277ba4551682f946
+    "player_maitre_name": "Player_0"
 }
