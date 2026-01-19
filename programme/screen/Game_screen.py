@@ -628,7 +628,8 @@ def Game_screen(screen, language, client, server, pageset, pageget, clock):
     annonce = Annonce_surname_Popup(screen, language, (screen.get_width()/2,screen.get_height()/2))
 
     pygame.mixer.music.load(resource_path("src/sound/music_fond_low_burnout.wav"))
-    pygame.mixer.music.set_volume(_configData.get("volume_son",0))
+    son= _configData.get("volume_son",0)-0.3 if _configData.get("volume_son",0)-0.3>0 else 0
+    pygame.mixer.music.set_volume(son)
     pygame.mixer.music.play(-1)
 
     tour_act = 0

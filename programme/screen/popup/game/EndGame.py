@@ -12,13 +12,12 @@ from utils.Constant import Screen
 
 class Game_Over(Popup):
     def __init__(self, screen, language, position):
-        _config = read_json(resource_path("config.json"))
+
         self.screen = screen
         self.language = language
         Popup.__init__(self, self.screen)
 
-        pygame.mixer.music.load(resource_path("src/sound/game_over.mp3"))
-        pygame.mixer.music.set_volume(_config["volume_son"])
+
 
         self.imgView_over = None
         self.text_over = None
@@ -39,9 +38,12 @@ class Game_Over(Popup):
 
 
     def change_active(self):
+        _config = read_json(resource_path("config.json"))
         Popup.change_active(self)
         self.time_start = pygame.time.get_ticks()
         self.current_alpha = 0
+        pygame.mixer.music.load(resource_path("src/sound/game_over.mp3"))
+        pygame.mixer.music.set_volume(_config["volume_son"])
         pygame.mixer.music.play()
 
     def update(self):
@@ -72,14 +74,13 @@ class Game_Over(Popup):
 
 class Game_Win(Popup):
     def __init__(self, screen, language, position):
-        _config = read_json(resource_path("config.json"))
+
         self.screen = screen
         self.language = language
         Popup.__init__(self, self.screen)
 
 
-        pygame.mixer.music.load(resource_path("src/sound/game_over.mp3"))
-        pygame.mixer.music.set_volume(_config["volume_son"])
+
 
         self.imgView_win = None
         self.text_win = None
@@ -105,8 +106,11 @@ class Game_Win(Popup):
         self.win = True
 
     def change_active(self):
+        _config = read_json(resource_path("config.json"))
         Popup.change_active(self)
         self.time_start = pygame.time.get_ticks()
+        pygame.mixer.music.load(resource_path("src/sound/game_win.wav"))
+        pygame.mixer.music.set_volume(_config["volume_son"])
         self.current_alpha = 0
         pygame.mixer.music.play()
 
