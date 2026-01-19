@@ -7,26 +7,40 @@
             "id": 0,
             "name": "Benoit",
             "statue": 1,
-            "tour": 2,
+            "tour": 3,
             "bob_burnout": 0,
             "action_realisee": "",
-            "tache_realisee": "",
+            "tache_realisee": [],
+            "credit_bonus": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "piece_ferme": [
+                [],
+                [],
+                [],
+                [],
+                []
+            ],
             "effet_actif": "",
             "mission": [
                 [
-                    "D\u00e9marrer une machine",
-                    "R\u00e9parer un ordinateur",
-                    "Ranger le stock"
+                    "G\u00e9rer l'inventaire",
+                    "Probl\u00e8me dehors",
+                    "Mise \u00e0 jour syst\u00e8me"
                 ],
                 [
-                    "R\u00e9soudre un conflit",
-                    "Grosse r\u00e9paration \u00e9lectrique",
-                    "Donner des consignes"
+                    "Ouvrir les cartons",
+                    "Mise \u00e0 jour syst\u00e8me",
+                    "R\u00e9parer une machine critique"
                 ],
                 [
-                    "Grosse r\u00e9paration \u00e9lectrique",
-                    "Remplacer un fusible",
-                    "G\u00e9rer l'inventaire"
+                    "R\u00e9union de crise",
+                    "Compter les stocks",
+                    "R\u00e9soudre un conflit"
                 ]
             ],
             "mission_faite": [],
@@ -34,8 +48,8 @@
             "nb_player_win": 0,
             "wait_nb_player": 1,
             "player_maitre": 0,
-            "player_maitre_name": "Benoit"
+            "player_maitre_name": "Player_0"
         }
     ],
-    "player_maitre_name": "Benoit"
+    "player_maitre_name": "Player_0"
 }

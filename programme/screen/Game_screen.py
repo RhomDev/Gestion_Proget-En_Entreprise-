@@ -47,7 +47,7 @@ def game_screen_init(screen):
     img_btn_fin_tour = pygame.image.load(resource_path("src/img/game_img/btn_tour.png"))
     img_btn_fin_tour = pygame.transform.scale(img_btn_fin_tour, (450, 70))
 
-    img_description = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
+    img_description = pygame.image.load(resource_path("src/img/game_img/Description.png"))
 
     img_hint_panel = pygame.image.load(resource_path("src/img/game_img/hint_panel.png"))
     img_hint_panel = pygame.transform.scale(img_hint_panel, (64, 64))
@@ -119,7 +119,7 @@ def game_screen_init(screen):
     )
 
 # Barre
-    img_description = pygame.image.load(resource_path("src/img/game_img/btn_tour.png"))
+   # img_description = pygame.image.load(resource_path("src/img/game_img/.png"))
 
     Burnout_bar = barre_de_vie(screen, (39,80), (160,120),image=img_bar, scale_img=2 , scale=1.8)
     Burnout_bar.set_value(0)

@@ -2,6 +2,7 @@
     "id": 0,
     "name": "Benoit",
     "statue": 1,
+<<<<<<< HEAD
     "tour": 2,
     "bob_burnout": 0,
     "action_realisee": "",
@@ -22,6 +23,42 @@
             "Grosse réparation électrique",
             "Remplacer un fusible",
             "Gérer l'inventaire"
+=======
+    "tour": 3,
+    "bob_burnout": 0,
+    "action_realisee": "",
+    "tache_realisee": [],
+    "credit_bonus": [
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "piece_ferme": [
+        [],
+        [],
+        [],
+        [],
+        []
+    ],
+    "effet_actif": "",
+    "mission": [
+        [
+            "Gérer l'inventaire",
+            "Problème dehors",
+            "Mise à jour système"
+        ],
+        [
+            "Ouvrir les cartons",
+            "Mise à jour système",
+            "Réparer une machine critique"
+        ],
+        [
+            "Réunion de crise",
+            "Compter les stocks",
+            "Résoudre un conflit"
+>>>>>>> 86be722 (Changement png description)
         ]
     ],
     "mission_faite": [],
@@ -29,5 +66,9 @@
     "nb_player_win": 0,
     "wait_nb_player": 1,
     "player_maitre": 0,
+<<<<<<< HEAD
     "player_maitre_name": "Benoit"
+=======
+    "player_maitre_name": "Player_0"
+>>>>>>> 86be722 (Changement png description)
 }
