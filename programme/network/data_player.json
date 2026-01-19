@@ -15,6 +15,8 @@
     "mission": [],
     "mission_faite": [],
 
+    "game_over": false,
+
     "nb_player": 0,
     "nb_player_win": 0,
     "wait_nb_player": 0,

@@ -80,7 +80,9 @@ class Serveur(threading.Thread):
         with self.lock:
             player = self.shared_data["players"][client_id]
 
-            if msg["time"]!= self.history["time"]:
+            delay =  msg["time"] - self.history["time"]
+
+            if delay>100:
                 # 🔹 Action du maître
                 if msg["type"] == "action" and player["statue"] == 1:
                     for i in range(self.shared_data["nb_player"]):
@@ -115,6 +117,16 @@ class Serveur(threading.Thread):
                 elif msg["type"] == "player_win":
                     for i in range(self.shared_data["nb_player"]):
                         self.shared_data["players"][i]["nb_player_win"] += 1
+
+                elif msg["type"] == "game_over":
+                    for i in range(self.shared_data["nb_player"]):
+                        self.shared_data["players"][i]["game_over"] = True
+
+                elif msg["type"] == "burnout":
+                    for i in range(self.shared_data["nb_player"]):
+                        self.shared_data["players"][i]["bob_burnout"] =  self.shared_data["players"][i]["bob_burnout"] \
+                                                                         + msg["value"] if self.shared_data["players"][i]["bob_burnout"]\
+                                                                                           + msg["value"] > 0 else 0
 
                 # 🔹 Fin de tour
                 elif msg["type"] == "loading_mission":

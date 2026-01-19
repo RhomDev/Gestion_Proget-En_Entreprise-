@@ -411,6 +411,8 @@ def game_update():
         hint_panel.update()
 
     bob.update()
+
+    Burnout_bar.set_value(cl.get_state().get("bob_burnout", 0))
     Burnout_bar.update()
 
     btn_affiche_effet.update()
@@ -490,7 +492,7 @@ def init_next_tour():#les effets qui ce update en fonction des tours
             cl.send_task(event)
 
 def executer_effets_tache(piece, nom_tache):
-    global data_tache_effet,event_tache_effet,Burnout_bar,liste_btn_deplacement,Even
+    global data_tache_effet,event_tache_effet,liste_btn_deplacement,Even
     burnout = 0
     if nom_tache[0:5] == "Event":
 
@@ -508,10 +510,7 @@ def executer_effets_tache(piece, nom_tache):
         burnout = tache.get('burnout', 0)
         bob.anim()
 
-    burnout = Burnout_bar.value +burnout/100
-    if burnout < 0:
-        burnout = 0
-    Burnout_bar.set_value(burnout)
+    cl.send_burnout(burnout/100)
 
     
     for effet in effets:
@@ -591,10 +590,11 @@ def debloque_toutes_pieces():
 
 def is_Game_Over(popup, client):
     global val_game_over
-    burnout =  Burnout_bar.value
-    if (burnout > 1 or client().get_state().get("tour",0)>=_configData.get("nb_tour",40))and not val_game_over:
+    burnout =  client().get_state().get("bob_burnout",0)
+    if ((burnout > 1 or client().get_state().get("tour",0)>=_configData.get("nb_tour",40) or client().get_state().get("game_over",False))and not val_game_over):
         print("Game Over")
         val_game_over=True
+        client().send_game_over()
         pygame.mixer.music.stop()
         popup.change_active()
 
@@ -604,7 +604,7 @@ def is_Game_Win(popup, client):
         val_game_win = True
         pygame.mixer.music.stop()
         popup.change_active()
-    if client().get_state().get("nb_player_win",0)==client().get_state().get("nb_player",0):
+    if client().get_state().get("nb_player_win",0)==client().get_state().get("nb_player",0) and not val_game_win:
         val_game_win = True
         pygame.mixer.music.stop()
         popup.change_win()

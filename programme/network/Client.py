@@ -78,6 +78,17 @@ class Client(threading.Thread):
             "time": pygame.time.get_ticks()
         })
 
+    def send_game_over(self):
+        self.send({"type": "game_over",
+                   "time": pygame.time.get_ticks()
+                   })
+
+    def send_burnout(self,value):
+        self.send({
+            "type": "burnout",
+            "value": value,
+            "time": pygame.time.get_ticks()
+        })
 
         # 🔹 Fin d’animation
     def send_animation_done(self, mise=None):
