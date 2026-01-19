@@ -77,7 +77,7 @@ class Ouvrier:
             image_scale = pygame.transform.scale_by(img, s.scale)
             s.fenetre.blit(image_scale, position)
         elif s.etat[state] == "Anim":
-            img = s.img_anim.subsurface( ( (i % 2) * s.width_anim, 0, s.width_anim, s.heigth_anim ) )
+            img = s.img_anim.subsurface( ( ((i//2) % 2) * s.width_anim, 0, s.width_anim, s.heigth_anim ) )
             image_scale = pygame.transform.scale_by(img, 1.5)
             position = [s.pose[0]-45, s.pose[1]-180]
             s.fenetre.blit(image_scale, position)

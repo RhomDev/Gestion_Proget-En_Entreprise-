@@ -2,26 +2,26 @@
     "id": 0,
     "name": "Player_0",
     "statue": 1,
-    "tour": 1,
+    "tour": 0,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": [],
     "effet_actif": "",
     "mission": [
         [
-            "Changer une pièce",
+            "Problème dehors",
+            "Redémarrer le Wi-Fi",
+            "Problème de livraison"
+        ],
+        [
+            "Réparer une grosse panne",
             "Remplacer un fusible",
-            "Sécuriser l'installation"
+            "Maintenance complète"
         ],
         [
-            "Réparer une petite panne",
-            "Réparer une panne",
-            "Grosse réparation électrique"
-        ],
-        [
-            "Résoudre un conflit",
-            "Démarrer une machine",
-            "Ouvrir les cartons"
+            "Redémarrer le Wi-Fi",
+            "Installer un programme",
+            "Remplacer un fusible"
         ]
     ],
     "mission_faite": [],
@@ -29,5 +29,5 @@
     "nb_player_win": 0,
     "wait_nb_player": 1,
     "player_maitre": 0,
-    "player_maitre_name": "Player_0"
+    "player_maitre_name": ""
 }

@@ -7,26 +7,26 @@
             "id": 0,
             "name": "Player_0",
             "statue": 1,
-            "tour": 1,
+            "tour": 0,
             "bob_burnout": 0,
             "action_realisee": "",
             "tache_realisee": [],
             "effet_actif": "",
             "mission": [
                 [
-                    "Changer une pi\u00e8ce",
+                    "Probl\u00e8me dehors",
+                    "Red\u00e9marrer le Wi-Fi",
+                    "Probl\u00e8me de livraison"
+                ],
+                [
+                    "R\u00e9parer une grosse panne",
                     "Remplacer un fusible",
-                    "S\u00e9curiser l'installation"
+                    "Maintenance compl\u00e8te"
                 ],
                 [
-                    "R\u00e9parer une petite panne",
-                    "R\u00e9parer une panne",
-                    "Grosse r\u00e9paration \u00e9lectrique"
-                ],
-                [
-                    "R\u00e9soudre un conflit",
-                    "D\u00e9marrer une machine",
-                    "Ouvrir les cartons"
+                    "Red\u00e9marrer le Wi-Fi",
+                    "Installer un programme",
+                    "Remplacer un fusible"
                 ]
             ],
             "mission_faite": [],
@@ -34,8 +34,8 @@
             "nb_player_win": 0,
             "wait_nb_player": 1,
             "player_maitre": 0,
-            "player_maitre_name": "Player_0"
+            "player_maitre_name": ""
         }
     ],
-    "player_maitre_name": "Player_0"
+    "player_maitre_name": ""
 }
