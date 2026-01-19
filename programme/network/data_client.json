@@ -2,26 +2,26 @@
     "id": 0,
     "name": "Player_0",
     "statue": 1,
-    "tour": 0,
+    "tour": 1,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": [],
     "effet_actif": "",
     "mission": [
         [
-            "Grosse réparation électrique",
-            "Distribuer des flyers",
-            "Événement public"
-        ],
-        [
-            "Remplacer un fusible",
-            "Tester l’électricité",
-            "Réparer une panne"
-        ],
-        [
             "Changer une pièce",
-            "Sécuriser l'installation",
-            "Distribuer des flyers"
+            "Remplacer un fusible",
+            "Sécuriser l'installation"
+        ],
+        [
+            "Réparer une petite panne",
+            "Réparer une panne",
+            "Grosse réparation électrique"
+        ],
+        [
+            "Résoudre un conflit",
+            "Démarrer une machine",
+            "Ouvrir les cartons"
         ]
     ],
     "mission_faite": [],
@@ -29,5 +29,5 @@
     "nb_player_win": 0,
     "wait_nb_player": 1,
     "player_maitre": 0,
-    "player_maitre_name": ""
+    "player_maitre_name": "Player_0"
 }
