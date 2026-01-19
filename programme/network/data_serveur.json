@@ -5,11 +5,12 @@
     "players": [
         {
             "id": 0,
+            "name": "Player_0",
             "statue": 1,
-            "tour": 20,
+            "tour": 0,
             "bob_burnout": 0,
             "action_realisee": "",
-            "tache_realisee": [],
+            "tache_realisee": "",
             "credit_bonus": [
                 0,
                 0,
@@ -27,25 +28,28 @@
             "effet_actif": "",
             "mission": [
                 [
-                    "Installer un programme",
-                    "R\u00e9soudre un conflit",
-                    "S\u00e9curiser l'installation"
-                ],
-                [
-                    "\u00c9v\u00e9nement public",
-                    "Changer une pi\u00e8ce",
-                    "R\u00e9parer une machine critique"
+                    "Distribuer des flyers",
+                    "R\u00e9parer une panne",
+                    "Probl\u00e8me dehors"
                 ],
                 [
                     "Ranger le stock",
-                    "R\u00e9parer une grosse panne",
-                    "R\u00e9union de crise"
+                    "R\u00e9parer une panne",
+                    "Changer une pi\u00e8ce"
+                ],
+                [
+                    "Maintenance compl\u00e8te",
+                    "Maintenance compl\u00e8te",
+                    "R\u00e9parer un ordinateur"
                 ]
             ],
             "mission_faite": [],
             "nb_player": 1,
+            "nb_player_win": 0,
             "wait_nb_player": 1,
-            "player_maitre": 0
+            "player_maitre": 0,
+            "player_maitre_name": ""
         }
-    ]
+    ],
+    "player_maitre_name": ""
 }

@@ -8,9 +8,9 @@ class Ouvrier:
     def __init__(s, fenetre,  map):
         s.state = 0
         s.etat = ["Fixe", "Cour", "Anim"]
-        s.image = pygame.image.load("src/img/perso/homme.png")
+        s.image = pygame.image.load(resource_path("src/img/perso/homme.png"))
         s.width_image, s.heigth_image = s.image.get_size()[0] // 3, s.image.get_size()[1] // 3
-        s.img_anim = pygame.image.load("src/img/perso/bob_anim.png")
+        s.img_anim = pygame.image.load(resource_path("src/img/perso/bob_anim.png"))
         s.width_anim, s.heigth_anim = s.img_anim.get_size()[0] // 3, s.img_anim.get_size()[1]
         s.image_flip = pygame.transform.flip(s.image, True, False)
         s.flip = 0
@@ -34,16 +34,22 @@ class Ouvrier:
         s.pose = s.node.data
         s.obj = s.pose
 
+        s.current_room = "Entrée"
+        s.credit_longueur = {"Entrée": "0", "Electricité": "0", "Info": "0", "Reception": "0", "Machine": "0", "Entrepôt": "0",
+                      "Dehors": "0"}
+        s.set_Objectif("Entrée")
+
     def get_Longueur(s, objectif):
         return s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
 
-    def Set_Objectif(s, objectif,liste_longeurs):
-        print(objectif)
+    def set_Objectif(s, objectif):
+        s.current_room = objectif
+
         s.walk_sound.play(-1)
         liste_longeurs_int = s.nodes.liste_longueur_chemin(s.nodes.noeuds[objectif])
         for key in liste_longeurs_int:
-            liste_longeurs[key] = str(int(liste_longeurs_int[key]/5)*5)
-        print(liste_longeurs)
+            s.credit_longueur[key] = str(int(liste_longeurs_int[key]/5)*5)
+
         bool = s.nodes.Chemin(objectif, s.node.name)
         if bool:
             s.obj = s.node.pointe.data
@@ -120,8 +126,14 @@ class Ouvrier:
     def anim(s):
         s.state = 2
                 
+    def get_map(s):
+        return s.map
 
+    def get_current_room(s):
+        return s.current_room
 
+    def get_credits_longueur(s):
+        return s.credit_longueur
 
     def update(s):
         s.Draw()

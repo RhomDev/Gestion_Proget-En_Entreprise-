@@ -1,4 +1,3 @@
-import pygame
 import pygame_gui.elements as gui
 import sys,os
 
@@ -11,7 +10,7 @@ from utils.Constant import Screen
 from network.Serveur import Serveur
 from network.Client import Client
 
-from screen.popup.game.Wait_connect import Wait_Popup
+from screen.popup.lobby.Wait_connect import Wait_Popup
 
 from utils.Read_Data import read_json, resource_path
 
@@ -58,7 +57,7 @@ def create_game_screen_init(screen,manage):
         relative_rect=pygame.Rect(((screen.get_width() / 2)-100, 420),(200,50)),
         manager=manage)
 
-    txt_err_msg = TextView(screen,((screen.get_width() / 2), (screen.get_height() / 2)-50),3,"", "Red")
+    txt_err_msg = TextView(screen,((screen.get_width() / 2), (screen.get_height() / 2)),3,"", "Red")
 
     btn_valide = Button(screen, ((screen.get_width()/2)+350,270), img_btn_std, 1, lg,"loggy::btn:join",
                         "White", color_input1='Red', police_taille=8)
@@ -82,23 +81,22 @@ def create_game_update():
     btn_cancel.update()
     btn_server.update()
 
-def create_server(set_client):
+def create_server(set_client, set_serveur):
     global serveur
 
     try:
             port = int(edit_port.get_text())
             # Créer le serveur
             serveur = Serveur(port=port, nb_wait=int(data_config.get("nb_player",1)))
-            set_client(serveur)
+            set_serveur(serveur)
             serveur.start()
             time.sleep(1)
-            joint_server(set_client)
+            joint_server(set_client,port)
 
     except ValueError as e:
         if data_config.get("dev_mod",False) == True:
-            print("coucou")
             serveur = Serveur()
-            set_client(serveur)
+            set_serveur(serveur)
             serveur.start()
             time.sleep(1)
             joint_server(set_client)
@@ -114,12 +112,17 @@ def create_server(set_client):
         txt_err_msg.change_text(f"{text_error} : {e}")
         print(f"Erreur serveur : {e}")
 
-def joint_server(set_client):
+def joint_server(set_client, port=None):
     ip = edit_ip.get_text()
     port_text = edit_port.get_text()
+    name_text = edit_surname.get_text()
     try:
-        port = int(port_text)
-        client = Client(host=ip, port=port)
+        if port is None:
+            port = int(port_text)
+        else:
+            ip = "127.0.0.1"
+
+        client = Client(host=ip, port=port, player_name=name_text)
 
         set_client(client)
         time.sleep(1)
@@ -128,6 +131,7 @@ def joint_server(set_client):
 
     except ValueError as e:
         if data_config.get("dev_mod",False) == True:
+
             client = Client()
 
             set_client(client)
@@ -149,19 +153,20 @@ def joint_server(set_client):
         txt_err_msg.change_text(f"Erreur : {e}")
         print(f"Erreur : {e}")
 
-def event_create_game(event,page,set_cl):
+def event_create_game(event,page,set_cl, set_sr):
     btn_valide.animation_check_color(pygame.mouse.get_pos())
-    btn_valide.event(event, pygame.mouse.get_pos(), lambda: joint_server(page,set_cl))
+    btn_valide.event(event, pygame.mouse.get_pos(), lambda: joint_server(set_cl))
     btn_cancel.animation_check_color(pygame.mouse.get_pos())
     btn_cancel.event(event, pygame.mouse.get_pos(), lambda: page(Screen.MENU.value))
     btn_server.animation_check_color(pygame.mouse.get_pos())
-    btn_server.event(event, pygame.mouse.get_pos(), lambda: create_server(set_cl))
+    btn_server.event(event, pygame.mouse.get_pos(), lambda: create_server(set_cl, set_sr))
 
-def cancel_wait(client, set_client):
+def cancel_wait(client, set_client, set_serveur):
     global serveur
     if serveur is not None:
         serveur.stop()
         serveur = None
+        set_serveur(serveur)
     else:
         client().stop()
         set_client(None)
@@ -181,7 +186,7 @@ def verif_wait(page, cl):
 
 
 
-def Create_Game_screen(screen,manage,lang, set_cl, get_cl,page,get, clock):
+def Create_Game_screen(screen,manage,lang, set_sr,set_cl, get_cl,page,get, clock):
     global lg, popup_wait, serveur, data_config
     serveur=None
     data_config = read_json(resource_path("config.json"))
@@ -201,10 +206,10 @@ def Create_Game_screen(screen,manage,lang, set_cl, get_cl,page,get, clock):
             if event.type == pygame.QUIT:
                 pygame.quit()
             if not popup_wait.get_active():
-                event_create_game(event,page,set_cl)
+                event_create_game(event,page,set_cl, set_sr)
             else:
                 popup_wait.event_handler(event,
-                                         lambda : cancel_wait(get_cl,set_cl))
+                                         lambda : cancel_wait(get_cl,set_cl, set_sr))
                 popup_wait.animation_check_color()
 
         if popup_wait.get_active():

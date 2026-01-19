@@ -8,8 +8,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import screen.Menu_screen as menu_screen
 import screen.Game_screen as game_screen
 import screen.Option_screen as option_screen
-import screen.Create_Game_screen as create_game_screen
-import screen.popup.End_game.Game_Over as game_over
+import screen.Lobby_screen as create_game_screen
 
 from utils.Constant import Screen
 from utils.LanguageManage import LanguageManager
@@ -19,6 +18,7 @@ from utils.Read_Data import read_json
 # Déclarer les variables globales
 screen_page = None
 client = None
+server = None
 
 def set_client(cl):
     global client
@@ -26,6 +26,13 @@ def set_client(cl):
 
 def get_client():
     return client
+
+def set_server(sr):
+    global client
+    server = sr
+
+def get_server():
+    return server
 
 def change_page(page):
     global screen_page
@@ -81,12 +88,11 @@ if __name__ == '__main__':
         if screen_page == Screen.MENU.value:
             menu_screen.menu_screen(screen, language, change_page, get_page, clock)
         elif screen_page == Screen.GAME.value:
-            game_screen.Game_screen(screen, language, get_client, change_page, get_page, clock)
+            game_screen.Game_screen(screen, language, get_client, get_server, change_page, get_page, clock)
         elif screen_page == Screen.OPTION.value:
             option_screen.option_screen(screen,manager, language, change_page, get_page, clock)
         elif screen_page == Screen.LOBBY.value:
-            create_game_screen.Create_Game_screen(screen, manager, language, set_client, get_client, change_page, get_page, clock)
-        elif screen_page == Screen.GAME_OVER.value:
-            game_over.Game_Over_screen(change_page)
+            create_game_screen.Create_Game_screen(screen, manager, language, set_server,set_client, get_client, change_page, get_page, clock)
+
 
     pygame.quit()

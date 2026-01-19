@@ -1,10 +1,11 @@
 {
     "id": 0,
+    "name": "Player_0",
     "statue": 1,
-    "tour": 20,
+    "tour": 0,
     "bob_burnout": 0,
     "action_realisee": "",
-    "tache_realisee": [],
+    "tache_realisee": "",
     "credit_bonus": [
         0,
         0,
@@ -22,23 +23,25 @@
     "effet_actif": "",
     "mission": [
         [
-            "Installer un programme",
-            "Résoudre un conflit",
-            "Sécuriser l'installation"
-        ],
-        [
-            "Événement public",
-            "Changer une pièce",
-            "Réparer une machine critique"
+            "Distribuer des flyers",
+            "Réparer une panne",
+            "Problème dehors"
         ],
         [
             "Ranger le stock",
-            "Réparer une grosse panne",
-            "Réunion de crise"
+            "Réparer une panne",
+            "Changer une pièce"
+        ],
+        [
+            "Maintenance complète",
+            "Maintenance complète",
+            "Réparer un ordinateur"
         ]
     ],
     "mission_faite": [],
     "nb_player": 1,
+    "nb_player_win": 0,
     "wait_nb_player": 1,
-    "player_maitre": 0
+    "player_maitre": 0,
+    "player_maitre_name": ""
 }

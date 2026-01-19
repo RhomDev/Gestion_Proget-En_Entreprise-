@@ -1,6 +1,6 @@
 {
     "id": 0,
-
+    "name": "",
     "statue": 0,
 
     "tour": 0,
@@ -19,6 +19,8 @@
     "mission_faite": [],
 
     "nb_player": 0,
+    "nb_player_win": 0,
     "wait_nb_player": 0,
-    "player_maitre": 0
+    "player_maitre": 0,
+    "player_maitre_name": ""
 }

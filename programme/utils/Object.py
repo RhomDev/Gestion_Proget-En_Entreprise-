@@ -55,7 +55,7 @@ class Button:
 
 
     def update(self):
-        
+
         self.screen.blit(self.image, self.rect)
         if self._input_text != "":
             self.screen.blit(self.text, self.text_rect)
@@ -132,7 +132,6 @@ class Button:
             if event.type == pygame.MOUSEBUTTONDOWN and self.actif and not self.blocked:
                 function()
                 self.clicked_sound_effect.play()
-                print("BUTTON " , self.get_text())
             self.hovered = True
             if self.last_hovered == False:
                 self.hover_sound_effect.play()
@@ -166,7 +165,6 @@ class InputBox:
         if event.type == pygame.KEYDOWN:
             if self.active:
                 if event.key == pygame.K_RETURN:
-                    print(self.text)  # Faire quelque chose avec le texte
                     self.text = ''
                 elif event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
@@ -190,9 +188,8 @@ class InputBox:
 
 # visuelle
 class TextView:
-    def __init__(self, screen,position,scale,text,color_input,language=None,
-        color_input1=(255, 255, 255),police=8,function=None,box_size=(300, 100)
-    ):
+    def __init__(self, screen, position, scale, text, color_input, language=None,
+                 color_input1=(255, 255, 255), police=8, function=None, box_size=(300, 100)):
         self.screen = screen
         self.main_font = pygame.font.SysFont("Arial", police * scale)
 
@@ -211,6 +208,7 @@ class TextView:
 
         self.lines = []
         self._wrap_text()
+        self.current_alpha = 255  # Opacité maximale par défaut
 
     def _wrap_text(self):
         self.lines = []
@@ -231,6 +229,9 @@ class TextView:
         if current_line:
             self.lines.append(current_line)
 
+    def set_alpha(self, alpha):
+        self.current_alpha = alpha
+
     def update(self):
         color = self._input_color1 if self.hovered else self._input_color
 
@@ -239,6 +240,7 @@ class TextView:
 
         for line in self.lines:
             surf = self.main_font.render(line, True, color)
+            surf.set_alpha(self.current_alpha)  # Appliquer l'opacité
             rect = surf.get_rect(centerx=self.box_rect.centerx, y=y)
             self.screen.blit(surf, rect)
             y += self.main_font.get_height()
@@ -269,23 +271,33 @@ class TextView:
     def draw_debug(self, color=(255, 0, 0)):
         pygame.draw.rect(self.screen, color, self.box_rect, 1)
 
+
 class ImageView:
-    def __init__(self, screen, position, scale, image_path):
+    def __init__(self, screen, position, scale, image_path, image_=None):
         self.screen = screen
         self.position = position
         self.scale = scale
 
         # Chargement image
-        self._image_path = image_path
-        self._original_image = pygame.image.load(image_path).convert_alpha()
+        if image_path != "":
+            self._image_path = image_path
+            self._original_image = pygame.image.load(image_path).convert_alpha()
+        else:
+            self._original_image = image_
 
         self.image = self._scale_image(self._original_image)
         self.rect = self.image.get_rect(center=position)
+        self.current_alpha = 255  # Opacité maximale par défaut
 
     def _scale_image(self, image):
         width = image.get_width() * self.scale
         height = image.get_height() * self.scale
         return pygame.transform.scale(image, (width, height))
+
+    def set_alpha(self, alpha):
+        self.current_alpha = alpha
+        self.image = self._scale_image(self._original_image)
+        self.image.set_alpha(alpha)  # Appliquer l'opacité
 
     def update(self):
         self.screen.blit(self.image, self.rect)
@@ -294,12 +306,15 @@ class ImageView:
         self._image_path = image_path
         self._original_image = pygame.image.load(image_path).convert_alpha()
         self.image = self._scale_image(self._original_image)
+        self.image.set_alpha(self.current_alpha)  # Conserver l'opacité actuelle
         self.rect = self.image.get_rect(center=self.position)
 
     def change_scale(self, scale):
         self.scale = scale
         self.image = self._scale_image(self._original_image)
+        self.image.set_alpha(self.current_alpha)  # Conserver l'opacité actuelle
         self.rect = self.image.get_rect(center=self.position)
+
 class RectangleView:
     def __init__(self,screen,position, dim=(0, 0),scale=1, color=None, img=None):
         self.position = position
@@ -410,7 +425,6 @@ class Menu_Deroulent:
             s.n=nombre_bouton_affiche
         else:
             s.n=len(s.liste)
-        print("nombre de bouton affiche :",s.n)
         s.index=0
         s.position = [ position_bas[0] , position_bas[1] - size[1]]
         s.affiche= s.liste[s.index:s.index+s.n]
@@ -427,7 +441,6 @@ class Menu_Deroulent:
             s.deroule(-1)
 
     def update(s):
-        #print(pygame.mouse.get_pos())
         if s.up is not None:
             s.up.update()
         if s.down is not None:
@@ -437,7 +450,6 @@ class Menu_Deroulent:
 
     def deroule(s,k):
         if s.index + k + s.n < len(s.liste)+1 and s.index+k >= 0:
-            print("index : ",s.index ,"k:", k,"index + s.n:",s.index + s.n,"taille liste", len(s.affiche))
             if len(s.affiche) !=0:
                 if k>0:
                     s.affiche[0].actif = False
@@ -503,6 +515,5 @@ class barre_de_vie:
     def set_value(s, vie):
         s.value = vie
         s.rec_vie = s.change_dim( (s.dim[0] * s.value , int(s.dim[1]/8)) )
-        print("value burnout :", s.rec_vie)
 
 

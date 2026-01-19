@@ -34,7 +34,6 @@ def menu_update():
     Option_bouton.update()
     Quit_bouton.update()
 
-
 def menu_screen(screen,lang, pageset, pageget, clock):
     global popup_quit, lg
     menu_active=True
