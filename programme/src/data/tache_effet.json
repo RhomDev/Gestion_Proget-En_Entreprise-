@@ -132,6 +132,14 @@
         }
     },
     "Reception": {
+        "Pause café": {
+            "credit": 50,
+            "burnout":-30,
+            "effets": [
+            ],
+            "Description":"retire 30 burn-out"
+    },
+
         "Donner des consignes": {
             "credit": 20,
             "burnout":10,
