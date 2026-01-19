@@ -363,7 +363,7 @@ def loading_animation_serveur(screen, client):
 
         Update_Objectif(act)
         client().get_state()["action_realisee"] = ""
-        client().send_animation_done()
+        client().send_animation_done("action_")
 
 
     if client().get_state()["tache_realisee"]:
@@ -398,7 +398,7 @@ def loading_animation_serveur(screen, client):
         client().get_state()["tache_realisee"] = ""
         
 
-        client().send_animation_done([missions,fait])
+        client().send_animation_done("tache_")
 
     btn_fin_tour.change_text(f"Fin de tour ({credits_restants}/{credit_init})")
 
@@ -483,10 +483,11 @@ def init_next_tour():#les effets qui ce update en fonction des tours
                     btn_piece.piece_ferme = True
         piece_ferme.remove(piece_ferme[0])
 
-    a=[0,0,1] #une chance sur 3 d'avoir un evenement
-    if random.choice(a):
-        event =random.choice(list(event_tache_effet.keys()))
-        cl.send_task(event)
+    if cl.get_state()["statue"] == 1:
+        a=[0,0,1] #une chance sur 3 d'avoir un evenement
+        if random.choice(a):
+            event =random.choice(list(event_tache_effet.keys()))
+            cl.send_task(event)
 
 def executer_effets_tache(piece, nom_tache):
     global data_tache_effet,event_tache_effet,Burnout_bar,liste_btn_deplacement,Even
@@ -568,7 +569,7 @@ def ajout_tache():
             tache = tirage_mission()[0][0]
             mission.append(tache)
     menu_deroulant_mission,list_mission_btn = print_mission(ecran, missions)
-    cl.send_animation_done([missions,fait])
+    cl.send_animation_done("Ajout task")
 
 def Go_Reception():
     global tache_bouton,panel_taches

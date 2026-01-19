@@ -81,10 +81,9 @@ class Client(threading.Thread):
 
         # 🔹 Fin d’animation
     def send_animation_done(self, mise=None):
-        print("animation_done")
+        print("animation_done : ", mise)
         self.send({
             "type": "animation_done",
-            "action": mise,
             "time": pygame.time.get_ticks()
         })
 
@@ -107,7 +106,8 @@ class Client(threading.Thread):
         self.send({
             "type": "loading_mission",
             "action": mission,
-            "action_second" : mission_faite
+            "action_second" : mission_faite,
+            "time": pygame.time.get_ticks()
         })
 
     def send(self, data):
