@@ -1,35 +1,16 @@
 {
-<<<<<<< HEAD
     "id": 1,
-    "wait_new": [
-        2,
-        2
-    ],
-<<<<<<< HEAD
-    "tour": 1,
-=======
-    "tour": 3,
->>>>>>> eb90fd421a0d9fff99fb58a7e045a3f4fb8a6162
-=======
-    "id": 0,
     "statue": 0,
     "tour": 0,
->>>>>>> fe6618f5fcfd1622c54f2cc9e80a7b1541ae2125
     "bob": {
         "stress": 0,
         "fatigue": 0
     },
-<<<<<<< HEAD
-    "action_realisee": [],
-    "statue": 1,
-    "effet_actif": "aucun",
-=======
     "action_realisee": "",
     "effet_actif": "",
->>>>>>> fe6618f5fcfd1622c54f2cc9e80a7b1541ae2125
     "mission": [],
     "mission_faite": [],
-    "nb_player": 3,
-    "wait_nb_player": 3,
+    "nb_player": 2,
+    "wait_nb_player": 2,
     "player_maitre": 0
 }
