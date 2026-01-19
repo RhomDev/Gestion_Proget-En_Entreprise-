@@ -2,26 +2,26 @@
     "id": 0,
     "name": "Player_0",
     "statue": 1,
-    "tour": 6,
+    "tour": 1,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": [],
     "effet_actif": "",
     "mission": [
         [
-            "Ouvrir les cartons",
-            "Problème de livraison",
-            "Ranger le stock"
-        ],
-        [
-            "Gérer l'inventaire",
-            "Réparer un ordinateur",
-            "Changer une pièce"
-        ],
-        [
-            "Compter les stocks",
+            "Changer une pièce",
             "Remplacer un fusible",
-            "Réunion de crise"
+            "Sécuriser l'installation"
+        ],
+        [
+            "Réparer une petite panne",
+            "Réparer une panne",
+            "Grosse réparation électrique"
+        ],
+        [
+            "Résoudre un conflit",
+            "Démarrer une machine",
+            "Ouvrir les cartons"
         ]
     ],
     "mission_faite": [],
