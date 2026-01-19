@@ -2,26 +2,26 @@
     "id": 0,
     "name": "Player_0",
     "statue": 1,
-    "tour": 6,
+    "tour": 0,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": [],
     "effet_actif": "",
     "mission": [
         [
-            "Ouvrir les cartons",
-            "Problème de livraison",
-            "Ranger le stock"
+            "Grosse réparation électrique",
+            "Distribuer des flyers",
+            "Événement public"
         ],
         [
-            "Gérer l'inventaire",
-            "Réparer un ordinateur",
-            "Changer une pièce"
-        ],
-        [
-            "Compter les stocks",
             "Remplacer un fusible",
-            "Réunion de crise"
+            "Tester l’électricité",
+            "Réparer une panne"
+        ],
+        [
+            "Changer une pièce",
+            "Sécuriser l'installation",
+            "Distribuer des flyers"
         ]
     ],
     "mission_faite": [],
@@ -29,5 +29,5 @@
     "nb_player_win": 0,
     "wait_nb_player": 1,
     "player_maitre": 0,
-    "player_maitre_name": "Player_0"
+    "player_maitre_name": ""
 }

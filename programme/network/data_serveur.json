@@ -7,26 +7,26 @@
             "id": 0,
             "name": "Player_0",
             "statue": 1,
-            "tour": 6,
+            "tour": 0,
             "bob_burnout": 0,
             "action_realisee": "",
-            "tache_realisee": [],
+            "tache_realisee": "",
             "effet_actif": "",
             "mission": [
                 [
-                    "Ouvrir les cartons",
-                    "Probl\u00e8me de livraison",
-                    "Ranger le stock"
+                    "Grosse r\u00e9paration \u00e9lectrique",
+                    "Distribuer des flyers",
+                    "\u00c9v\u00e9nement public"
                 ],
                 [
-                    "G\u00e9rer l'inventaire",
-                    "R\u00e9parer un ordinateur",
-                    "Changer une pi\u00e8ce"
-                ],
-                [
-                    "Compter les stocks",
                     "Remplacer un fusible",
-                    "R\u00e9union de crise"
+                    "Tester l\u2019\u00e9lectricit\u00e9",
+                    "R\u00e9parer une panne"
+                ],
+                [
+                    "Changer une pi\u00e8ce",
+                    "S\u00e9curiser l'installation",
+                    "Distribuer des flyers"
                 ]
             ],
             "mission_faite": [],
@@ -34,8 +34,8 @@
             "nb_player_win": 0,
             "wait_nb_player": 1,
             "player_maitre": 0,
-            "player_maitre_name": "Player_0"
+            "player_maitre_name": ""
         }
     ],
-    "player_maitre_name": "Player_0"
+    "player_maitre_name": ""
 }
