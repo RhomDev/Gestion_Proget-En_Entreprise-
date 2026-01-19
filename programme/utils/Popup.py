@@ -16,5 +16,9 @@ class Popup:
 
     def get_active(self):
         return self.active
+
+    def set_active(self,active):
+        self.active = active
+
     def change_active(self):
         self.active = not self.active

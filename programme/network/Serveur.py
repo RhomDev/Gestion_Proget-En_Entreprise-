@@ -5,7 +5,7 @@ import random
 import utils.Read_Data as j
 
 class Serveur(threading.Thread):
-    def __init__(self, host="0.0.0.0", port=5555, file="network/data_serveur.json", nb_wait=0):
+    def __init__(self, host="0.0.0.0", port=5555, file="network/data_serveur.json", nb_wait=1):
         super().__init__(daemon=True)
         self.host = host
         self.port = port
@@ -18,13 +18,15 @@ class Serveur(threading.Thread):
         self.init_started = False
         self.shared_data = j.read_json(file)
 
+        self.history = ""
+
         self.save_json()
         self.shared_data["wait_nb_player"] = nb_wait
 
     def run(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.bind((self.host, self.port))
-        self.server_socket.listen()
+        self.server_socket.listen(self.shared_data["wait_nb_player"])
         print(f"Serveur lancé sur {self.host}:{self.port}")
 
         while self.running:
@@ -57,6 +59,7 @@ class Serveur(threading.Thread):
                         self.save_json()
                         self.broadcast_state()
 
+
                 data = client_socket.recv(4096)
                 if not data:
                     break
@@ -77,36 +80,67 @@ class Serveur(threading.Thread):
         with self.lock:
             player = self.shared_data["players"][client_id]
 
-            # 🔹 Action du maître
-            if msg["type"] == "action" and player["statue"] == 1:
-                for i in range(self.shared_data["nb_player"]):
-                    self.shared_data["players"][i]["action_realisee"] = msg["action"]
+            if self.history != msg:
+                # 🔹 Action du maître
+                if msg["type"] == "action" and player["statue"] == 1:
+                    for i in range(self.shared_data["nb_player"]):
+                        self.shared_data["players"][i]["action_realisee"] = msg["action"]
 
-            # 🔹 Fin d’animation
-            elif msg["type"] == "animation_done":
-                player["action_realisee"] = ""
+                # 🔹 Initialisation
+                elif msg["type"] == "init":
+                    if msg["key"]=="name" and msg["value"] == "":
+                        player["name"] = "Player_"+ str(player["id"])
+                    else:
+                        player[msg["key"]] = msg["value"]
 
-            # 🔹 Fin de tour
-            elif msg["type"] == "end_turn" and player["statue"] == 1:
-                player["statue"] = 0
-                self.select_new_master()
+                # 🔹 Tache du maître
+                elif msg["type"] == "task":
+                    for i in range(self.shared_data["nb_player"]):
+                        self.shared_data["players"][i]["tache_realisee"] = msg["action"]
 
-            self.save_json()
-            self.broadcast_state()
+                # 🔹 Fin d’animation
+                elif msg["type"] == "animation_done":
+                    if player["action_realisee"] != "":
+                        player["action_realisee"] = ""
+                    if player["tache_realisee"]:
+                        player["tache_realisee"] = []
+
+                # 🔹 Fin de tour
+                elif msg["type"] == "end_turn" and player["statue"] == 1:
+                    player["statue"] = 0
+                    for i in range(self.shared_data["nb_player"]):
+                        self.shared_data["players"][i]["tour"] +=1
+                    self.select_new_master()
+
+                elif msg["type"] == "player_win":
+                    for i in range(self.shared_data["nb_player"]):
+                        self.shared_data["players"][i]["nb_player_win"] += 1
+
+                # 🔹 Fin de tour
+                elif msg["type"] == "loading_mission":
+                    player["mission"] = msg["action"]
+                    player["mission_faite"] = msg["action_second"]
+                self.save_json()
+                self.broadcast_state()
+            self.history = msg
+
 
     def select_new_master(self):
         nombre = random.randint(0, self.shared_data["nb_player"] - 1)
         for i in range(self.shared_data["nb_player"]):
             self.shared_data["players"][i]["statue"] = 0
+            self.shared_data["players"][i]["player_maitre_name"] = self.shared_data["players"][nombre]["name"]
+
         self.shared_data["players"][nombre]["statue"] = 1
         self.shared_data["player_maitre"] = nombre
+        self.shared_data["player_maitre_name"] = self.shared_data["players"][nombre]["name"]
 
     def broadcast_state(self):
 
         for idx, client_socket in enumerate(self.clients[:]):
             try:
                 message = json.dumps(self.shared_data["players"][idx]) + "\n"
-                print("Serveur -> Client", idx," : ", message)
+                #print("Serveur -> Client", idx," : ", message)
                 client_socket.sendall(message.encode())
             except (BrokenPipeError, ConnectionResetError):
                 self.clients.remove(client_socket)

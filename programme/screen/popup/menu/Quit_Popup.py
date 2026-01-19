@@ -3,7 +3,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from utils.Popup import Popup
 from utils.Object import *
-
+from utils.Read_Data import resource_path
 class Quit_Popup(Popup):
     def __init__(self, screen, language, position):
         Popup.__init__(self, screen)
@@ -21,8 +21,8 @@ class Quit_Popup(Popup):
         self.render(position)
 
     def render(self,position):
-        img_btn = pygame.image.load("src/img/util/btn_standard.png")
-        img_panel = pygame.image.load("src/img/game_img/background_btn_option.jpg")
+        img_btn = pygame.image.load(resource_path("src/img/util/btn_standard.png"))
+        img_panel = pygame.image.load(resource_path("src/img/game_img/background_btn_option.jpg"))
 
         self.rect_panel = RectangleView(self.screen,position, (self.width_panel, self.height_panel), img=img_panel)
         self.text_panel = TextView(self.screen, (position[0]+160,position[1]+15), 2, "menu:popup::text:answer",'Black', language=self.language)

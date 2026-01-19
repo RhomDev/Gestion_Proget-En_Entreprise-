@@ -1,55 +1,55 @@
 {
-    "nb_player": 3,
-    "wait_nb_player": 3,
-    "player_maitre": 1,
+    "nb_player": 1,
+    "wait_nb_player": 1,
+    "player_maitre": 0,
     "players": [
         {
             "id": 0,
-            "statue": 0,
-            "tour": 0,
-            "bob": {
-                "stress": 0,
-                "fatigue": 0
-            },
-            "action_realisee": "",
-            "effet_actif": "",
-            "mission": [],
-            "mission_faite": [],
-            "nb_player": 3,
-            "wait_nb_player": 3,
-            "player_maitre": 0
-        },
-        {
-            "id": 1,
+            "name": "Benoit",
             "statue": 1,
-            "tour": 0,
-            "bob": {
-                "stress": 0,
-                "fatigue": 0
-            },
+            "tour": 3,
+            "bob_burnout": 0,
             "action_realisee": "",
+            "tache_realisee": [],
+            "credit_bonus": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "piece_ferme": [
+                [],
+                [],
+                [],
+                [],
+                []
+            ],
             "effet_actif": "",
-            "mission": [],
+            "mission": [
+                [
+                    "G\u00e9rer l'inventaire",
+                    "Probl\u00e8me dehors",
+                    "Mise \u00e0 jour syst\u00e8me"
+                ],
+                [
+                    "Ouvrir les cartons",
+                    "Mise \u00e0 jour syst\u00e8me",
+                    "R\u00e9parer une machine critique"
+                ],
+                [
+                    "R\u00e9union de crise",
+                    "Compter les stocks",
+                    "R\u00e9soudre un conflit"
+                ]
+            ],
             "mission_faite": [],
-            "nb_player": 3,
-            "wait_nb_player": 3,
-            "player_maitre": 0
-        },
-        {
-            "id": 2,
-            "statue": 0,
-            "tour": 0,
-            "bob": {
-                "stress": 0,
-                "fatigue": 0
-            },
-            "action_realisee": "",
-            "effet_actif": "",
-            "mission": [],
-            "mission_faite": [],
-            "nb_player": 3,
-            "wait_nb_player": 3,
-            "player_maitre": 0
+            "nb_player": 1,
+            "nb_player_win": 0,
+            "wait_nb_player": 1,
+            "player_maitre": 0,
+            "player_maitre_name": "Player_0"
         }
-    ]
+    ],
+    "player_maitre_name": "Player_0"
 }

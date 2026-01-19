@@ -1,5 +1,5 @@
 from math import sqrt
-from tkinter.constants import FALSE, TRUE
+from utils.Read_Data import resource_path
 
 import pygame
 
@@ -16,7 +16,7 @@ class Map:
     def __init__(s, screen, choix):
         s.screen = screen
         s.resolution = (s.screen.get_width(), s.screen.get_height())
-        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
+        s.image = pygame.image.load(resource_path(f"src/img/map/map{choix}.png"))
         s.image = pygame.transform.scale(s.image, s.resolution)
         s.nodes = Nodes()
 
@@ -24,7 +24,7 @@ class Map:
         s.screen.blit(s.image, (0, 0))
 
     def Set_Map(s, choix):
-        s.image = pygame.image.load(f"src/img/map/map{choix}.png")
+        s.image = pygame.image.load(resource_path(f"src/img/map/map{choix}.png"))
         s.image = pygame.transform.scale(s.image, s.resolution)
 
     def update(s):
@@ -38,7 +38,7 @@ class Node:
         s.lien = []
         s.pointe = None
         s.score = 1000000
-        s.visited = FALSE
+        s.visited = False
 
 
 class Nodes:
@@ -48,22 +48,23 @@ class Nodes:
         s.a         = Node([1390, 555], "A")
         s.electric  = Node([1563, 372], "Electricité")
         s.b         = Node([1042, 406], "B")
-        s.mange     = Node([1134, 264], "Mange")
+        s.Reception     = Node([1134, 264], "Reception")
         s.ba        = Node([885,  328], "BA")          
-        s.travail   = Node([752,  393], "Travail")
+        s.Info   = Node([752,  393], "Info")
         s.c         = Node([986, 690], "C")
         s.ca1       = Node([998, 790], "CA1")
         s.ca2       = Node([896, 680], "CA2")
         s.cb2       = Node([718, 762], "CB2")
         s.machine   = Node([636, 712], "Machine")
         s.entrepot  = Node([887, 871], "Entrepôt")
-        s.objectifs = {"Entrée":0,"Electricité":0,"Travail":0,"Mange":0,"Machine":0,"Entrepôt":0}
+        s.dehors    = Node([1462, 756], "Dehors")
+        s.objectifs = {"Entrée":0,"Electricité":0,"Info":0,"Reception":0,"Machine":0,"Entrepôt":0,"Dehors":0}
         s.noeuds = {
             "EntréeBis": s.EntreeBis, "Entrée": s.Entree,
             "A": s.a, "Electricité": s.electric, "B": s.b,
-            "Mange": s.mange, "BA": s.ba, "Travail": s.travail,
+            "Reception": s.Reception, "BA": s.ba, "Info": s.Info,
             "C": s.c, "CA1": s.ca1, "CA2": s.ca2, "CB2": s.cb2,
-            "Machine": s.machine, "Entrepôt": s.entrepot
+            "Machine": s.machine, "Entrepôt": s.entrepot,"Dehors":s.dehors
         }
 
 
@@ -78,6 +79,7 @@ class Nodes:
         link(s.Entree, s.b)
         link(s.Entree, s.c)
         link(s.Entree, s.ca1)
+        link(s.Entree, s.dehors)
 
         link(s.a, s.b)
         link(s.a, s.c)
@@ -85,11 +87,11 @@ class Nodes:
         link(s.a, s.ca2)
 
         link(s.b, s.c)
-        link(s.b, s.mange)
+        link(s.b, s.Reception)
         link(s.b, s.ba)
         link(s.b, s.ca2)
 
-        link(s.ba, s.travail)
+        link(s.ba, s.Info)
 
         link(s.c, s.ca1)
         link(s.c, s.ca2)
@@ -108,7 +110,7 @@ class Nodes:
             return 0
         for nod in s.noeuds.values():
             nod.score = 100000
-            nod.visited = FALSE
+            nod.visited = False
             nod.pointe = None
         start = s.noeuds[deb]
         end = s.noeuds[fin]
@@ -120,7 +122,7 @@ class Nodes:
             noeud = priorité[a]  
             #print("Noeud : ", noeud.name)
             sup = priorité.pop(a)
-            noeud.visited = TRUE
+            noeud.visited = True
             for i in noeud.lien:
                 if i.name == fin:
                     end.pointe = noeud

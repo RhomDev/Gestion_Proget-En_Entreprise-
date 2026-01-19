@@ -1,16 +1,14 @@
 {
     "id": 0,
-
+    "name": "",
     "statue": 0,
 
     "tour": 0,
 
-    "bob": {
-        "stress": 0,
-        "fatigue": 0
-    },
+    "bob_burnout": 0,
 
     "action_realisee": "",
+    "tache_realisee": "",
 
     "effet_actif": "",
 
@@ -18,6 +16,8 @@
     "mission_faite": [],
 
     "nb_player": 0,
+    "nb_player_win": 0,
     "wait_nb_player": 0,
-    "player_maitre": 0
+    "player_maitre": 0,
+    "player_maitre_name": ""
 }

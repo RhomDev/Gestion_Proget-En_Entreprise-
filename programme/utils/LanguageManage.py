@@ -23,6 +23,9 @@ class LanguageManager:
             print(f"Key '{key}' not found in language file.")
             return key
 
+    def get(self):
+        return self.languages[self.current_language]
+
     def set_language(self, language):
         if language in self.languages:
             self.current_language = language

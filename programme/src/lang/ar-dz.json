@@ -1,0 +1,48 @@
+{
+  "language::fr-fr": "فرنسي",
+  "language::en-en": "إنجليزي",
+  "language::es-es": "إسباني",
+  "language::de-de": "ألماني",
+  "language::ar-dz": "جزائري",
+
+
+  "menu::text:title": "في الشركة",
+  "menu::btn:start": "لعبة جديدة",
+  "menu::btn:option": "إعدادات",
+  "menu::btn:exit": "خروج",
+
+  "menu:popup::text:answer": "حاب تخرج بصح؟",
+  "menu:popup::btn:yes": "إيه",
+  "menu:popup::btn:no": "لا",
+
+  "option::text:langue": "اللغة",
+  "option::text:tour": "عدد الدورات",
+  "option::text:player": "عدد اللاعبين",
+  "option::text:volume": "صوت",
+
+  "loggy::edit:surname": "لقب",
+  "loggy::edit:ip": "ID تاع السيرفر",
+  "loggy::edit:port": "بورت",
+  "loggy::edit:nb_player": "عدد اللاعبين",
+  "loggy::btn:join": "دخول",
+  "loggy::btn:cancel": "إلغاء",
+  "loggy::btn:server": "سيرفر",
+
+  "lobby:error::port_fail": "البورت مشغول ولا غالط",
+  "lobby:error::port_input": "إدخال البورت غالط",
+  "lobby:error::server_fail": "مشكل في السيرفر",
+  "lobby:error::client_connect": "الاتصال مرفوض: السيرفر ما يردش",
+  "lobby:error::client_timeout": "الاتصال بالسيرفر طول بزاف",
+  "lobby:error::client_error": "مشكل في الشبكة",
+
+  "logging:popup::text:wait": "نستناو اللاعبين الآخرين...",
+  "logging:popup::btn:cancel": "إلغاء",
+
+  "game:tache:info::text": [
+    "تنصيب برنامج",
+    "تصليح كمبيوتر",
+    "إعادة تشغيل الواي فاي",
+    "تحديث النظام",
+    "تصليح عطل كبير"
+  ]
+}
