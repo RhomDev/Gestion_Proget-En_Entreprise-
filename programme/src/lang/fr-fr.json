@@ -37,18 +37,11 @@
   "logging:popup::text:wait": "Attente des autres joueur ...",
   "logging:popup::btn:cancel": "Annuler",
 
-  "game:popup::text:over" : ["Surveille ta barre de Burnout",
-                              "Fais attention au deadline",
-                              "Tu seras mieux la prochaine fois"
+  "game:popup::text:over" : ["Surveille ta barre de Burn-out",
+                              "Fais attention à la deadline",
+                              "Tu feras mieux la prochaine fois"
                             ],
   "game:popup::text:win": "Bien joué",
-  "game:popup::text:annonce": "C'est au joueur ",
+  "game:popup::text:annonce": "C'est au joueur "
 
-  "game:tache:info::text": [
-    "Installer un programme",
-    "Réparer un ordinateur",
-    "Redémarrer le Wi-Fi ",
-    "Mise à jour système",
-    "Réparer une grosse panne"
-  ]
 }

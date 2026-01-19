@@ -40,6 +40,7 @@ def menu_screen(screen,lang, pageset, pageget, clock):
     lg = lang
 
     menu_init(screen)
+    pygame.mixer.music.stop()
     popup_quit = Popup.Quit_Popup(screen, lang, (int(screen.get_width()/2)-100, int(screen.get_height()/2)-100))
 
     while(menu_active):

@@ -1,7 +1,7 @@
 from math import sqrt,floor
 import pygame
 
-from utils.Read_Data import resource_path
+from utils.Read_Data import resource_path, read_json
 
 
 class Ouvrier:
@@ -18,7 +18,9 @@ class Ouvrier:
         s.width = fenetre.get_size()[0]
         s.heigth = fenetre.get_size()[1]
         s.centre = (s.width / 2, s.heigth / 2)
+        _config = read_json(resource_path("config.json"))
         s.walk_sound = pygame.mixer.Sound(resource_path("src/sound/walk.wav"))
+        s.walk_sound.set_volume(_config["volume_son"])
 
 
         s.i = 0
