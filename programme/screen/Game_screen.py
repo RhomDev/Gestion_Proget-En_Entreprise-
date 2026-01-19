@@ -11,13 +11,13 @@ from utils.Constant import Screen
 
 
 def reset_variable():
-    global credit_bonus,piece_ferme,bonus_next_task,tache_a_faire,credit_depense, \
+    global credit_bonus,piece_ferme,bonus_next_task,tache_a_faire, \
         data_tache_effet, event_tache_effet, event_sound
 
     piece_ferme = [[], [], [], [], []]
     credit_bonus = [0, 0, 0, 0, 0]
     bonus_next_task = 0
-    credit_depense = 0
+
 
     data_tache_effet = read_json(resource_path("src/data/tache_effet.json"))
     event_tache_effet = read_json(resource_path("src/data/event_effet.json"))
@@ -124,7 +124,7 @@ def game_screen_init(screen):
     Burnout_bar = barre_de_vie(screen, (39,80), (160,120),image=img_bar, scale_img=2 , scale=1.8)
     Burnout_bar.set_value(0)
 
-    description_bouton = Button(screen, (125,125),img_description,3,text="")
+    description_bouton = Button(screen, (1250,125),img_description,3,text="")
 
     hint_panel = Button(screen, (sWidth - 80, sHeight - 170), img_hint_panel, 1)
 
@@ -176,7 +176,7 @@ def game_screen_init(screen):
 
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text=f"Fin de tour ({credits_restants}/{credit_init})",police_taille=4)
 
-    btn_affiche_effet = Button(screen, (sWidth - 350,70),img_description,3,text=f"",police_taille=1,taille=(300,130))
+    btn_affiche_effet = Button(screen, (sWidth - 350,70),img_description,3,text=f"",police_taille=1,taille=(350,130))
 
 def print_mission(screen, list):
     print_list_tache_a_faire = []
@@ -283,7 +283,7 @@ def tirage_mission():
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def event_outil_panel(event, client):
-    global var_open_panel, panel_deplacement, panel_taches, credit_depense
+    global var_open_panel, panel_deplacement, panel_taches
 
     def event_check(btn,function,functions=[]):
         btn.animation_check_color(pygame.mouse.get_pos())
@@ -304,14 +304,16 @@ def event_outil_panel(event, client):
                 event_check(up_deplacement,lambda: menu_deroulant_deplacement.deroule(-1))
                 event_check(down_deplacement,lambda: menu_deroulant_deplacement.deroule(1))
                 for btn in liste_btn_deplacement:
+                    credit_depense = int(bob.get_credits_longueur()[btn._input_text]) + credit_effet
                     if credit_depense < 0:
                         credit_depense = 0
 
                     if credit_depense > credits_restants or btn.piece_ferme or btn.blocked:
                         btn.set_input_color1("Gray")
+                        btn.event(event, pygame.mouse.get_pos(), lambda : print())
                     else:
                         btn.set_input_color1("White")
-                        credit_depense = int(bob.get_credits_longueur()[btn._input_text]) + credit_effet
+                        
                         btn.event(event, pygame.mouse.get_pos(), lambda : client().send_action(btn.get_text()))
 
                     btn.animation_check_color(pygame.mouse.get_pos())
@@ -326,6 +328,7 @@ def event_outil_panel(event, client):
                         credit_depense = 0
                     if credit_depense > credits_restants or btn.blocked:
                         btn.set_input_color1("Gray")
+                        btn.event(event, pygame.mouse.get_pos(), lambda:print(""))
                     else:
                         btn.set_input_color1("White")
 
