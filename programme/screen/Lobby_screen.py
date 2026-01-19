@@ -116,6 +116,7 @@ def joint_server(set_client, port=None):
     ip = edit_ip.get_text()
     port_text = edit_port.get_text()
     name_text = edit_surname.get_text()
+    print("name tag : ",name_text)
     try:
         if port is None:
             port = int(port_text)
@@ -132,7 +133,7 @@ def joint_server(set_client, port=None):
     except ValueError as e:
         if data_config.get("dev_mod",False) == True:
 
-            client = Client()
+            client = Client(player_name=name_text)
 
             set_client(client)
             time.sleep(1)

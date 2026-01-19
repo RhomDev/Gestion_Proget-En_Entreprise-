@@ -5,42 +5,28 @@
     "players": [
         {
             "id": 0,
-            "name": "Player_0",
+            "name": "Benoit",
             "statue": 1,
-            "tour": 0,
+            "tour": 2,
             "bob_burnout": 0,
             "action_realisee": "",
             "tache_realisee": "",
-            "credit_bonus": [
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "piece_ferme": [
-                [],
-                [],
-                [],
-                [],
-                []
-            ],
             "effet_actif": "",
             "mission": [
                 [
-                    "Distribuer des flyers",
-                    "R\u00e9parer une panne",
-                    "Probl\u00e8me dehors"
+                    "D\u00e9marrer une machine",
+                    "R\u00e9parer un ordinateur",
+                    "Ranger le stock"
                 ],
                 [
-                    "Ranger le stock",
-                    "R\u00e9parer une panne",
-                    "Changer une pi\u00e8ce"
+                    "R\u00e9soudre un conflit",
+                    "Grosse r\u00e9paration \u00e9lectrique",
+                    "Donner des consignes"
                 ],
                 [
-                    "Maintenance compl\u00e8te",
-                    "Maintenance compl\u00e8te",
-                    "R\u00e9parer un ordinateur"
+                    "Grosse r\u00e9paration \u00e9lectrique",
+                    "Remplacer un fusible",
+                    "G\u00e9rer l'inventaire"
                 ]
             ],
             "mission_faite": [],
@@ -48,8 +34,8 @@
             "nb_player_win": 0,
             "wait_nb_player": 1,
             "player_maitre": 0,
-            "player_maitre_name": ""
+            "player_maitre_name": "Benoit"
         }
     ],
-    "player_maitre_name": ""
+    "player_maitre_name": "Benoit"
 }

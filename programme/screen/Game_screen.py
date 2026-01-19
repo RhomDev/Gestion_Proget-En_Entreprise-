@@ -622,10 +622,10 @@ def Game_screen(screen, language, client, server, pageset, pageget, clock):
     reset_variable()
 
     missions = tirage_mission()
-    game_over = Game_Over(screen, language, (screen.get_height()/2, screen.get_width()/2))
-    game_win = Game_Win(screen, language, (screen.get_height()/2, screen.get_width()/2))
+    game_over = Game_Over(screen, language, (screen.get_width()/2,screen.get_height()/2))
+    game_win = Game_Win(screen, language, (screen.get_width()/2,screen.get_height()/2))
 
-    annonce = Annonce_surname_Popup(screen, language, (screen.get_height()/2, screen.get_width()/2))
+    annonce = Annonce_surname_Popup(screen, language, (screen.get_width()/2,screen.get_height()/2))
 
     pygame.mixer.music.load(resource_path("src/sound/music_fond_low_burnout.wav"))
     pygame.mixer.music.set_volume(_configData.get("volume_son",0))

@@ -1,41 +1,27 @@
 {
     "id": 0,
-    "name": "Player_0",
+    "name": "Benoit",
     "statue": 1,
-    "tour": 0,
+    "tour": 2,
     "bob_burnout": 0,
     "action_realisee": "",
     "tache_realisee": "",
-    "credit_bonus": [
-        0,
-        0,
-        0,
-        0,
-        0
-    ],
-    "piece_ferme": [
-        [],
-        [],
-        [],
-        [],
-        []
-    ],
     "effet_actif": "",
     "mission": [
         [
-            "Distribuer des flyers",
-            "Réparer une panne",
-            "Problème dehors"
+            "Démarrer une machine",
+            "Réparer un ordinateur",
+            "Ranger le stock"
         ],
         [
-            "Ranger le stock",
-            "Réparer une panne",
-            "Changer une pièce"
+            "Résoudre un conflit",
+            "Grosse réparation électrique",
+            "Donner des consignes"
         ],
         [
-            "Maintenance complète",
-            "Maintenance complète",
-            "Réparer un ordinateur"
+            "Grosse réparation électrique",
+            "Remplacer un fusible",
+            "Gérer l'inventaire"
         ]
     ],
     "mission_faite": [],
@@ -43,5 +29,5 @@
     "nb_player_win": 0,
     "wait_nb_player": 1,
     "player_maitre": 0,
-    "player_maitre_name": ""
+    "player_maitre_name": "Benoit"
 }
