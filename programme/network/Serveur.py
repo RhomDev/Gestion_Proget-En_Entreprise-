@@ -124,9 +124,8 @@ class Serveur(threading.Thread):
 
                 elif msg["type"] == "burnout" and player["statue"] == 1:
                     for i in range(self.shared_data["nb_player"]):
-                        self.shared_data["players"][i]["bob_burnout"] =  self.shared_data["players"][i]["bob_burnout"] \
-                                                                         + msg["value"] if self.shared_data["players"][i]["bob_burnout"]\
-                                                                                           + msg["value"] > 0 else 0
+                        self.shared_data["players"][i]["bob_burnout"] =  (self.shared_data["players"][i]["bob_burnout"] + msg["value"])/2 \
+                            if self.shared_data["players"][i]["bob_burnout"] + msg["value"] > 0 else 0
 
                 # 🔹 Fin de tour
                 elif msg["type"] == "loading_mission":
