@@ -494,6 +494,7 @@ def init_next_tour():#les effets qui ce update en fonction des tours
 def executer_effets_tache(piece, nom_tache):
     global data_tache_effet,event_tache_effet,liste_btn_deplacement,Even
     burnout = 0
+
     if nom_tache[0:5] == "Event":
 
         event_sound.play()
@@ -510,7 +511,8 @@ def executer_effets_tache(piece, nom_tache):
         burnout = tache.get('burnout', 0)
         bob.anim()
 
-    cl.send_burnout(burnout/100)
+    if cl.get_state()["statue"] == 1:
+        cl.send_burnout(burnout/100)
 
     
     for effet in effets:

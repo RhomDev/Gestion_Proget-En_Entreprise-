@@ -2,7 +2,7 @@
     "resolution": "1920x1080",
     "volume_son": 0.66,
     "nb_tour": 20,
-    "nb_player": 2,
+    "nb_player": 3,
     "language": "fr-fr",
     "fullcreen": false,
     "dev_mod": true

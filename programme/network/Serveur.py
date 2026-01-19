@@ -18,7 +18,7 @@ class Serveur(threading.Thread):
         self.init_started = False
         self.shared_data = j.read_json(file)
 
-        self.history = {"time":0}
+        self.history = {"time":0, "type":None}
 
         self.save_json()
         self.shared_data["wait_nb_player"] = nb_wait
@@ -80,9 +80,9 @@ class Serveur(threading.Thread):
         with self.lock:
             player = self.shared_data["players"][client_id]
 
-            delay =  msg["time"] - self.history["time"]
+            delay = msg["time"] - self.history["time"]
 
-            if delay>100:
+            if msg["type"] != self.history["type"] or delay>1000:
                 # 🔹 Action du maître
                 if msg["type"] == "action" and player["statue"] == 1:
                     for i in range(self.shared_data["nb_player"]):
@@ -122,7 +122,7 @@ class Serveur(threading.Thread):
                     for i in range(self.shared_data["nb_player"]):
                         self.shared_data["players"][i]["game_over"] = True
 
-                elif msg["type"] == "burnout":
+                elif msg["type"] == "burnout" and player["statue"] == 1:
                     for i in range(self.shared_data["nb_player"]):
                         self.shared_data["players"][i]["bob_burnout"] =  self.shared_data["players"][i]["bob_burnout"] \
                                                                          + msg["value"] if self.shared_data["players"][i]["bob_burnout"]\

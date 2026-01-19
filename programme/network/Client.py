@@ -103,13 +103,13 @@ class Client(threading.Thread):
         print("end_turn")
         self.send({
             "type": "end_turn",
-            "time":pygame.time.get_ticks()
+            "time": pygame.time.get_ticks()
         })
 
     def send_win(self):
         self.send({
             "type": "player_win",
-            "time":pygame.time.get_ticks()
+            "time": pygame.time.get_ticks()
         })
 
     def send_loading_mission(self,mission,mission_faite):
