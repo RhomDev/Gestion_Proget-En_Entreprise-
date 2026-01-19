@@ -42,6 +42,6 @@
                               "Tu feras mieux la prochaine fois"
                             ],
   "game:popup::text:win": "Bien joué",
-  "game:popup::text:annonce": "C'est au joueur ",
+  "game:popup::text:annonce": "C'est au joueur "
 
 }
