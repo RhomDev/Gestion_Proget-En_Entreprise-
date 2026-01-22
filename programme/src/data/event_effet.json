@@ -1,37 +1,53 @@
 {
 
+
     "Event Arrêt maladie": {
-        "effets": [{"fonction": "fin_tour"}]
+        "effets": [{"fonction": "fin_tour"}],
+        "Description": "Vous êtes malade\nle tour se termine\nimmédiatement"
     },
     "Event Journée compliquée": {
-        "effets": [{"fonction": "credit_effets", "argument": -20, "duree": 1}]
+        "effets": [{"fonction": "credit_effets", "argument": -20, "duree": 1}],
+        "Description": "Tout prend plus\nde temps aujourd'hui\n-20 crédits ce tour"
     },
     "Event Rush forcer": {
-        "effets": [{"fonction": "credit_effets", "argument": -20, "duree": 1},{"fonction": "effet_credit", "argument": -20, "duree": 1}]
+        "effets": [
+            {"fonction": "credit_effets", "argument": -20, "duree": 1},
+            {"fonction": "effet_credit", "argument": -20, "duree": 1}
+        ],
+        "Description": "Urgence stressante\n-20 crédits ce tour\nsur toutes les actions"
     },
     "Event Réunion surprise": {
-        "effets": [{"fonction": "Go_Mange"}]
+        "effets": [{"fonction": "Go_Mange"}],
+        "Description": "Réunion imprévue\nvous allez directement\nà la pause déjeuner"
     },
-        "Event Bureau inaccessible": {
-        "effets": [{"fonction": "bloque_piece"}]
+    "Event Bureau inaccessible": {
+        "effets": [{"fonction": "bloque_piece"}],
+        "Description": "Votre bureau\nest temporairement\ninaccessible"
     },
     "Event Procédure supplémentaire": {
-        "effets": [{"fonction": "bonus_next_task", "argument": 20}]
+        "effets": [{"fonction": "bonus_next_task", "argument": 20}],
+        "Description": "Nouvelle procédure\nlourde à suivre\n+20 crédits prochaine tâche"
     },
     "Event Outil bien configuré": {
-        "effets": [{"fonction": "bonus_next_task", "argument": -20}]
+        "effets": [{"fonction": "bonus_next_task", "argument": -20}],
+        "Description": "Outils optimisés\ntravail facilité\n-20 crédits prochaine tâche"
     },
     "Event Erreur": {
-        "effets": [{"fonction": "Ajout_Tache"}]
+        "effets": [{"fonction": "Ajout_Tache"}],
+        "Description": "Une erreur s'est\nglissée dans votre\ntravail à corriger"
     },
-    "Event Ordre prioritaire":{
-        "effets": [{"fonction": "Ajout_Tache_Prioritaire"}]
+    "Event Ordre prioritaire": {
+        "effets": [{"fonction": "Ajout_Tache_Prioritaire"}],
+        "Description": "Tâche urgente\ns'ajoute en priorité\nà votre liste"
     },
     "Event Motivation soudaine": {
         "burnout": -20,
-        "effets": [{"fonction": "credit_effets", "argument": 10, "duree": 3}]
+        "effets": [{"fonction": "credit_effets", "argument": 10, "duree": 3}],
+        "Description": "Regain d'énergie\n-20 burnout\n+10 crédits/tour (3 tours)"
     },
     "Event Épuisement progressif": {
-        "burnout": 20
+        "burnout": 20,
+        "effets": [],
+        "Description": "La fatigue s'accumule\n+20 burnout"
     }
 }
