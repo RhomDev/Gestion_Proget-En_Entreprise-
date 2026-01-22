@@ -128,7 +128,6 @@ class Client(threading.Thread):
         message = json.dumps(data) + "\n"
         try:
             print("send : ", message)
-            self.socket.send(message.encode())
             self.socket.sendall(message.encode())
         except Exception as e:
             print(f"Erreur de connexion : {e}")
