@@ -33,11 +33,12 @@ def game_screen_init(screen):
            bob, description_bouton
 
     global background_meca_tour,txt_N_tour, txt_heure, btn_fin_tour, img_statue,credits_restants,credit,i_btn,credit_effet,Burnout_bar,\
-        btn_affiche_effet,ecran,btn_tache_a_faire
+        btn_affiche_effet,ecran,btn_tache_a_faire,last_task
 
     panel_deplacement = False
     panel_taches = False
     panel_mission = False
+    last_task = ""
 
     var_open_panel = True
 
@@ -176,7 +177,7 @@ def game_screen_init(screen):
 
     btn_fin_tour = Button(screen, (sWidth - 525,sHeight - 70),img_btn_fin_tour,1,text=f"Fin de tour ({credits_restants}/{credit_init})",police_taille=4)
 
-    btn_affiche_effet = Button(screen, (sWidth - 350,70),img_description,3,text=f"",police_taille=1,taille=(350,130))
+    btn_affiche_effet = Button(screen, (sWidth - 350,70),img_description,3,text=f"",police_taille=1,taille=(350,130),argument = "",function =lambda : description_bouton_update(btn_affiche_effet.argument,pos=(1574, 207),dim=(300,320),police_taille=36))
 
 def print_mission(screen, list):
     print_list_tache_a_faire = []
@@ -286,6 +287,7 @@ def event_outil_panel(event, client):
     global var_open_panel, panel_deplacement, panel_taches
 
     def event_check(btn,function,functions=[]):
+        btn_affiche_effet.event(event,pygame.mouse.get_pos(), lambda : print())
         btn.animation_check_color(pygame.mouse.get_pos())
         btn.event(event, pygame.mouse.get_pos(), function)
         for func in functions:
@@ -342,7 +344,7 @@ def event_outil_panel(event, client):
 
 def loading_animation_serveur(screen, client):
     global var_open_panel,credits_restants,credit_effet,data_tache_effet,missions,menu_deroulant_mission,list_mission_btn, next_turn,tour_act,btn_affiche_effet,\
-            bonus_next_task,tache_a_faire, credit_depense
+            bonus_next_task,tache_a_faire, credit_depense,last_task
     if client().get_state()["tour"] != tour_act:
         init_next_tour()
         annonce.change_active(client().get_state()["player_maitre_name"])
@@ -392,8 +394,15 @@ def loading_animation_serveur(screen, client):
             if credits_restants <0:
                 credits_restants = 0
         bonus_next_task = 0
-        executer_effets_tache(bob.get_current_room(), tache)
+        if tache != last_task:
+            executer_effets_tache(bob.get_current_room(), tache)
+            last_task = tache
         btn_affiche_effet.change_text(tache)
+        if tache[0:5] == "Event":
+            description =event_tache_effet.get(tache,{}).get("Description")
+        else :
+            description = data_tache_effet.get(bob.get_current_room(),{}).get(tache,{}).get("Description")
+        btn_affiche_effet.argument = description
 
         client().get_state()["tache_realisee"] = ""
         
@@ -465,10 +474,9 @@ def effet_credit(credit):
 
 def init_next_tour():#les effets qui ce update en fonction des tours
     global credits_restants,liste_btn_deplacement,i_btn, piece_ferme, credit_bonus,event_tache_effet,tache_a_faire
-
-    if tache_a_faire != "":
-        tache_a_faire = ""
+    if tache_a_faire != "":  # Tâche non faite
         credit_effets(-20, 1)
+        tache_a_faire = ""
 
     credits_restants=credit_init
     debloque_toutes_pieces()
@@ -492,7 +500,7 @@ def init_next_tour():#les effets qui ce update en fonction des tours
             cl.send_task(event)
 
 def executer_effets_tache(piece, nom_tache):
-    global data_tache_effet,event_tache_effet,liste_btn_deplacement,Even
+    global data_tache_effet,event_tache_effet,liste_btn_deplacement
     burnout = 0
 
     if nom_tache[0:5] == "Event":
