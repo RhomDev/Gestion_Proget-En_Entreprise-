@@ -20,9 +20,9 @@
         "effets": [{"fonction": "Go_Mange"}],
         "Description": "Réunion imprévue\nvous allez directement\nà la pause déjeuner"
     },
-    "Event Bureau inaccessible": {
+    "Event piece inaccessible": {
         "effets": [{"fonction": "bloque_piece"}],
-        "Description": "Votre bureau\nest temporairement\ninaccessible"
+        "Description": "Une piece aléatoire\nest temporairement\ninaccessible"
     },
     "Event Procédure supplémentaire": {
         "effets": [{"fonction": "bonus_next_task", "argument": 20}],
