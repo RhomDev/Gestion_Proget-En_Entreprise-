@@ -81,9 +81,7 @@ li {
     margin-bottom: 8px;
 }
 
-/* =========================
-   PIED DE PAGE
-   ========================= */
+/* PIED DE PAGE */
 
 footer {
     text-align: center;
@@ -94,11 +92,17 @@ footer {
     font-size: 0.9rem;
 }
 
-/* =========================
-   EFFETS LÉGERS
-   ========================= */
+
+  /* EFFETS LÉGERS*/
+
 
 section:hover {
     transform: scale(1.01);
     transition: transform 0.2s ease;
+}
+
+.image-jeu {
+
+
+    width : 800px;
 }
