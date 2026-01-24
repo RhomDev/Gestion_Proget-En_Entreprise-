@@ -1,3 +1,4 @@
 # Gestion_Proget-En_Entreprise-
 
-Consultez le dossier notes_générales, il y a des infos.
+lien site web :
+file:///C:/Users/rigon/Documents/GitHub/Gestion_Proget-En_Entreprise-/Website/index.html
