@@ -1,0 +1,47 @@
+{
+    "language::fr-fr": "Französisch",
+  "language::en-en": "Englisch",
+  "language::es-es": "Spanisch",
+  "language::de-de": "Deutsch",
+  "language::ar-dz": "Algerisch",
+
+  "menu::text:title": "Im Unternehmen",
+  "menu::btn:start": "Neues Spiel",
+  "menu::btn:option": "Optionen",
+  "menu::btn:exit": "Beenden",
+
+  "menu:popup::text:answer": "Möchten Sie wirklich beenden?",
+  "menu:popup::btn:yes": "Ja",
+  "menu:popup::btn:no": "Nein",
+
+  "option::text:langue": "Sprache",
+  "option::text:tour": "Anzahl der Runden",
+  "option::text:player": "Anzahl der Spieler",
+  "option::text:volume": "Lautstärke",
+
+  "loggy::edit:surname": "Spitzname",
+  "loggy::edit:ip": "Server-ID",
+  "loggy::edit:port": "Port",
+  "loggy::edit:nb_player": "Anzahl der Spieler",
+  "loggy::btn:join": "Beitreten",
+  "loggy::btn:cancel": "Abbrechen",
+  "loggy::btn:server": "Server",
+
+  "lobby:error::port_fail": "Port belegt oder ungültig",
+  "lobby:error::port_input": "Ungültige Port-Eingabe",
+  "lobby:error::server_fail": "Serverfehler",
+  "lobby:error::client_connect": "Verbindung abgelehnt: Server nicht erreichbar",
+  "lobby:error::client_timeout": "Zeitüberschreitung bei der Serververbindung",
+  "lobby:error::client_error": "Netzwerkfehler",
+
+  "logging:popup::text:wait": "Warten auf andere Spieler...",
+  "logging:popup::btn:cancel": "Abbrechen",
+
+  "game:tache:info::text": [
+    "Programm installieren",
+    "Computer reparieren",
+    "WLAN neu starten",
+    "Systemaktualisierung",
+    "Großen Fehler beheben"
+  ]
+}

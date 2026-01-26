@@ -1,0 +1,25 @@
+{
+    "id": 0,
+    "name": "",
+    "statue": 0,
+
+    "tour": 0,
+
+    "bob_burnout": 0,
+
+    "action_realisee": "",
+    "tache_realisee": "",
+
+    "effet_actif": "",
+
+    "mission": [],
+    "mission_faite": [],
+
+    "game_over": false,
+
+    "nb_player": 0,
+    "nb_player_win": 0,
+    "wait_nb_player": 0,
+    "player_maitre": 0,
+    "player_maitre_name": ""
+}

@@ -1,0 +1,47 @@
+{
+  "language::fr-fr": "Français",
+  "language::en-en": "Anglais",
+  "language::es-es": "Espagnol",
+  "language::de-de": "Allemand",
+  "language::ar-dz": "Algérien",
+
+  "menu::text:title": "En Entreprise",
+  "menu::btn:start": "Nouvelle Partie",
+  "menu::btn:option": "Option",
+  "menu::btn:exit": "Quitter",
+
+  "menu:popup::text:answer": "Voulez vous vraiment quitter ?",
+  "menu:popup::btn:yes": "Yes",
+  "menu:popup::btn:no": "Non",
+
+  "option::text:langue": "Langue",
+  "option::text:tour": "Nombre de tour",
+  "option::text:player": "Nombre de Joueur",
+  "option::text:volume": "Volume de son",
+
+  "loggy::edit:surname": "surnom",
+  "loggy::edit:ip": "Id du Serveur",
+  "loggy::edit:port":"Port",
+  "loggy::edit:nb_player": "Nb de joueur",
+  "loggy::btn:join": "Joindre",
+  "loggy::btn:cancel": "Annuler",
+  "loggy::btn:server": "Serveur",
+
+  "lobby:error::port_fail": "Port Occupé ou Invalide",
+  "lobby:error::port_input": "Saisie de Port Incorrect",
+  "lobby:error::server_fail": "Erreur serveur ",
+  "lobby:error::client_connect": "Connexion refusée : serveur inaccessible",
+   "lobby:error::client_timeout":"Connexion au serveur timeout",
+  "lobby:error::client_error": "Erreur réseau",
+
+  "logging:popup::text:wait": "Attente des autres joueur ...",
+  "logging:popup::btn:cancel": "Annuler",
+
+  "game:popup::text:over" : ["Surveille ta barre de Burn-out",
+                              "Fais attention à la deadline",
+                              "Tu feras mieux la prochaine fois"
+                            ],
+  "game:popup::text:win": "Bien joué",
+  "game:popup::text:annonce": "C'est au joueur "
+
+}
